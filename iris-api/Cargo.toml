@@ -8,3 +8,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
+thiserror = "1.0.64"
+tokio = "1.40.0"
+
+[dev-dependencies]
+anyhow = "1.0.89"

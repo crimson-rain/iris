@@ -1,3 +1,5 @@
+#![allow(unused)] // Temporary remove when project is mature
+
 use godot::prelude::*;
 
 mod error;

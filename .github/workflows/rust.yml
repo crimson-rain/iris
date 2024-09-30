@@ -17,6 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build
+      working-directory: ./iris-api
       run: cargo build --verbose
     - name: Run tests
+      working-directory: ./iris-api
       run: cargo test --verbose
+      

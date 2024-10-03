@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0" version="24.7.17">
   <diagram name="Page-1" id="EbFhku3aeiVI1ehOrgtn">
-    <mxGraphModel dx="2583" dy="1193" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1464" dy="581" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -13,7 +13,7 @@
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-25" value="Questing System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
           <mxGeometry x="260" y="450" width="270" height="240" as="geometry" />
         </mxCell>
-        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="hP0yGo-dvykfc_xAxlZr-1">
+        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="hP0yGo-dvykfc_xAxlZr-1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="274" y="920" as="targetPoint" />
           </mxGeometry>

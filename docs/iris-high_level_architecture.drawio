@@ -23,7 +23,7 @@
           <mxGeometry x="530" y="30" width="620" height="220" as="geometry" />
         </mxCell>
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-41" value="NPC (Entities) System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
-          <mxGeometry x="10" y="40" width="240" height="480" as="geometry" />
+          <mxGeometry x="10" y="30" width="240" height="490" as="geometry" />
         </mxCell>
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-42" value="Economy System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
           <mxGeometry x="260" y="290" width="168.75" height="150" as="geometry" />

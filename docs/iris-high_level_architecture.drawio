@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0" version="24.7.17">
   <diagram name="Page-1" id="EbFhku3aeiVI1ehOrgtn">
-    <mxGraphModel dx="2474" dy="1134" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+    <mxGraphModel dx="2583" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -22,7 +22,7 @@
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-40" value="Player System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
           <mxGeometry x="530" y="30" width="620" height="220" as="geometry" />
         </mxCell>
-        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-41" value="NPC System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
+        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-41" value="NPC (Entities) System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
           <mxGeometry x="10" y="40" width="240" height="480" as="geometry" />
         </mxCell>
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-42" value="Economy System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">

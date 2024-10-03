@@ -34,6 +34,9 @@
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-44" value="AI System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
           <mxGeometry x="260" y="200" width="260" height="80" as="geometry" />
         </mxCell>
+        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-45" value="Rewards System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
+          <mxGeometry x="530" y="170" width="260" height="80" as="geometry" />
+        </mxCell>
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="hP0yGo-dvykfc_xAxlZr-1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="274" y="920" as="targetPoint" />

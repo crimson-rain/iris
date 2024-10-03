@@ -25,8 +25,8 @@
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-41" value="NPC System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
           <mxGeometry x="10" y="200" width="240" height="320" as="geometry" />
         </mxCell>
-        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-42" value="Economy" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
-          <mxGeometry x="260" y="200" width="270" height="240" as="geometry" />
+        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-42" value="Economy System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="lu1HMCi60wpDwEhCYiGy-1">
+          <mxGeometry x="260" y="290" width="168.75" height="150" as="geometry" />
         </mxCell>
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="hP0yGo-dvykfc_xAxlZr-1">
           <mxGeometry relative="1" as="geometry">

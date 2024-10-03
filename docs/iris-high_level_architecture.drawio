@@ -31,6 +31,12 @@
         <mxCell id="US7T-Pkhr5Sw-hJU1p7X-8" value="Embedding Model" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="hP0yGo-dvykfc_xAxlZr-3">
           <mxGeometry x="510" y="50" width="160" height="550" as="geometry" />
         </mxCell>
+        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.005;entryY=0.181;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="hP0yGo-dvykfc_xAxlZr-3" source="US7T-Pkhr5Sw-hJU1p7X-4" target="US7T-Pkhr5Sw-hJU1p7X-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="US7T-Pkhr5Sw-hJU1p7X-10" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="hP0yGo-dvykfc_xAxlZr-3">
+          <mxGeometry x="260" y="320" width="127.5" height="170" as="geometry" />
+        </mxCell>
         <mxCell id="hP0yGo-dvykfc_xAxlZr-6" value="&lt;div&gt;IRIS - API&lt;/div&gt;" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-40" y="800" width="1160" height="120" as="geometry" />
         </mxCell>

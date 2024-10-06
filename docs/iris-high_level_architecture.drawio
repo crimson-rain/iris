@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="High Level Architecture" id="EbFhku3aeiVI1ehOrgtn">
-        <mxGraphModel dx="2461" dy="821" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+        <mxGraphModel dx="2152" dy="698" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -48,7 +48,7 @@
                 <mxCell id="US7T-Pkhr5Sw-hJU1p7X-37" value="Generated Quest &amp;amp; Dialogue" style="rounded=0;whiteSpace=wrap;html=1;" parent="hP0yGo-dvykfc_xAxlZr-1" vertex="1">
                     <mxGeometry x="470" y="320" width="120.01" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="2" value="World Data Handler" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="hP0yGo-dvykfc_xAxlZr-1">
+                <mxCell id="2" value="World Data Handler" style="rounded=0;whiteSpace=wrap;html=1;" parent="hP0yGo-dvykfc_xAxlZr-1" vertex="1">
                     <mxGeometry x="21" y="60" width="201" height="114" as="geometry"/>
                 </mxCell>
                 <mxCell id="hP0yGo-dvykfc_xAxlZr-3" value="IRIS - LLM" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -84,7 +84,7 @@
                 <mxCell id="US7T-Pkhr5Sw-hJU1p7X-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.003;entryY=0.29;entryDx=0;entryDy=0;entryPerimeter=0;exitX=-0.004;exitY=0.564;exitDx=0;exitDy=0;exitPerimeter=0;" parent="hP0yGo-dvykfc_xAxlZr-3" source="US7T-Pkhr5Sw-hJU1p7X-8" target="US7T-Pkhr5Sw-hJU1p7X-10" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="hP0yGo-dvykfc_xAxlZr-6" value="&lt;div&gt;IRIS - DATA ENCODER&lt;br&gt;&lt;/div&gt;" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="hP0yGo-dvykfc_xAxlZr-6" value="&lt;div&gt;IRIS - GAME DATA&lt;br&gt;&lt;/div&gt;" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-40" y="800" width="1160" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="US7T-Pkhr5Sw-hJU1p7X-23" value="Key Locations" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;" parent="hP0yGo-dvykfc_xAxlZr-6" vertex="1">
@@ -110,7 +110,7 @@
                         <mxPoint x="560" y="1320" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="5" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="2">
+                <mxCell id="5" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;" parent="1" source="2" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="80.5" y="919.6666666666667" as="targetPoint"/>
                     </mxGeometry>

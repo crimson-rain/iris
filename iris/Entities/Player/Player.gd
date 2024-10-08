@@ -6,7 +6,8 @@ extends CharacterBody2D
 
 func _physics_process(_delta: float) -> void:
 	movement()
-	
+
+### Handles user input for player movement and updates animation.
 func movement() -> void:
 	var direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
@@ -18,7 +19,7 @@ func movement() -> void:
 	update_animation(direction)
 	move_and_slide()
 
-# TODO: Pause at a Specific Frame
+### Handles animation Update
 func update_animation(direction: Vector2) -> void:
 	if direction.x < 0:
 		player_animation_player.play("walk_left")
@@ -29,4 +30,5 @@ func update_animation(direction: Vector2) -> void:
 	elif direction.y > 0:
 		player_animation_player.play("walk_down")
 	else:
+		# TODO: Pause at a Specific Frame
 		player_animation_player.pause()

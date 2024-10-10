@@ -1,8 +1,8 @@
 [gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bsoc5mtarorlr"]
 
-[ext_resource type="Texture2D" uid="uid://ciixay5apa88a" path="res://Assets/ExteriorPack/atlas_48x.png" id="1_d2ny8"]
-[ext_resource type="Texture2D" uid="uid://owtaht5vp6b3" path="res://Assets/ExteriorPack-2/atlas.png" id="2_b4vq8"]
-[ext_resource type="Texture2D" uid="uid://d1g7ogjb6n2ol" path="res://Assets/OverworldPack/atlas.png" id="3_h6d57"]
+[ext_resource type="Texture2D" uid="uid://ciixay5apa88a" path="res://World/Aether/Data/Atlas/exterior_atlas.png" id="1_d2ny8"]
+[ext_resource type="Texture2D" uid="uid://owtaht5vp6b3" path="res://World/Aether/Data/Atlas/exterior2_atlas.png" id="2_b4vq8"]
+[ext_resource type="Texture2D" uid="uid://d1g7ogjb6n2ol" path="res://World/Aether/Data/Atlas/overworld_atlas.png" id="3_h6d57"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2jjpc"]
 texture = ExtResource("1_d2ny8")

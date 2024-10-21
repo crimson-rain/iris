@@ -4,8 +4,14 @@ extends CharacterBody2D
 @export var acceleration: float = 10.0
 @onready var player_animation_player: AnimationPlayer = $PlayerAnimationPlayer
 
+
 func _physics_process(_delta: float) -> void:
 	movement()
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("action_interact"):
+		print("Action Pressed")
 
 ### Handles user input for player movement and updates animation.
 func movement() -> void:
@@ -19,7 +25,7 @@ func movement() -> void:
 	update_animation(direction)
 	move_and_slide()
 
-### Handles animation Update
+### Updates player animation based on the direction they are moving.
 func update_animation(direction: Vector2) -> void:
 	if direction.x < 0:
 		player_animation_player.play("walk_left")
@@ -30,5 +36,5 @@ func update_animation(direction: Vector2) -> void:
 	elif direction.y > 0:
 		player_animation_player.play("walk_down")
 	else:
-		# TODO: Pause at a Specific Frame
+		# TODO: Pause at a Specific Frame instead of Pausing at Current Frame
 		player_animation_player.pause()

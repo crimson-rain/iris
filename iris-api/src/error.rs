@@ -7,4 +7,7 @@ pub enum Error {
     /// Remove After Code Base Matures
     #[error("Static Error: {0}")]
 	Static(&'static str),
+
+    #[error(transparent)]
+	OllamaError(#[from] ollama_rs::error::OllamaError),
 }

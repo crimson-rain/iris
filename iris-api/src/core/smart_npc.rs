@@ -73,7 +73,7 @@ impl ICharacterBody2D for SmartNPC {
             let id = self.id.clone();
             
             rt.spawn(async move {
-                match Self::generate_dialogue(&prompt).await {
+                match Self::generate_quest().await {
                     Ok(response) => {
                         let _ = sender.send(response.response).await;
                     },
@@ -121,6 +121,7 @@ impl SmartNPC {
   }
 }
 
+// Handle the Signal in a Dialogue Box inside Godot
 #[godot_api]
 impl SmartNPC {
   #[signal]
@@ -128,6 +129,6 @@ impl SmartNPC {
 
   #[func]
   fn success_generation(&mut self, response: Variant) {
-    godot_print!("Generated Dialogue, {}", response);
+    godot_print!("Generated Dialogue: '{}'", response);
   }
 }

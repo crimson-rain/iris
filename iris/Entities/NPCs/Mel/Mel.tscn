@@ -121,7 +121,8 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
-[node name="Mel" type="CharacterBody2D"]
+[node name="Mel" type="SmartNPC"]
+id = "Mel"
 scale = Vector2(2.5, 2.5)
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]

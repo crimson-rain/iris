@@ -1,3 +1,4 @@
+use std::sync::Arc;
 use std::alloc::System;
 use godot::{builtin::{GString, StringName, Variant}, classes::{CharacterBody2D, ICharacterBody2D, InputEvent}, global::godot_print, obj::{Base, Gd, WithBaseField}, prelude::{godot_api, GodotClass}};
 use ollama_rs::generation::completion::{request::GenerationRequest, GenerationResponse};
@@ -13,7 +14,7 @@ pub struct SmartNPC {
     id: GString,
     memory: Vec<String>,
     base: Base<CharacterBody2D>,
-    runtime: Runtime,
+    runtime: Arc<Runtime>,
     receiver: Option<mpsc::Receiver<String>>,
 }
 
@@ -32,7 +33,7 @@ impl ICharacterBody2D for SmartNPC {
             id: GString::from(""),
             memory: vec![],
             base,
-            runtime: Runtime::new().expect("Failed to Create Tokio Runtime"),
+            runtime: Arc::new(Runtime::new().expect("Failed to Create Tokio Runtime")),
             receiver: None,
         }
     }
@@ -42,7 +43,6 @@ impl ICharacterBody2D for SmartNPC {
         self.base_mut().connect("dialogue_generated".into(), callable);
     }
     
-    // TODO: Comment?
     fn physics_process(&mut self, _delta: f64) {
         if let Some(receiver) = &mut self.receiver {
             match receiver.try_recv() {
@@ -62,25 +62,23 @@ impl ICharacterBody2D for SmartNPC {
         }
     }
 
-    // TODO: Comment
     fn input(&mut self, event: Gd<InputEvent>) {
         if event.is_action_pressed(StringName::from("action_interact")) {
-
-            // TODO: Refactor and Move this Into Generate Dialogue? | Also use Signals to Interact with Dialogue Interface. | Create UI to represent Dialogue. | Figure out Safeguards Later.
             let (sender, receiver) = mpsc::channel(1);
             self.receiver = Some(receiver);
             
             let prompt = "What colour is the sky?".to_string();
-            let rt = &self.runtime;
             let id = self.id.clone();
+            let runtime = Arc::clone(&self.runtime);
             
-            rt.spawn(async move {
-                match Self::generate_quest().await {
+            // TODO: do I have to write this disgusting ass code?
+            runtime.spawn(async move {
+                match SmartNPC::generate_dialogue(&prompt).await {
                     Ok(response) => {
                         let _ = sender.send(response.response).await;
                     },
                     Err(e) => {
-                        let _ = sender.send(f!("Error: {:?}", e)).await;
+                        let _ = sender.send(format!("Error: {:?}", e)).await;
                     }
                 }
             });
@@ -90,13 +88,16 @@ impl ICharacterBody2D for SmartNPC {
 
 // Should this be abstracted towards the LLM Layer? Perhaps this would be more convenient if it was?
 impl SmartNPC {
-    // TODO: Comment
-    pub async fn generate_dialogue(&mut self, prompt: &str) -> Result<GenerationResponse> {
-        // Initialize Model
+    // Generate Dialogue
+    pub async fn generate_dialogue(prompt: &str) -> Result<GenerationResponse> {
         let model = Models::Mistral7B.initialize_model();
 
         // Format the Prompt
-        let formatted_prompt = f!("{}{}, Memory: {}", SystemPrompt::DialogueSystem.get_system_prompt(),prompt, self.memory.concat());
+        let formatted_prompt = format!(
+            "{}{}",
+            SystemPrompt::DialogueSystem.get_system_prompt(),
+            prompt
+        );
 
         // Generate Response from Model
         let response = model.ollama.generate(
@@ -106,21 +107,17 @@ impl SmartNPC {
         Ok(response)
     }
 
-    // TODO: Comment and Improve
+    // Generate Quest
     pub async fn generate_quest() -> Result<GenerationResponse> {
-      // Initialize Model
-      let model = Models::Mistral7B.initialize_model();
+        let model = Models::Mistral7B.initialize_model();
+        let formatted_prompt = format!("{}{}", SystemPrompt::QuestSystem.get_system_prompt(), "No Prompt");
 
-      // Format the Prompt Before Parsing to Model
-      let formatted_prompt = f!("{}{}", SystemPrompt::QuestSystem.get_system_prompt(), "No Prompt");
+        let response = model.ollama.generate(
+            GenerationRequest::new(model.model.get_model(), formatted_prompt)
+        ).await?;
 
-      // Generate Response from Model
-      let response = model.ollama.generate(
-          GenerationRequest::new(model.model.get_model(), formatted_prompt)
-      ).await?;
-
-      Ok(response)
-  }
+        Ok(response)
+    }
 }
 
 // Handle the Signal in a Dialogue Box inside Godot

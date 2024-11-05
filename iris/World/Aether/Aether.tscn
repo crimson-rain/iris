@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://xcn135w7jxln"]
+
+[ext_resource type="PackedScene" uid="uid://c4mk2jo1218c5" path="res://Entities/Player/Player.tscn" id="1_1vvus"]
+[ext_resource type="PackedScene" uid="uid://chehoc72bjo4x" path="res://Entities/NPCs/Mel/Mel.tscn" id="2_wals1"]
+
+[node name="Aether" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_1vvus")]
+
+[node name="Mel" parent="." instance=ExtResource("2_wals1")]
+position = Vector2(407, 4)

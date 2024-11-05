@@ -1,5 +1,5 @@
 use std::alloc::System;
-use godot::{builtin::{GString, StringName}, classes::{CharacterBody2D, ICharacterBody2D, InputEvent}, global::godot_print, obj::{Base, Gd}, prelude::{godot_api, GodotClass}};
+use godot::{builtin::{GString, StringName, Variant}, classes::{CharacterBody2D, ICharacterBody2D, InputEvent}, global::godot_print, obj::{Base, Gd, WithBaseField}, prelude::{godot_api, GodotClass}};
 use ollama_rs::generation::completion::{request::GenerationRequest, GenerationResponse};
 use tokio::{runtime::Runtime, time::error};
 use tokio::sync::mpsc;
@@ -36,12 +36,18 @@ impl ICharacterBody2D for SmartNPC {
             receiver: None,
         }
     }
+
+    fn ready(&mut self) {
+        let callable = self.base_mut().callable("success_generation");
+        self.base_mut().connect("dialogue_generated".into(), callable);
+    }
     
     // TODO: Comment?
     fn physics_process(&mut self, _delta: f64) {
         if let Some(receiver) = &mut self.receiver {
             match receiver.try_recv() {
                 Ok(response) => {
+                    self.base_mut().emit_signal("dialogue_generated".into(), &[Variant::from(response.clone())]);
                     godot_print!("{}: {}", &self.id, response);
                 },
                 Err(_) => {}
@@ -75,7 +81,7 @@ impl ICharacterBody2D for SmartNPC {
     }
 }
 
-// Should this be abstracted towards the LLM Layer?
+// Should this be abstracted towards the LLM Layer? Perhaps this would be more convenient if it was?
 impl SmartNPC {
     // TODO: Comment
     pub async fn generate_dialogue(prompt: &str) -> Result<GenerationResponse> {
@@ -107,5 +113,16 @@ impl SmartNPC {
       ).await?;
 
       Ok(response)
+  }
+}
+
+#[godot_api]
+impl SmartNPC {
+  #[signal]
+  fn dialogue_generated();
+
+  #[func]
+  fn success_generation(&mut self, response: Variant) {
+    godot_print!("Generated Dialogue, {}", response);
   }
 }

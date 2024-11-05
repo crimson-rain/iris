@@ -19,6 +19,8 @@ pub struct LLM {
 pub enum Models {
   Dolphin,
   Mixtral,
+  Gemma9B,
+  Mistral7B,
 }
 
 impl Models {
@@ -27,6 +29,8 @@ impl Models {
     match self {
       Models::Dolphin => "dolphin-llama3".to_string(),
       Models::Mixtral => "mixtral".to_string(),
+      Models::Gemma9B => "gemma2:9b".to_string(),
+      Models::Mistral7B => "mistral".to_string(),
     }
   }
 
@@ -42,6 +46,18 @@ impl Models {
         LLM {
           ollama: Ollama::default(),
           model: Models::Mixtral,
+        }
+      }
+      Models::Gemma9B => {
+        LLM {
+          ollama: Ollama::default(),
+          model: Models::Gemma9B,
+        }
+      }
+      Models::Mistral7B => {
+        LLM {
+          ollama: Ollama::default(),
+          model: Models::Mistral7B,
         }
       }
     }
@@ -71,6 +87,8 @@ impl SystemPrompt {
         Act like a Non-player Character.
 
         Make the dialogue short and concise.
+
+        If the same question is asked only respond with the amount of times the question was asked.
         ".to_string()
       },
 

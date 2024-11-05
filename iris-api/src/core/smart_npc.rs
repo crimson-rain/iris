@@ -50,8 +50,10 @@ impl ICharacterBody2D for SmartNPC {
                     self.base_mut().emit_signal("dialogue_generated".into(), &[Variant::from(response.clone())]);
 
                     if self.memory.len() >= 5 {
-                        
+                        self.memory.remove(0);
                     }
+
+                    self.memory.push(response.clone());
 
                     godot_print!("{}: {}", &self.id, response);
                 },
@@ -89,12 +91,12 @@ impl ICharacterBody2D for SmartNPC {
 // Should this be abstracted towards the LLM Layer? Perhaps this would be more convenient if it was?
 impl SmartNPC {
     // TODO: Comment
-    pub async fn generate_dialogue(prompt: &str) -> Result<GenerationResponse> {
+    pub async fn generate_dialogue(&mut self, prompt: &str) -> Result<GenerationResponse> {
         // Initialize Model
-        let model = Models::Dolphin.initialize_model();
+        let model = Models::Mistral7B.initialize_model();
 
         // Format the Prompt
-        let formatted_prompt = f!("{}{}", SystemPrompt::DialogueSystem.get_system_prompt(), prompt);
+        let formatted_prompt = f!("{}{}, Memory: {}", SystemPrompt::DialogueSystem.get_system_prompt(),prompt, self.memory.concat());
 
         // Generate Response from Model
         let response = model.ollama.generate(
@@ -107,7 +109,7 @@ impl SmartNPC {
     // TODO: Comment and Improve
     pub async fn generate_quest() -> Result<GenerationResponse> {
       // Initialize Model
-      let model = Models::Dolphin.initialize_model();
+      let model = Models::Mistral7B.initialize_model();
 
       // Format the Prompt Before Parsing to Model
       let formatted_prompt = f!("{}{}", SystemPrompt::QuestSystem.get_system_prompt(), "No Prompt");
@@ -129,6 +131,6 @@ impl SmartNPC {
 
   #[func]
   fn success_generation(&mut self, response: Variant) {
-    godot_print!("Generated Dialogue: '{}'", response);
+    godot_print!("Generated Dialogue");
   }
 }

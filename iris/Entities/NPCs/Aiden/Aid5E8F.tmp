@@ -122,7 +122,6 @@ _data = {
 }
 
 [node name="Aiden" type="SmartNPC"]
-id = "Aiden"
 scale = Vector2(2.5, 2.5)
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]

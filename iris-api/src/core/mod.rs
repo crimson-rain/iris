@@ -1,1 +1,2 @@
-pub mod dialogue_manager;
+pub mod smart_npc;
+pub mod llm;

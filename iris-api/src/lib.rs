@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use godot::prelude::*;
 
 mod error;

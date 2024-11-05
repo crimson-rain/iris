@@ -48,6 +48,11 @@ impl ICharacterBody2D for SmartNPC {
             match receiver.try_recv() {
                 Ok(response) => {
                     self.base_mut().emit_signal("dialogue_generated".into(), &[Variant::from(response.clone())]);
+
+                    if self.memory.len() >= 5 {
+                        
+                    }
+
                     godot_print!("{}: {}", &self.id, response);
                 },
                 Err(_) => {}

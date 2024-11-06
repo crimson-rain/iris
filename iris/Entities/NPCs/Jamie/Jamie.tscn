@@ -121,7 +121,7 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
-[node name="Jamie" type="SmartNPC"]
+[node name="Jamie" type="LLMCharacterBody2D"]
 id = "Jamie"
 scale = Vector2(2.5, 2.5)
 

@@ -1,2 +1,2 @@
-pub mod smart_npc;
 pub mod llm;
+pub mod llm_npc;

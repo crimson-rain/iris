@@ -18,12 +18,17 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://Common/Global/Global.gd"
+InteractionManager="*res://Common/Interaction/InteractionManager.tscn"
 
 [debug]
 
 gdscript/warnings/untyped_declaration=2
 gdscript/warnings/inferred_declaration=2
 gdscript/warnings/confusable_local_declaration=2
+
+[global_group]
+
+GlobalPlayerGroup=""
 
 [input]
 

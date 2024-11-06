@@ -1,7 +1,8 @@
 /* FILENAME: llm/mod.rs
  * 
  * DESCRIPTION 
- * Embeddings for the vector store.
+ * Interactions with the vector store
+ * 
  * 
  * 
  * NOTES

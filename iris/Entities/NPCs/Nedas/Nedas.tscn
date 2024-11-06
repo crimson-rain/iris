@@ -121,7 +121,7 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
-[node name="Nedas" type="SmartNPC"]
+[node name="Nedas" type="LLMCharacterBody2D"]
 id = "Nedas"
 scale = Vector2(2.5, 2.5)
 

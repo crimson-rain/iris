@@ -5,7 +5,7 @@
 
 [node name="Aether" type="Node2D"]
 
-[node name="Player" parent="." groups=["GlobalPlayerGroup"] instance=ExtResource("1_1vvus")]
+[node name="Player" parent="." instance=ExtResource("1_1vvus")]
 
 [node name="Mel" parent="." instance=ExtResource("2_wals1")]
 position = Vector2(407, 4)

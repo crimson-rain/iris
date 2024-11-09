@@ -2,9 +2,9 @@
 #
 #	Description
 #   Scene Manager and Game World Manager
-#   Might want to move this into Rust.
 #
 #	NOTES
+#	- Might want to move this into Rust.
 #   
 #	AUTHOR: Rezwan Rahman (RAH22529097)
 #	CREATED: 09/11/2024

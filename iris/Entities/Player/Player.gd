@@ -16,13 +16,10 @@ extends CharacterBody2D
 @export var acceleration: float = 10.0
 @onready var player_animation_player: AnimationPlayer = $PlayerAnimationPlayer
 
-	
+
 func _physics_process(_delta: float) -> void:
 	movement()
 
-
-func _input(_event: InputEvent) -> void:
-	pass
 
 func movement() -> void:
 	var direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -34,6 +31,7 @@ func movement() -> void:
 	
 	update_animation(direction)
 	move_and_slide()
+
 
 func update_animation(direction: Vector2) -> void:
 	if direction.x < 0: 

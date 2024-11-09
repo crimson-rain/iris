@@ -1,5 +1,15 @@
-extends Node
+#	FILENAME: DialogManager.gd
+#
+#	Description
+#   Interaction Area for Objects
+#
+#	NOTES
+#   
+#	AUTHOR: Rezwan Rahman (RAH22529097)
+#	CREATED: 09/11/2024
+#	MODIFIED: 09/11/2024
 
+extends Node
 
 @onready var text_box_scene: PackedScene = preload("res://Utilities/TextBox/TextBox.tscn")
 
@@ -22,10 +32,13 @@ func start_dialog(position: Vector2, lines: Array[String]) -> void:
 	
 	is_dialog_active = true
 
+
 func _show_text_box() -> void:
 	text_box = text_box_scene.instantiate()
 	get_tree().root.add_child(text_box)
 	text_box.global_position = text_box_position
+	
+	text_box.connect("finished_displaying", Callable(self, "_on_text_box_finished_displaying"))
 	
 	text_box.display_text(dialog_lines[current_line_index])
 	can_advance_line = false
@@ -35,7 +48,7 @@ func _on_text_box_finished_displaying() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (
-		event.is_action_pressed("advance_dialogue") &&
+		event.is_action_pressed("action_interact") &&
 		is_dialog_active &&
 		can_advance_line
 	):

@@ -27,8 +27,8 @@ r"
   Do not mention that you are a large language model.
   Only respond to approriate questions depenedent on the game world.
   Act like a Non-player Character.
-  Make the dialogue short and concise.
-  If the same question is asked only respond with the amount of times the question was asked.
+
+  Ensure that you dont go over 300 words.
 ";
 
 const QUEST_SYSTEM_PROMPT: &'static str =
@@ -79,17 +79,19 @@ impl LLM {
   }
   
   pub async fn generate_dialogue(&self, prompt: String) -> Result<GenerationResponse> {
-    let formatted_prompt = f!("{}{}", SystemPrompt::DialogueSystem.get_system().to_string(), prompt);
     let response = self.ollama
-      .generate(GenerationRequest::new( self.model.clone(), formatted_prompt))
+      .generate(GenerationRequest::new( self.model.clone(), prompt)
+      .system(SystemPrompt::DialogueSystem.get_system().to_string())
+    )
       .await?;
     Ok(response)
   }
 
   pub async fn generate_quest(&self) -> Result<GenerationResponse> {
-    let formatted_prompt = f!("{}{}", SystemPrompt::QuestSystem.get_system().to_string(), "Generate a Quest Suitable for the User");
     let response = self.ollama
-      .generate(GenerationRequest::new( self.model.clone(), formatted_prompt))
+      .generate(GenerationRequest::new( self.model.clone(), "Generate a Quest Suitable for the Player".to_string())
+      .system(SystemPrompt::QuestSystem.get_system().to_string())
+    )
       .await?;
     Ok(response)
   }

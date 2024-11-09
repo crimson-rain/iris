@@ -20,14 +20,18 @@ var can_interact: bool = true
 
 func register_area(area: InteractionArea) -> void:
 	active_areas.push_back(area)
-	
+
+
 func unregister_area(area: InteractionArea) -> void:
 	var index: int = active_areas.find(area)
 	
 	if index != -1:
 		active_areas.remove_at(index)
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
+	active_areas = active_areas.filter(func(x: InteractionArea) -> bool: return x != null)
+	
 	if active_areas.size() > 0 && can_interact:
 		active_areas.sort_custom(_sort_by_distance_to_player)
 		label.text = base_text + active_areas[0].action_name
@@ -37,16 +41,23 @@ func _process(delta: float) -> void:
 		label.show()
 	else:
 		label.hide()
-		
+
+
 func _sort_by_distance_to_player(area1: InteractionArea,  area2: InteractionArea) -> bool:
-	var area1_to_player: int = player.global_position.distance_to(area1.global_position)
-	var area2_to_player: int = player.global_position.distance_to(area2.global_position)
+	if player == null or area1 == null or area2 == null:
+		return false
+		
+	var area1_to_player: float = player.global_position.distance_to(area1.global_position)
+	var area2_to_player: float = player.global_position.distance_to(area2.global_position)
 	return area1_to_player < area2_to_player
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("action_interact") && can_interact:
 		if active_areas.size() > 0:
 			can_interact = false
 			label.hide()
+			
+			active_areas[0].get_parent().handle_interactions()
 			
 			can_interact = true

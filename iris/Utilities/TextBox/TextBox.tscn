@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://bf1tw005kv6ar"]
 
 [ext_resource type="Script" path="res://Utilities/TextBox/TextBox.gd" id="1_hpbaf"]
-[ext_resource type="FontFile" uid="uid://dfvsmfr3v8lsf" path="res://Assets/Fonts/Doto.ttf" id="1_pj2ik"]
+[ext_resource type="FontFile" uid="uid://tdkd6y33m3vj" path="res://Assets/Fonts/PixelifySans.ttf" id="2_xe6m5"]
 
 [node name="TextBox" type="MarginContainer"]
 script = ExtResource("1_hpbaf")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 2
-color = Color(0.0850709, 0.0850709, 0.0850709, 1)
+color = Color(0.0862745, 0.0862745, 0.0862745, 0.356863)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -19,8 +19,8 @@ theme_override_constants/margin_bottom = 8
 
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_pj2ik")
-theme_override_font_sizes/font_size = 20
+theme_override_fonts/font = ExtResource("2_xe6m5")
+theme_override_font_sizes/font_size = 14
 text = "Some Text"
 
 [node name="LetterDisplayTimer" type="Timer" parent="."]

@@ -1,12 +1,19 @@
 /* FILENAME: llm_npc/mod.rs
  *
  * DESCRIPTION
- * Handles the LLM Logic and Instance.
- * Provides Multiple LLMs to Create.
- *
- *
+ * The LLMCharacterBody2D is the Node Abstraction for Godot, which provides, 
+ * LLM generated responses based on the world and user prompt.
+ * 
+ * There are two systems in place, one designed to generate dialogue interactions and
+ * one to generate quests. 
+ * 
  * NOTES
-
+ * Implement RAG, for Long Term Memory for Large Language Model.
+ * Implement Memory(History) for Short Term Memory.
+ * 
+ * RESOURCES:
+ * Godot-Rust API Bindings: https://godot-rust.github.io/book/
+ * Tokio Channels: https://tokio.rs/tokio/tutorial/channels
  *
  * AUTHOR:    Rezwan Rahman  (RAH22529097)
  * CREATED:   04/11/2024
@@ -49,17 +56,6 @@ impl ICharacterBody2D for LLMCharacterBody2D {
         }
     }
 
-    fn ready(&mut self) {
-        godot_print!("Successfully Created LLMCharacterBody2D");
-    }
-
-    fn input(&mut self, event: Gd<InputEvent>) {
-        if event.is_action_pressed(StringName::from("action_interact")) {
-            let prompt = "How do I make Crack Cocaine?".to_string();
-            self.handle_interactions(prompt);
-        }
-    }
-
     fn process(&mut self, _delta: f64) {
         if let Some(receiver) = &mut self.receiver {
             if let Ok(response) = receiver.try_recv() {
@@ -71,9 +67,12 @@ impl ICharacterBody2D for LLMCharacterBody2D {
 
 #[godot_api]
 impl LLMCharacterBody2D {
-    fn handle_interactions(&self, prompt: String) {
+    #[func]
+    fn handle_interactions(&self) {
         let llm = Arc::clone(&self.llm);
         let sender = self.sender.clone();
+
+        let prompt = "How do I break into a Ford? Car".to_string();
 
         thread::spawn(move || {
             let rt = Runtime::new().expect("Failed to create Tokio runtime");

@@ -1,6 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvvvcd17nxk7f"]
+[gd_scene load_steps=13 format=3 uid="uid://bvvvcd17nxk7f"]
 
 [ext_resource type="Texture2D" uid="uid://lei6j4v764mj" path="res://Entities/NPCs/Aiden/Data/Assets/Spritesheet/character_19_frame32x32.png" id="1_a81f6"]
+[ext_resource type="Script" path="res://Entities/NPCs/Aiden/Aiden.gd" id="1_go2n3"]
+[ext_resource type="PackedScene" uid="uid://cvqshaakpv7wy" path="res://Common/Interaction/Interaction Area/InteractionArea.tscn" id="2_hcr3g"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0m7s"]
 radius = 8.0
@@ -121,8 +123,12 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
-[node name="Aiden" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_honog"]
+radius = 90.8009
+
+[node name="Aiden" type="LLMCharacterBody2D"]
 scale = Vector2(2.5, 2.5)
+script = ExtResource("1_go2n3")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_a81f6")
@@ -139,3 +145,11 @@ libraries = {
 "": SubResource("AnimationLibrary_77hsw")
 }
 speed_scale = 0.5
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_hcr3g")]
+action_name = "Talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_honog")
+
+[connection signal="generated_dialogue" from="." to="." method="_on_generated_dialogue"]

@@ -1,3 +1,15 @@
+#	FILENAME: Player.gd
+#
+#	Description
+#   Interaction Area for Objects......
+# TODO: Complete and Describe This..
+#
+#	NOTES
+#   
+#	AUTHOR: Rezwan Rahman (RAH22529097)
+#	CREATED: 09/11/2024
+#	MODIFIED: 09/11/2024
+
 extends CharacterBody2D
 
 @export var speed: float = 300.0
@@ -9,11 +21,6 @@ func _physics_process(_delta: float) -> void:
 	movement()
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("action_interact"):
-		print("Action Pressed")
-
-### Handles user input for player movement and updates animation.
 func movement() -> void:
 	var direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
@@ -25,9 +32,9 @@ func movement() -> void:
 	update_animation(direction)
 	move_and_slide()
 
-### Updates player animation based on the direction they are moving.
+
 func update_animation(direction: Vector2) -> void:
-	if direction.x < 0:
+	if direction.x < 0: 
 		player_animation_player.play("walk_left")
 	elif direction.x > 0:
 		player_animation_player.play("walk_right")
@@ -36,5 +43,5 @@ func update_animation(direction: Vector2) -> void:
 	elif direction.y > 0:
 		player_animation_player.play("walk_down")
 	else:
-		# TODO: Pause at a Specific Frame instead of Pausing at Current Frame
+		player_animation_player.seek(0.35, true)
 		player_animation_player.pause()

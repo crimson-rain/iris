@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://shfqkggxr6km"]
+[gd_scene load_steps=10 format=3 uid="uid://bvvvcd17nxk7f"]
 
-[ext_resource type="Texture2D" uid="uid://chjowovqtmqpa" path="res://Entities/NPCs/Zee/Data/Assets/Spritesheet/character_8_frame32x32.png" id="1_5dr6q"]
+[ext_resource type="Texture2D" uid="uid://lei6j4v764mj" path="res://Entities/NPCs/Aiden/Data/Assets/Spritesheet/character_19_frame32x32.png" id="1_a81f6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0m7s"]
 radius = 8.0
@@ -121,11 +121,11 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
-[node name="Zee" type="LLMCharacterBody2D"]
+[node name="Aiden" type="SmartNPC"]
 scale = Vector2(2.5, 2.5)
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_5dr6q")
+texture = ExtResource("1_a81f6")
 hframes = 3
 vframes = 4
 frame = 1

@@ -1,4 +1,4 @@
-#![allow(unused)] // Temporary remove when project is mature
+#![allow(unused)]
 
 use godot::prelude::*;
 

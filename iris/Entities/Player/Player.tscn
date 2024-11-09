@@ -122,8 +122,9 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["GlobalPlayerGroup"]]
 scale = Vector2(2.5, 2.5)
+collision_layer = 2
 script = ExtResource("1_a5heg")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]

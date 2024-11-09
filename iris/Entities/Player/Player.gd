@@ -1,3 +1,15 @@
+#	FILENAME: Player.gd
+#
+#	Description
+#   Interaction Area for Objects......
+# TODO: Complete and Describe This..
+#
+#	NOTES
+#   
+#	AUTHOR: Rezwan Rahman (RAH22529097)
+#	CREATED: 09/11/2024
+#	MODIFIED: 09/11/2024
+
 extends CharacterBody2D
 
 @export var speed: float = 300.0
@@ -9,10 +21,9 @@ func _physics_process(_delta: float) -> void:
 	movement()
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	pass
 
-### Handles user input for player movement and updates animation.
 func movement() -> void:
 	var direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
@@ -24,7 +35,6 @@ func movement() -> void:
 	update_animation(direction)
 	move_and_slide()
 
-### Updates player animation based on the direction they are moving.
 func update_animation(direction: Vector2) -> void:
 	if direction.x < 0: 
 		player_animation_player.play("walk_left")

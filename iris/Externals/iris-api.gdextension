@@ -7,5 +7,4 @@ reloadable = true
 LLMCharacterBody2D = "res://Assets/Icons/ai-chip.svg"
 
 [libraries]
-windows.debug.x86_64 =   "res://../iris-api/target/debug/iris_api.dll"
-windows.release.x86_64 = "res://../iris-api/target/release/iris_api.dll"
+windows.debug.x86_64 = "res://../iris-api/target/debug/iris_api.dll"

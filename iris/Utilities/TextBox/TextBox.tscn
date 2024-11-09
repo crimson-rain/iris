@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf1tw005kv6ar"]
+
+[ext_resource type="Script" path="res://Utilities/TextBox/TextBox.gd" id="1_hpbaf"]
+[ext_resource type="FontFile" uid="uid://dfvsmfr3v8lsf" path="res://Assets/Fonts/Doto.ttf" id="1_pj2ik"]
+
+[node name="TextBox" type="MarginContainer"]
+script = ExtResource("1_hpbaf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.0850709, 0.0850709, 0.0850709, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_pj2ik")
+theme_override_font_sizes/font_size = 20
+text = "Some Text"
+
+[node name="LetterDisplayTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="LetterDisplayTimer" to="." method="_on_letter_display_timer_timeout"]

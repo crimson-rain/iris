@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvqshaakpv7wy"]
+
+[sub_resource type="GDScript" id="GDScript_qljhm"]
+script/source = "#	FILENAME: InteractionArea.gd
+#
+#	Description
+#   Interaction Area for Objects......
+# TODO: Complete and Describe This..
+#
+#	NOTES
+#   
+#	AUTHOR: Rezwan Rahman (RAH22529097)
+#	CREATED: 09/11/2024
+#	MODIFIED: 09/11/2024
+extends Area2D
+class_name InteractionArea 
+
+@export var action_name: String = \"interact\"
+
+func _on_body_entered(_body: Node2D) -> void:
+	InteractionManager.register_area(self)
+
+func _on_body_exited(_body: Node2D) -> void:
+	InteractionManager.unregister_area(self)
+ 
+"
+
+[node name="InteractionArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = SubResource("GDScript_qljhm")
+action_name = null
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

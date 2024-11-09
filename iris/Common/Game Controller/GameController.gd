@@ -1,3 +1,15 @@
+#	FILENAME: GameController.gd
+#
+#	Description
+#   Scene Manager and Game World Manager
+#   Might want to move this into Rust.
+#
+#	NOTES
+#   
+#	AUTHOR: Rezwan Rahman (RAH22529097)
+#	CREATED: 09/11/2024
+#	MODIFIED: 09/11/2024
+
 class_name GameController extends Node
 
 @export var world: Node2D

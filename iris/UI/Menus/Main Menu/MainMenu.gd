@@ -1,3 +1,15 @@
+#	FILENAME: InteractionArea.gd
+#
+#	Description
+#   Manging MainMenu
+# TODO: Complete and Describe This..
+#
+#	NOTES
+#   
+#	AUTHOR: Rezwan Rahman (RAH22529097)
+#	CREATED: 09/11/2024
+#	MODIFIED: 09/11/2024
+
 extends Control
 
 func _on_play_button_pressed() -> void:

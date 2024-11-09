@@ -1,3 +1,19 @@
+/* FILENAME: llm_npc/mod.rs
+ *
+ * DESCRIPTION
+ * Handles the LLM Logic and Instance.
+ * Provides Multiple LLMs to Create.
+ *
+ *
+ * NOTES
+
+ *
+ * AUTHOR:    Rezwan Rahman  (RAH22529097)
+ * CREATED:   04/11/2024
+ * MODIFIED:  06/11/2024
+ */
+
+
 use std::{sync::Arc, thread};
 use ollama_rs::generation::completion::GenerationResponse;
 use godot::{builtin::{GString, StringName, Variant}, classes::{CharacterBody2D, ICharacterBody2D, InputEvent}, global::godot_print, obj::{Base, Gd, WithBaseField}, prelude::{godot_api, GodotClass}};
@@ -34,12 +50,12 @@ impl ICharacterBody2D for LLMCharacterBody2D {
     }
 
     fn ready(&mut self) {
-        godot_print!("Successfully Created LLMNPC");
+        godot_print!("Successfully Created LLMCharacterBody2D");
     }
 
     fn input(&mut self, event: Gd<InputEvent>) {
         if event.is_action_pressed(StringName::from("action_interact")) {
-            let prompt = "You are John Blackthorne a Blacksmith. You are to Interact with the Player.".to_string();
+            let prompt = "How do I make Crack Cocaine?".to_string();
             self.handle_interactions(prompt);
         }
     }
@@ -47,7 +63,7 @@ impl ICharacterBody2D for LLMCharacterBody2D {
     fn process(&mut self, _delta: f64) {
         if let Some(receiver) = &mut self.receiver {
             if let Ok(response) = receiver.try_recv() {
-                godot_print!("Generated Dialogue: {}", response);
+                self.base_mut().emit_signal("generated_dialogue".into(), &[Variant::from(GString::from(response))]);
             }
         }
     }

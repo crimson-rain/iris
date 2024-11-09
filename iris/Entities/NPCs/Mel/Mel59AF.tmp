@@ -1,6 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dxbvnw2en0pct"]
+[gd_scene load_steps=13 format=3 uid="uid://chehoc72bjo4x"]
 
-[ext_resource type="Texture2D" uid="uid://dm3jmwie3g7t1" path="res://Entities/NPCs/Nedas/Data/Assets/Spritesheet/character_1_frame32x32.png" id="1_y7gx7"]
+[ext_resource type="Texture2D" uid="uid://ds738rcwlfkkr" path="res://Entities/NPCs/Mel/Data/Assets/Spritesheet/character_6_frame32x32.png" id="1_76ldx"]
+[ext_resource type="Script" path="res://Entities/NPCs/Mel/Mel.gd" id="1_uksmy"]
+[ext_resource type="PackedScene" uid="uid://cvqshaakpv7wy" path="res://Common/Interaction/Interaction Area/InteractionArea.tscn" id="3_3aljj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0m7s"]
 radius = 8.0
@@ -8,18 +10,6 @@ height = 18.0
 
 [sub_resource type="Animation" id="Animation_s4xel"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1]
-}
 
 [sub_resource type="Animation" id="Animation_h8p3d"]
 resource_name = "idle"
@@ -35,7 +25,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [1]
 }
 
@@ -53,7 +43,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0714286, 0.142857),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [0, 1, 2]
 }
 
@@ -71,7 +61,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0714286, 0.142857),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [3, 4, 5]
 }
 
@@ -89,7 +79,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0714286, 0.142857, 0.214286),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [6, 7, 8, 6]
 }
 
@@ -107,7 +97,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0714286, 0.142857),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [9, 10, 11]
 }
 
@@ -121,11 +111,16 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
-[node name="Nedas" type="LLMCharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_bkerm"]
+radius = 90.8009
+
+[node name="Mel" type="LLMCharacterBody2D"]
+id = "Mel"
 scale = Vector2(2.5, 2.5)
+script = ExtResource("1_uksmy")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_y7gx7")
+texture = ExtResource("1_76ldx")
 hframes = 3
 vframes = 4
 frame = 1
@@ -139,3 +134,11 @@ libraries = {
 "": SubResource("AnimationLibrary_77hsw")
 }
 speed_scale = 0.5
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_3aljj")]
+action_name = "Talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_bkerm")
+
+[connection signal="generated_dialogue" from="." to="." method="_on_generated_dialogue"]

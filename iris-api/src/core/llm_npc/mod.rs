@@ -72,7 +72,7 @@ impl LLMCharacterBody2D {
         let llm = Arc::clone(&self.llm);
         let sender = self.sender.clone();
 
-        let prompt = "How do I break into a Ford? Car".to_string();
+        let prompt = "You are John Blackthorne a Blacksmith. You live in a Town called Aetherium.".to_string();
 
         thread::spawn(move || {
             let rt = Runtime::new().expect("Failed to create Tokio runtime");

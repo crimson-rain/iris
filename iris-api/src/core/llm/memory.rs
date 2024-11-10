@@ -1,4 +1,4 @@
-/* FILENAME: llm/embedding.rs
+/* FILENAME: llm/memory.rs
  * 
  * DESCRIPTION 
  * Embeddings for the vector store.

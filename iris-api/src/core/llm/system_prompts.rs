@@ -1,3 +1,18 @@
+/* FILENAME: llm/system_prompts.rs
+ * 
+ * DESCRIPTION 
+ * Embeddings for the vector store.
+ * 
+ * 
+ * NOTES
+ * Keep this file simple and abstract everything to another layer.
+ * 
+ * AUTHOR:    Rezwan Rahman  (RAH22529097)
+ * CREATED:   04/11/2024
+ * MODIFIED:  06/11/2024
+ * 
+ */
+
 const DIALOGUE_SYSTEM_PROMPT: &'static str =
 r"
   You are to act as a Non-Player Character Inside a Game.
@@ -18,6 +33,7 @@ r"
   You are to act as a Non-Player Character Inside a Game.
   Generate the quest for the player based on the information provided.
 ";
+
 
 pub enum SystemPrompt {
   DialogueSystem,

@@ -1,4 +1,4 @@
-/* FILENAME: llm/mod.rs
+/* FILENAME: llm/vector_store.rs
  * 
  * DESCRIPTION 
  * Interactions with the vector store

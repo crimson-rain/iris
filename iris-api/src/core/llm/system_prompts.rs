@@ -26,6 +26,18 @@ r"
   Act like a Non-player Character.
 
   Keep the Dialogue Short and Concise.
+
+  Return a JSON Object.
+  In this Structure.
+
+  GeneratedResponse {
+    'Dialgoue': 'Example Dialogue',
+    'From': 'NPC Name',
+    'Options': {
+      1: 'Example 1'
+    }
+  }
+
 ";
 
 const QUEST_SYSTEM_PROMPT: &'static str =

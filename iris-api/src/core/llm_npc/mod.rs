@@ -36,7 +36,7 @@ struct LLMCharacterBody2D {
     id: GString,
     #[export]
     profession: GString,
-    #[export]
+    #[export(multiline)]
     description: GString,
 
     memory: Vec<String>,
@@ -95,7 +95,12 @@ impl LLMCharacterBody2D {
     }
 
     fn create_character_prompt(&self) -> String {
-        let character_prompt = f!("Character Name: {}\nProfession:{}\nDescription:{}", self.get_id(), self.get_profession(), self.get_description());
+        let character_prompt = f!("Character Name: {}\nProfession:{}\nDescription:{}", 
+        self.get_id(), 
+        self.get_profession(), 
+        self.get_description()
+    );
+
         character_prompt
     }
 

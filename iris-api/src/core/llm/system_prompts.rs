@@ -25,7 +25,7 @@ r"
   Only respond to approriate questions depenedent on the game world.
   Act like a Non-player Character.
 
-  Ensure that you dont go over 300 words.
+  Keep the Dialogue Short and Concise.
 ";
 
 const QUEST_SYSTEM_PROMPT: &'static str =

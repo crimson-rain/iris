@@ -1,7 +1,7 @@
 /* FILENAME: llm/embedding.rs
  * 
  * DESCRIPTION 
- * Embeddings for the vector store.
+ * Embeddings for the Vectore Store.
  * 
  * 
  * NOTES

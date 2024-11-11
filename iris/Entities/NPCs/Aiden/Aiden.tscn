@@ -127,6 +127,9 @@ _data = {
 radius = 90.8009
 
 [node name="Aiden" type="LLMCharacterBody2D"]
+id = "Aiden"
+profession = "Knight"
+description = "A Knight of the Town of Aether"
 scale = Vector2(2.5, 2.5)
 script = ExtResource("1_go2n3")
 

@@ -1,14 +1,14 @@
 /* FILENAME: llm/memory.rs
  * 
  * DESCRIPTION 
- * Embeddings for the vector store.
+ * LLM Memory Module
  * 
  * 
  * NOTES
  * Keep this file simple and abstract everything to another layer.
  * 
  * AUTHOR:    Rezwan Rahman  (RAH22529097)
- * CREATED:   04/11/2024
- * MODIFIED:  06/11/2024
+ * CREATED:   10/11/2024
+ * MODIFIED:  10/11/2024
  * 
  */

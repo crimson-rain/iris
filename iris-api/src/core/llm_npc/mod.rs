@@ -17,7 +17,7 @@
  *
  * AUTHOR:    Rezwan Rahman  (RAH22529097)
  * CREATED:   04/11/2024
- * MODIFIED:  06/11/2024
+ * MODIFIED:  11/11/2024
  */
 
 
@@ -31,8 +31,14 @@ use crate::prelude::*;
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
 struct LLMCharacterBody2D {
+    // Character Exports
     #[export]
     id: GString,
+    #[export]
+    profession: GString,
+    #[export]
+    description: GString,
+
     memory: Vec<String>,
     base: Base<CharacterBody2D>,
     llm: Arc<LLM>,
@@ -43,11 +49,13 @@ struct LLMCharacterBody2D {
 #[godot_api]
 impl ICharacterBody2D for LLMCharacterBody2D {
     fn init(base: Base<CharacterBody2D>) -> Self {
-        let llm = Arc::new(LLM::new(super::llm::Models::Dolphin));
+        let llm = Arc::new(LLM::new(super::llm::Models::Mistral7B));
         let (sender, receiver) = mpsc::channel(1);
 
         Self {
             id: GString::from(""),
+            profession: GString::from(""),
+            description: GString::from(""),
             memory: Vec::new(),
             base,
             llm,
@@ -59,7 +67,7 @@ impl ICharacterBody2D for LLMCharacterBody2D {
     fn process(&mut self, _delta: f64) {
         if let Some(receiver) = &mut self.receiver {
             if let Ok(response) = receiver.try_recv() {
-                self.base_mut().emit_signal("generated_dialogue".into(), &[Variant::from(GString::from(response))]);
+                self.base_mut().emit_signal("generated_dialogue", &[Variant::from(GString::from(response))]);
             }
         }
     }
@@ -72,7 +80,7 @@ impl LLMCharacterBody2D {
         let llm = Arc::clone(&self.llm);
         let sender = self.sender.clone();
 
-        let prompt = "You are John Blackthorne a Blacksmith. You live in a Town called Aetherium.".to_string();
+        let prompt = self.create_character_prompt();
 
         thread::spawn(move || {
             let rt = Runtime::new().expect("Failed to create Tokio runtime");
@@ -84,6 +92,11 @@ impl LLMCharacterBody2D {
                 }
             });
         });
+    }
+
+    fn create_character_prompt(&self) -> String {
+        let character_prompt = f!("Character Name: {}\nProfession:{}\nDescription:{}", self.get_id(), self.get_profession(), self.get_description());
+        character_prompt
     }
 
     #[signal]

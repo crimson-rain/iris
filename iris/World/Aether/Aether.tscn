@@ -10,8 +10,10 @@
 
 [node name="Mel" parent="." instance=ExtResource("2_wals1")]
 id = "Mel"
+profession = "Bard"
+description = "A charasmatic and flirtatious  bard."
 position = Vector2(407, 4)
 
 [node name="Aiden" parent="." instance=ExtResource("3_oxxav")]
-id = "Aiden"
+description = "A knight who is kind and caring."
 position = Vector2(175, -248)

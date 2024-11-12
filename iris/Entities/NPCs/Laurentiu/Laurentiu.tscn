@@ -1,6 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://km056dnnno4j"]
+[gd_scene load_steps=13 format=3 uid="uid://km056dnnno4j"]
 
+[ext_resource type="Script" path="res://Entities/NPCs/Laurentiu/Laurentiu.gd" id="1_cmyyf"]
 [ext_resource type="Texture2D" uid="uid://c5sqmu2q1qs3c" path="res://Entities/NPCs/Laurentiu/Data/Assets/Spritesheet/character_9_frame32x32.png" id="1_jfvw5"]
+[ext_resource type="PackedScene" uid="uid://cvqshaakpv7wy" path="res://Common/Interaction/Interaction Area/InteractionArea.tscn" id="2_quaqe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0m7s"]
 radius = 8.0
@@ -121,8 +123,18 @@ _data = {
 "walk_up": SubResource("Animation_dxjkp")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lyjgw"]
+radius = 90.8009
+
 [node name="Laurentiu" type="LLMCharacterBody2D"]
+id = "Laurentiu"
+profession = "Mayor"
+description = "Overworked and Consistently Tired, is taking care of the entire town bureaucracy by himself
+Burning hatred for Squirrels and all rodent adjacent life.
+
+Random fits of anger mid-sentence, rambling about some stupid government body"
 scale = Vector2(2.5, 2.5)
+script = ExtResource("1_cmyyf")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_jfvw5")
@@ -139,3 +151,11 @@ libraries = {
 "": SubResource("AnimationLibrary_77hsw")
 }
 speed_scale = 0.5
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_quaqe")]
+action_name = "Talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_lyjgw")
+
+[connection signal="generated_dialogue" from="." to="." method="_on_generated_dialogue"]

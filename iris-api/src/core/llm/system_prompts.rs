@@ -12,7 +12,7 @@
  * 
  */
 
- const DIALOGUE_SYSTEM_PROMPT: &'static str =
+ pub const DIALOGUE_SYSTEM_PROMPT: &'static str =
  r"
    You are to act as a Non-Player Character Inside a Game.
    You are given information about the character such as their name, profession and general details about the character as well as their relationships with other characters.
@@ -38,7 +38,7 @@
    }
  ";
  
- const QUEST_SYSTEM_PROMPT: &'static str =
+ pub const QUEST_SYSTEM_PROMPT: &'static str =
  r"
    You are to act as a Non-Player Character Inside a Game.
    Generate the quest for the player based on the information provided.

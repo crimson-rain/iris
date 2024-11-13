@@ -1,7 +1,7 @@
 /* FILENAME: llm/mod.rs
  * 
  * DESCRIPTION 
- * System Prompts for the LLM.
+ * LLM Module, A Singleton providing a single access point for all queries to the Ollama LLM.
  * 
  * 
  * NOTES
@@ -16,7 +16,7 @@
 
 use ollama_rs::{generation::completion::{request::GenerationRequest, GenerationResponse}, Ollama};
 use once_cell::sync::Lazy;
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 use crate::error::{Error, Result};
 mod system_prompts;
 
@@ -31,8 +31,16 @@ pub struct LLM {
   model: String,
 }
 
+pub static LLM_INSTANCE: Lazy<Arc<LLM>> = Lazy::new(|| {
+  Arc::new(LLM::new(Models::Mistral7B))
+});
+
 impl LLM {
-  pub fn new(model: Models) -> Self {
+  pub fn get_instance() -> Arc<LLM> {
+    Arc::clone(&LLM_INSTANCE)
+  }
+
+  fn new(model: Models) -> Self {
     let model_name = match model {
         Models::Dolphin8B => "dolphin-llama3",
         Models::Mistral7B => "mistral",
@@ -63,7 +71,3 @@ impl LLM {
     Ok(response)
   }
 }
-
-pub static LLM_INSTANCE: Lazy<Mutex<LLM>> = Lazy::new(|| {
-  Mutex::new(LLM::new(Models::Mistral7B))
-});

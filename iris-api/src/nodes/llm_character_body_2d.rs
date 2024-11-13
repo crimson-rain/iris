@@ -34,7 +34,8 @@ struct LLMCharacterBody2D {
 
     memory: Vec<String>,
     base: Base<CharacterBody2D>,
-    llm: Arc<LLM>,
+
+    // Sender and Receiver for Transferring Data Between Threads.
     sender: Option<Sender<String>>,
     receiver: Option<Receiver<String>>,
 }
@@ -42,7 +43,6 @@ struct LLMCharacterBody2D {
 #[godot_api]
 impl ICharacterBody2D for LLMCharacterBody2D {
     fn init(base: Base<CharacterBody2D>) -> Self {
-        let llm = Arc::new(LLM::new(llm::Models::Mistral7B));
         let (sender, receiver) = mpsc::channel(1);
 
         Self {
@@ -51,7 +51,6 @@ impl ICharacterBody2D for LLMCharacterBody2D {
             description: GString::from(""),
             memory: Vec::new(),
             base,
-            llm,
             sender: Some(sender),
             receiver: Some(receiver),
         }
@@ -70,7 +69,7 @@ impl ICharacterBody2D for LLMCharacterBody2D {
 impl LLMCharacterBody2D {
   #[func]
   fn handle_interactions(&self) {
-    let llm = Arc::clone(&self.llm);
+    let llm = LLM::get_instance();
 
     let sender = self.sender.clone();
     let prompt = self.create_character_prompt();

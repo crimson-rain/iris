@@ -2,17 +2,16 @@
  * 
  * DESCRIPTION 
  * LLM Module, A Singleton providing a single access point for all queries to the Ollama LLM.
+ * Generating context driven responses from the NPC.
  * 
  * 
  * NOTES
  * 
  * AUTHOR:    Rezwan Rahman  (RAH22529097)
  * CREATED:   04/11/2024
- * MODIFIED:  12/11/2024
+ * MODIFIED:  14/11/2024
  * 
  */
-
-
 
 use ollama_rs::{generation::completion::{request::GenerationRequest, GenerationResponse}, Ollama};
 use once_cell::sync::Lazy;

@@ -14,17 +14,20 @@
  *
  */
 
-use std::{sync::Arc, thread};
-use godot::{obj::{Base, WithBaseField}, prelude::{godot_api, GString, GodotClass, Variant}};
-use godot::classes::CharacterBody2D;
+use std::{clone, sync::Arc, thread};
+use godot::{global::{godot_error, godot_print}, obj::{Base, WithBaseField}, prelude::{godot_api, GString, GodotClass, Variant}};
+use godot::classes::{CharacterBody2D, ICharacterBody2D};
 use tokio::{runtime::Runtime, sync::mpsc::{self, Receiver, Sender}};
-use crate::core::llm::{self, LLM, LLM_INSTANCE};
-use godot::classes::ICharacterBody2D;
+use serde_json;
+use crate::core::{dialogue, llm::{self, LLM, LLM_INSTANCE}}; // Flatten This
+use crate::core::dialogue::Dialogue; // Flatten this to.
+
+
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
 struct LLMCharacterBody2D {
-    // Character Exports
+    // Character Exports and Information
     #[export]
     id: GString,
     #[export]
@@ -32,8 +35,11 @@ struct LLMCharacterBody2D {
     #[export(multiline)]
     description: GString,
 
-    memory: Vec<String>,
+    // Base Class
     base: Base<CharacterBody2D>,
+
+    // Temporary Memory Module for the NPC
+    memory: Vec<String>,
 
     // Sender and Receiver for Transferring Data Between Threads.
     sender: Option<Sender<String>>,
@@ -49,8 +55,8 @@ impl ICharacterBody2D for LLMCharacterBody2D {
             id: GString::from(""),
             profession: GString::from(""),
             description: GString::from(""),
-            memory: Vec::new(),
             base,
+            memory: Vec::new(),
             sender: Some(sender),
             receiver: Some(receiver),
         }
@@ -59,7 +65,17 @@ impl ICharacterBody2D for LLMCharacterBody2D {
     fn process(&mut self, _delta: f64) {
       if let Some(receiver) = &mut self.receiver {
         if let Ok(response) = receiver.try_recv() {
-          self.base_mut().emit_signal("generated_dialogue", &[Variant::from(GString::from(response))]);
+          // FIXME: Handle the error where String cannot be converted to Dialogue Struct
+          match serde_json::from_str::<Dialogue>(&response) {
+            Ok(dialogue) => {
+              self.base_mut().emit_signal("generated_dialogue", &[Variant::from(GString::from(dialogue.dialogue))]);
+            }
+            Err(e) => {
+              godot_print!("Received JSON response {:?}", response);
+              godot_print!("Failed to Parse Dialogue: {:?}", e);
+              self.handle_interactions();
+            }
+          }
         }
       }
     }

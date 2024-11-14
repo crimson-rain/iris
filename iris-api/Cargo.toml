@@ -9,7 +9,7 @@ crate-type = ["cdylib"]
 [dependencies]
 # -- Godot Bindings
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
-# -- Ollama Bindings
+# -- LLM Libraries
 ollama-rs = "0.2.1"
 # -- Async
 tokio = { version = "1.41.1", features = ["full"] }

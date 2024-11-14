@@ -13,11 +13,11 @@
 id = "Mel"
 profession = "Bard"
 description = "A charasmatic and flirtatious bard."
-position = Vector2(407, 4)
+position = Vector2(295, -102)
 
 [node name="Aiden" parent="." instance=ExtResource("3_oxxav")]
 description = "A knight who is kind and caring."
-position = Vector2(175, -248)
+position = Vector2(-681, 136)
 
 [node name="Laurentiu" parent="." instance=ExtResource("4_jcx76")]
 description = "Overworked and Consistently Tired, is taking care of the entire town bureaucracy by himself
@@ -25,4 +25,4 @@ Burning hatred for Squirrels and all rodent adjacent life
 Random fits of anger mid-sentence, rambling about some stupid government body
 
 Is Genocidal against Rodents and Squirrels"
-position = Vector2(-246, -225)
+position = Vector2(-300, -336)

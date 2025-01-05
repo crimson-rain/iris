@@ -1,2 +1,2 @@
 pub mod llm;
-pub mod dialogue;
+pub mod dialogue_system;

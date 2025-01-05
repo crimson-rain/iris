@@ -19,8 +19,8 @@ use godot::{global::{godot_error, godot_print}, obj::{Base, WithBaseField}, prel
 use godot::classes::{CharacterBody2D, ICharacterBody2D};
 use tokio::{runtime::Runtime, sync::mpsc::{self, Receiver, Sender}};
 use serde_json;
-use crate::core::{dialogue, llm::{self, LLM, LLM_INSTANCE}}; // Flatten This
-use crate::core::dialogue::Dialogue; // Flatten this to.
+use crate::core::{dialogue_system, llm::{self, LLM, LLM_INSTANCE}}; // Flatten This
+use crate::core::dialogue_system::dialogue::Dialogue; // Flatten this to.
 
 
 

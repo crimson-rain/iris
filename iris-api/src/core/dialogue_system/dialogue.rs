@@ -19,5 +19,6 @@ use serde::{Serialize, Deserialize};
 pub struct Dialogue {
   pub dialogue: String,
   pub npc: String,
+  pub choices: Vec<String>
 }
 

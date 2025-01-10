@@ -21,7 +21,8 @@ use tokio::{runtime::Runtime, sync::mpsc::{self, Receiver, Sender}};
 use serde_json;
 use crate::core::{dialogue_system, llm::{self, LLM, LLM_INSTANCE}}; // Flatten This
 use crate::core::dialogue_system::dialogue::Dialogue; // Flatten this to.
-
+use crate::error::Error;
+use std::time;
 
 
 #[derive(GodotClass)]
@@ -48,55 +49,74 @@ struct LLMCharacterBody2D {
 
 #[godot_api]
 impl ICharacterBody2D for LLMCharacterBody2D {
-    fn init(base: Base<CharacterBody2D>) -> Self {
-        let (sender, receiver) = mpsc::channel(1);
+  fn init(base: Base<CharacterBody2D>) -> Self {
+      let (sender, receiver) = mpsc::channel(1);
 
-        Self {
-            id: GString::from(""),
-            profession: GString::from(""),
-            description: GString::from(""),
-            base,
-            memory: Vec::new(),
-            sender: Some(sender),
-            receiver: Some(receiver),
-        }
-    }
-
-    fn process(&mut self, _delta: f64) {
-      if let Some(receiver) = &mut self.receiver {
-        if let Ok(response) = receiver.try_recv() {
-          // FIXME: Handle the error where String cannot be converted to Dialogue Struct
-          match serde_json::from_str::<Dialogue>(&response) {
-            Ok(dialogue) => {
-              self.base_mut().emit_signal("generated_dialogue", &[Variant::from(GString::from(dialogue.dialogue))]);
-            }
-            Err(e) => {
-              godot_print!("Received JSON response {:?}", response);
-              godot_print!("Failed to Parse Dialogue: {:?}", e);
-              self.handle_interactions();
-            }
-          }
-        }
+      Self {
+          id: GString::from(""),
+          profession: GString::from(""),
+          description: GString::from(""),
+          base,
+          memory: Vec::new(),
+          sender: Some(sender),
+          receiver: Some(receiver),
       }
+  }
+
+  fn process(&mut self, _delta: f64) {
+    if let Some(receiver) = &mut self.receiver {
+        if let Ok(response) = receiver.try_recv() {
+            godot_print!("{}", response);
+
+            match serde_json::from_str::<Dialogue>(&response) {
+                Ok(dialogue) => {
+                    self.base_mut().emit_signal("generated_dialogue", &[Variant::from(GString::from(dialogue.dialogue))]);
+                }
+                Err(e) => {
+                    godot_print!("Failed to deserialize response to Dialogue: {:?}", e);
+                    self.base_mut().emit_signal("generated_dialogue", &[Variant::from(GString::from("Error: Invalid response format"))]);
+                }
+            }
+        }
     }
+  }
 }
 
 #[godot_api]
 impl LLMCharacterBody2D {
   #[func]
-  fn handle_interactions(&self) {
+  fn handle_interactions(&self, prompt: Variant) {
     let llm = LLM::get_instance();
 
-    let sender = self.sender.clone();
+    let user_prompt = match prompt.get_type() {
+      godot::prelude::VariantType::NIL => None,
+      godot::prelude::VariantType::STRING => Some(prompt.to_string()),
+      _ => None,
+    };
+
+    let mut final_prompt = self.create_character_prompt();
+    if let Some(ref extra) = user_prompt {
+        final_prompt.push('\n');
+        final_prompt.push_str(extra);
+    }
+
     let prompt = self.create_character_prompt();
+    let id = self.id.clone().to_string();
+
+    let sender = self.sender.clone();
 
     thread::spawn(move || {
       let runtime = Runtime::new().expect("Failed to Create Tokio Runtime");
 
       runtime.block_on(async move {
-        if let Ok(response) = llm.generate_dialogue(prompt).await {
+        if let Ok(response) = llm.generate_dialogue(prompt, id).await {
           if let Some(sender) = sender {
-            let _ = sender.send(response.response).await;
+            let content = match response.message {
+              Some(response) => response.content, 
+              None => Error::Generic("Failed to Output Generate Response".to_string()).to_string(),
+            };
+
+            let _ = sender.send(content).await;
           }
         }
       });
@@ -105,7 +125,11 @@ impl LLMCharacterBody2D {
 
   fn create_character_prompt(&self) -> String {
     format!(
-        "Character Name: {}\nProfession: {}\nDescription: {}",
+        "You are role-playing as the following NPC:\n\
+          Name: {}\n\
+          Profession: {}\n\
+          Description: {}\n\
+          Please respond in character to the player's inquiries.",
         self.id, self.profession, self.description
     )
   }

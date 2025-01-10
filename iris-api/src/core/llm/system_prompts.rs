@@ -14,20 +14,16 @@
 
 pub const DIALOGUE_SYSTEM_PROMPT: &'static str =
 r#"
-  You are to act as a Non-Player Character Inside a Game.
-  You are given information about the character such as their name, profession and general details about the character as well as their relationships with other characters.
-  You are also given a general description of the character's traits, etc.
-  You must only talk to the character and nothing more.
-  When the Player Interacts with you, you are to act as the prompt given.
+  You are an NPC in a role-playing game. Use the provided character information to generate responses that are authentic to the character's persona.
 
-  Do not mention that you are a large language model.
-  Only respond to appropriate questions dependent on the game world.
-
-  Respond in a JSON Format, Similar to the Example Shown Below. Only generate one Dialogue Response.
+  Format your response as:
   {
-    "dialogue": "Example Generated Dialogue",
-    "npc": "Example NPC"
+    "dialogue": "Your dialogue here.",
+    "npc": "The NPC's name here.",
+    "choices": ["Choice 1", "Choice 2", "Chocie 3"]
   }
+
+  IMPORTANT: Respond only in the specified JSON format. Do not include additional text or comments.
 "#;
  
 pub const QUEST_SYSTEM_PROMPT: &'static str =

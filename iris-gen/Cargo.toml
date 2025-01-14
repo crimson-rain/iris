@@ -9,3 +9,6 @@ crate-type = ["cdylib"]
 [dependencies]
 # Godot API Library to Interact with Godot
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
+
+# Error Handling Library
+thiserror = "2.0.11"

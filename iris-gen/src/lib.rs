@@ -1,3 +1,5 @@
+pub mod error;
+
 use godot::prelude::*;
 
 struct IrisGen;

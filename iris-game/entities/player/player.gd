@@ -19,11 +19,7 @@ const ACCELERATION = 10.0
 @onready var player_animation_player: AnimationPlayer = $PlayerAnimationPlayer
 
 ## Handles the Physics Process in the Game, Such as Movement Etc.
-## ARGS:
-## 	NONE
-## RETURNS:
-##	VOID
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	movement()
 
 ## Handles the Movement of the Player Currently Manages 4-D Movement

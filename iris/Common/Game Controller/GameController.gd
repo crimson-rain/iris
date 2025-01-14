@@ -1,16 +1,6 @@
-#	FILENAME: GameController.gd
-#
-#	Description
-#   Scene Manager and Game World Manager
-#
-#	NOTES
-#	- Might want to move this into Rust.
-#   
-#	AUTHOR: Rezwan Rahman (RAH22529097)
-#	CREATED: 09/11/2024
-#	MODIFIED: 09/11/2024
+extends Node
 
-class_name GameController extends Node
+class_name GameController
 
 @export var world: Node2D
 @export var gui: Control
@@ -51,3 +41,6 @@ func change_world_scene(new_scene: String, delete: bool = true, keep_running: bo
 		var new_world_scene: Node2D = load(new_scene).instantiate()
 		world.add_child(new_world_scene)
 		current_world_scene = new_world_scene
+
+func _on_choices_dialogue_selected(index: int) -> void:
+	print("Choice selected: %d" % index)

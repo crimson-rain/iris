@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://bvvvcd17nxk7f"]
 
 [ext_resource type="Texture2D" uid="uid://lei6j4v764mj" path="res://Entities/NPCs/Aiden/Data/Assets/Spritesheet/character_19_frame32x32.png" id="1_a81f6"]
-[ext_resource type="Script" path="res://Entities/NPCs/Aiden/Aiden.gd" id="1_go2n3"]
+[ext_resource type="Script" path="res://Entities/NPCs/NPC.gd" id="1_go2n3"]
 [ext_resource type="PackedScene" uid="uid://cvqshaakpv7wy" path="res://Common/Interaction/Interaction Area/InteractionArea.tscn" id="2_hcr3g"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0m7s"]

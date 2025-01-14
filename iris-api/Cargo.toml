@@ -10,7 +10,8 @@ crate-type = ["cdylib"]
 # -- Godot Bindings
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
 # -- LLM Libraries
-ollama-rs = { version = "0.2.2", features = ["chat-history"] }
+ollama-rs = { version = "0.2.3" }
+rig-core = "0.6.0"
 # -- Async
 tokio = { version = "1.41.1", features = ["full"] }
 # -- JSON Handling

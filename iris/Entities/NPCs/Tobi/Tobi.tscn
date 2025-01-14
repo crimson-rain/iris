@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bssl2gwid1p5x"]
+[gd_scene load_steps=11 format=3 uid="uid://bssl2gwid1p5x"]
 
 [ext_resource type="Texture2D" uid="uid://cxriyc7s8viy2" path="res://Entities/NPCs/Tobi/Data/Assets/Spritesheet/character_4_frame32x32.png" id="1_4038k"]
+[ext_resource type="Script" path="res://Entities/NPCs/NPC.gd" id="1_ko42o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0m7s"]
 radius = 8.0
@@ -123,6 +124,7 @@ _data = {
 
 [node name="Tobi" type="LLMCharacterBody2D"]
 scale = Vector2(2.5, 2.5)
+script = ExtResource("1_ko42o")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_4038k")

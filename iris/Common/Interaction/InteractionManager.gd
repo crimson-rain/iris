@@ -58,6 +58,6 @@ func _input(event: InputEvent) -> void:
 			can_interact = false
 			label.hide()
 			
-			active_areas[0].get_parent().handle_interactions("")
+			await active_areas[0].get_parent().handle_interactions("")
 			
 			can_interact = true

@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dxbvnw2en0pct"]
+[gd_scene load_steps=11 format=3 uid="uid://dxbvnw2en0pct"]
 
+[ext_resource type="Script" path="res://Entities/NPCs/NPC.gd" id="1_ujflp"]
 [ext_resource type="Texture2D" uid="uid://dm3jmwie3g7t1" path="res://Entities/NPCs/Nedas/Data/Assets/Spritesheet/character_1_frame32x32.png" id="1_y7gx7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0m7s"]
@@ -123,6 +124,7 @@ _data = {
 
 [node name="Nedas" type="LLMCharacterBody2D"]
 scale = Vector2(2.5, 2.5)
+script = ExtResource("1_ujflp")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_y7gx7")

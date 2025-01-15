@@ -36,14 +36,14 @@ func movement() -> void:
 
 ## Update the Animation Based on the Movement of the Player
 func update_animation(direction: Vector2) -> void:
-	if direction.x < 0: 
-		player_animation_player.play("walk_left")
-	elif direction.x > 0:
-		player_animation_player.play("walk_right")
-	elif direction.y < 0:
-		player_animation_player.play("walk_up")
-	elif direction.y > 0:
-		player_animation_player.play("walk_down")
-	else:
-		player_animation_player.seek(0.35, true)
-		player_animation_player.pause()
+	match direction:
+		Vector2(0, -1):
+			print("Up")
+		Vector2(0, 1):
+			print("Down")
+		Vector2(-1, 0):
+			print("Left")
+		Vector2(1, 0):
+			print("Right")
+		_:
+			print("Stop")

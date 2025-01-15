@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0w17e7kpjei6"
-path="res://.godot/imported/tobi_sprite.png-bf53fb172f866a8de4d6149df1df6dc0.ctex"
+uid="uid://cb1mlgblb8c3e"
+path="res://.godot/imported/zee_sprite.png-70aabd97fb63da9f4db1af06989010cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/npcs/tobi/tobi_sprite.png"
-dest_files=["res://.godot/imported/tobi_sprite.png-bf53fb172f866a8de4d6149df1df6dc0.ctex"]
+source_file="res://entities/npcs/zee/data/zee_sprite.png"
+dest_files=["res://.godot/imported/zee_sprite.png-70aabd97fb63da9f4db1af06989010cd.ctex"]
 
 [params]
 

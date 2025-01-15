@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkykuoe24ri5g"]
-
-[ext_resource type="PackedScene" uid="uid://5gfdglugqy4" path="res://entities/player/player.tscn" id="1_djv42"]
-
-[node name="Aetheria" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource("1_djv42")]
-position = Vector2(571, 269)

@@ -8,15 +8,15 @@
  * NOTES
  * 
  * AUTHOR:    Rezwan Rahman (RAH22529097)
- * CREATED:   04/11/2024
- * MODIFIED:  14/11/2024
- */
+ * CREATED:   16/11/2024
+ * MODIFIED:  16/11/2024
+*/
 
 use thiserror::Error;
 
 #[derive(Error, Debug)]
-pub enum IrisGenError {
-    
+pub enum Error {
+
 }
 
 #[cfg(test)]

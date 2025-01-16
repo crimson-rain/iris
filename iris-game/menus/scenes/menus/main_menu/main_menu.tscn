@@ -14,9 +14,6 @@ credits_packed_scene = ExtResource("4_c8agl")
 [node name="BackgroundMusicPlayer" parent="." index="1"]
 bus = &"Master"
 
-[node name="VersionLabel" parent="VersionMargin/VersionContainer" index="0"]
-text = "v0.2.0"
-
 [node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0"]
 text = "IRIS"
 

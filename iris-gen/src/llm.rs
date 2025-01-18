@@ -212,7 +212,7 @@ mod tests {
             "We are talking about games".to_string(),
         ));
 
-        let mut memory = MemoryStore::new();
+        let mut memory = MemoryStore::default();
         memory.add_memory("You are a mighty warrior named Chicken".to_string());
         memory.add_memory("You live in Aetheria".to_string());
         memory.add_memory("You are a Knight in Townsville".to_string());

@@ -53,7 +53,7 @@ mod tests {
         );
     }
 
-    #[should_panic(expected = "missing field `npc`")]
+    #[should_panic]
     #[test]
     fn fail_to_serialize_test() {
         let data = r#"
@@ -62,6 +62,13 @@ mod tests {
         }
         "#;
 
-        let _ = Dialogue::try_from(data).unwrap();
+        let result = Dialogue::try_from(data);
+
+        match &result {
+            Err(IrisError::FailedToSerialize(err)) => {
+                assert_eq!(err.to_string(), "missing field `npc` at line 4 column 9");
+            }
+            _ => panic!("Expected FailedToSerialize error, but got {:?}", result),
+        }
     }
 }

@@ -3,18 +3,17 @@
 //! ### Key Components
 //! - `Memory`: Represents a single memory with a description timestamp and access count.
 //! - `MemoryStore`: Manages multiple memories, allowing for storage, retrieval, and sorting.
-//! 
+//!
 //! It defines the `LLM` struct and methods which are associated with it.
 //! It is responsible for making API calls to the Ollama API.
-//! 
+//!
 //! ### Features
 //! - Create and store NPC memories with timestamps.
 //! - Retrieve the most recent or relevant memories.
 //! - Manage memory access counts to track relevance.
-//! 
+//!
 //! This module is intended for systems that simulate NPC behaviors, enabling dynamic memory
 //! management and interaction history tracking.
-
 
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};

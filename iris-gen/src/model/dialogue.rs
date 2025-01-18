@@ -1,25 +1,25 @@
 /* FILENAME: llm/dialogue.rs
- * 
- * DESCRIPTION 
+ *
+ * DESCRIPTION
  * Memory Model used to Serialize and Deserialize Dialogue Choices
- * 
+ *
  * NOTES
  * Perhaps we return the Dialogue Object instead of Generation Response?
- * 
+ *
  * AUTHOR:    Rezwan Rahman  (RAH22529097)
  * CREATED:   14/11/2024
  * MODIFIED:  18/01/2025
- * 
+ *
  */
 
-use serde::{Serialize, Deserialize};
 use crate::error::IrisError;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Dialogue {
     pub dialogue: String,
     pub npc: String,
-    pub choices: Vec<String>
+    pub choices: Vec<String>,
 }
 
 impl TryFrom<&str> for Dialogue {
@@ -50,9 +50,19 @@ mod tests {
 
         let dialogue = Dialogue::try_from(data).expect("Failed to Deserialize Dialogue");
 
-        assert_eq!(dialogue.dialogue, "Welcome, traveller! What brings you to our village?");
+        assert_eq!(
+            dialogue.dialogue,
+            "Welcome, traveller! What brings you to our village?"
+        );
         assert_eq!(dialogue.npc, "Elder Rowan");
-        assert_eq!(dialogue.choices, vec!["I'm just passing through.", "I'm looking for someone.", "Can you tell me more about this place?"]);
+        assert_eq!(
+            dialogue.choices,
+            vec![
+                "I'm just passing through.",
+                "I'm looking for someone.",
+                "Can you tell me more about this place?"
+            ]
+        );
     }
 
     #[should_panic(expected = "missing field `npc`")]

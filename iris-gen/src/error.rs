@@ -1,5 +1,4 @@
 //! This module provides error handling for the Iris Gen Library.
-//! 
 
 use thiserror::Error;
 

@@ -1,5 +1,6 @@
 //! This module provides error handling for the Iris Gen Library.
 
+use godot::global::godot_print;
 use thiserror::Error;
 
 /// Error Type for `iris-gen`
@@ -10,6 +11,12 @@ pub enum IrisError {
     OllamaGenerationError(#[from] ollama_rs::error::OllamaError),
     #[error("Failed to Parse JSON into Dialogue: {0}")]
     FailedToSerialize(#[from] serde_json::error::Error),
+}
+
+impl Drop for IrisError {
+    fn drop(&mut self) {
+        godot_print!("Error: {}", self);
+    }
 }
 
 #[cfg(test)]

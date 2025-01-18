@@ -1,16 +1,4 @@
-/* FILENAME: llm/dialogue.rs
- *
- * DESCRIPTION
- * Memory Model used to Serialize and Deserialize Dialogue Choices
- *
- * NOTES
- * Perhaps we return the Dialogue Object instead of Generation Response?
- *
- * AUTHOR:    Rezwan Rahman  (RAH22529097)
- * CREATED:   14/11/2024
- * MODIFIED:  18/01/2025
- *
- */
+//! This module provides functionality for creating and managing NPC memories.
 
 use crate::error::IrisError;
 use serde::{Deserialize, Serialize};

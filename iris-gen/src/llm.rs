@@ -16,6 +16,8 @@
 use crate::error::Error;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
+use ollama_rs::generation::embeddings::request::GenerateEmbeddingsRequest;
+use ollama_rs::generation::embeddings::GenerateEmbeddingsResponse;
 use ollama_rs::Ollama;
 
 pub const DOCUMENTS_PATH: &str = "";
@@ -40,6 +42,15 @@ impl Default for LLM {
 }
 
 impl LLM {
+    // TODO: Comment
+    pub fn new(model: &str) -> Self {
+        LLM {
+            ollama: Ollama::default(),
+            model: model.to_string()
+        }
+    }
+
+    // TODO: Comment
     pub async fn generate_dialogue(
         &mut self,
         prompt: &str,
@@ -57,11 +68,12 @@ impl LLM {
         let res = self
             .ollama
             .send_chat_messages_with_history(history, dialogue_request)
-            .await;
+            .await?;
 
-        res.map_err(Error::OllamaGenerationError)
+        Ok(res)
     }
 
+    // TODO: Comment
     pub async fn generate_quest(
         &mut self,
         prompt: &str,
@@ -79,12 +91,29 @@ impl LLM {
         let res = self
             .ollama
             .send_chat_messages_with_history(history, quest_request)
-            .await;
+            .await?;
 
-        res.map_err(Error::OllamaGenerationError)
+        Ok(res)
+    }
+
+    pub async fn generate_embeddings(&self, text: &str) -> Result<GenerateEmbeddingsResponse, Error> {
+        let request = GenerateEmbeddingsRequest::new(self.model.clone(), text.into());
+        let res = self.ollama.generate_embeddings(request).await?;
+        
+        Ok(res)
     }
 }
 
 // Test for the Library
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_generate_embeddings() {
+        let llm = LLM::default();
+        let res = llm.generate_embeddings("What colour is the sky?").await;
+
+        assert!(res.is_ok())
+    }
+}

@@ -17,7 +17,7 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum Error {
     #[error(transparent)]
-    OllamaGenerationError(ollama_rs::error::OllamaError),
+    OllamaGenerationError(#[from] ollama_rs::error::OllamaError),
 }
 
 // Test for the Library

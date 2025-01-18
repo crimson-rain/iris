@@ -18,6 +18,8 @@ use thiserror::Error;
 pub enum Error {
     #[error(transparent)]
     OllamaGenerationError(#[from] ollama_rs::error::OllamaError),
+    #[error("Failed to Parse JSON into Dialogue: {0}")]
+    FailedToSerialize(#[from] serde_json::error::Error),
 }
 
 // Test for the Library

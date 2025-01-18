@@ -38,6 +38,13 @@ impl Memory {
     pub fn access(&mut self) {
         self.access_count += 1;
     }
+
+    pub fn memory_to_str(&self) -> String {
+        format!(
+            "Description: {}, Timestamp: {}, Access Count: {}",
+            self.description, self.timestamp, self.access_count
+        )
+    }
 }
 
 pub struct MemoryStore {

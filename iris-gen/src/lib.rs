@@ -15,6 +15,7 @@ pub mod error;
 pub mod llm;
 pub mod llm_character;
 pub mod memory;
+pub mod model;
 pub mod vec_store;
 
 use godot::prelude::*;

@@ -14,6 +14,7 @@
 */
 
 use crate::error::Error;
+use crate::memory::Memory;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
 use ollama_rs::generation::embeddings::request::GenerateEmbeddingsRequest;
@@ -23,7 +24,7 @@ use ollama_rs::Ollama;
 pub const DOCUMENTS_PATH: &str = "";
 pub const TOKENIZER_MODEL: &str = "bert-base-cased";
 pub const MAX_TOKENS: usize = 1000;
-pub const MODEL: &str = "mistral";
+pub const MODEL: &str = "phi4";
 
 pub const DIALOGUE_SYSTEM: &'static str = r#"
   You are an NPC in a role-playing game. Use the provided character information to generate responses that are authentic to the character's persona.
@@ -35,7 +36,7 @@ pub const DIALOGUE_SYSTEM: &'static str = r#"
     "choices": ["Choice 1", "Choice 2", "Chocie 3"]
   }
 
-  IMPORTANT: Respond only in the specified JSON format. Do not include additional text or comments.
+  IMPORTANT: Do not include additional text or comments. Do NOT ADD JSON Formatting.
 "#;
 
 pub struct LLM {
@@ -66,13 +67,21 @@ impl LLM {
         &mut self,
         prompt: &str,
         history: &mut Vec<ChatMessage>,
+        memory: &mut Vec<&Memory>,
     ) -> Result<ChatMessageResponse, Error> {
+        let memory_string = memory
+            .iter()
+            .map(|m| m.memory_to_str())
+            .collect::<Vec<String>>()
+            .join(", ");
+
         let dialogue_request = ChatMessageRequest::new(
             self.model.clone(),
             vec![ChatMessage::user(format!(
-                "SYSTEM: {}, PROMPT: {}",
+                "SYSTEM: {}, PROMPT: {} MEMORY: {}",
                 DIALOGUE_SYSTEM.to_string(),
-                prompt.to_string()
+                prompt.to_string(),
+                memory_string,
             ))],
         );
 
@@ -98,22 +107,36 @@ impl LLM {
 // Test for the Library
 #[cfg(test)]
 mod tests {
+    use crate::memory::MemoryStore;
+
     use super::*;
     use ollama_rs::generation::chat::MessageRole;
 
     #[tokio::test]
     async fn test_generate_dialogue() {
         let mut llm = LLM::default();
-
+        
         let mut hist = Vec::new();
         hist.push(ChatMessage::new(
             MessageRole::User,
             "We are talking about games".to_string(),
         ));
 
+        let mut memory = MemoryStore::new();
+        memory.add_memory("You are a mighty warrior named Chicken".to_string());
+        memory.add_memory("You live in Aetheria".to_string());
+        memory.add_memory("You are a Knight in Townsville".to_string());
+
+
         let res = llm
-            .generate_dialogue("What colour is the sky?", &mut hist)
+            .generate_dialogue(
+                "Hello, I'm looking to do an adventure",
+                &mut hist,
+                &mut memory.retrieve_recent(3),
+            )
             .await;
+
+        println!("{:?}", res.as_ref().unwrap().message.content);
 
         assert!(res.is_ok())
     }
@@ -123,10 +146,5 @@ mod tests {
         let llm = LLM::default();
         let res = llm.generate_embeddings("What colour is the sky?").await;
         assert!(res.is_ok())
-    }
-
-    #[tokio::test]
-    async fn test_generate_dialogue_with_memory() {
-        todo!()
     }
 }

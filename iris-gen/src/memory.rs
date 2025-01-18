@@ -54,6 +54,7 @@ impl Memory {
     }
 }
 
+#[derive(Default)]
 pub struct MemoryStore {
     memories: HashMap<u64, Memory>,
     next_id: u64,
@@ -61,13 +62,6 @@ pub struct MemoryStore {
 
 // Memory Storage using a Hasmap
 impl MemoryStore {
-    pub fn new() -> Self {
-        Self {
-            memories: HashMap::new(),
-            next_id: 0,
-        }
-    }
-
     // Add Memory to the Hashamp
     pub fn add_memory(&mut self, description: String) {
         let memory = Memory::new(description);
@@ -99,7 +93,7 @@ mod tests {
     use super::*;
 
     fn create_test_memory_store() -> MemoryStore {
-        let mut memory_store = MemoryStore::new();
+        let mut memory_store = MemoryStore::default();
         memory_store.add_memory(format!("Memory 1"));
         memory_store.add_memory(format!("Memory 2"));
         memory_store.add_memory(format!("Memory 3"));

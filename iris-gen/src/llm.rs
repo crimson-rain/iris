@@ -20,7 +20,7 @@ pub const TOKENIZER_MODEL: &str = "bert-base-cased";
 pub const MAX_TOKENS: usize = 1000;
 pub const MODEL: &str = "phi4";
 
-pub const DIALOGUE_SYSTEM: &'static str = r#"
+pub const DIALOGUE_SYSTEM: &str = r#"
   You are an NPC in a role-playing game. Use the provided character information to generate responses that are authentic to the character's persona.
 
   Format your response as:
@@ -170,9 +170,7 @@ impl LLM {
             self.model.clone(),
             vec![ChatMessage::user(format!(
                 "SYSTEM: {}, PROMPT: {} MEMORY: {}",
-                DIALOGUE_SYSTEM.to_string(),
-                prompt.to_string(),
-                memory_string,
+                DIALOGUE_SYSTEM, prompt, memory_string,
             ))],
         );
 

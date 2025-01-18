@@ -1,4 +1,5 @@
 //! This module provides functionality for creating and managing NPC memories.
+#![deny(clippy::todo)]
 
 use godot::classes::{CharacterBody2D, ICharacterBody2D};
 use godot::obj::Base;

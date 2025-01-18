@@ -14,7 +14,7 @@ impl TryFrom<&str> for Dialogue {
     type Error = IrisError;
 
     fn try_from(data: &str) -> Result<Self, Self::Error> {
-        serde_json::from_str::<Dialogue>(&data).map_err(IrisError::FailedToSerialize)
+        serde_json::from_str::<Dialogue>(data).map_err(IrisError::FailedToSerialize)
     }
 }
 

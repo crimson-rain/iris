@@ -24,8 +24,19 @@ pub const DOCUMENTS_PATH: &str = "";
 pub const TOKENIZER_MODEL: &str = "bert-base-cased";
 pub const MAX_TOKENS: usize = 1000;
 pub const MODEL: &str = "mistral";
-pub const DIALOGUE_SYSTEM: &str = r"";
-pub const QUEST_SYSTEM: &str = r"";
+
+pub const DIALOGUE_SYSTEM: &'static str = r#"
+  You are an NPC in a role-playing game. Use the provided character information to generate responses that are authentic to the character's persona.
+
+  Format your response as:
+  {
+    "dialogue": "Your dialogue here.",
+    "npc": "The NPC's name here.",
+    "choices": ["Choice 1", "Choice 2", "Chocie 3"]
+  }
+
+  IMPORTANT: Respond only in the specified JSON format. Do not include additional text or comments.
+"#;
 
 pub struct LLM {
     ollama: Ollama,
@@ -46,7 +57,7 @@ impl LLM {
     pub fn new(model: &str) -> Self {
         LLM {
             ollama: Ollama::default(),
-            model: model.to_string()
+            model: model.to_string(),
         }
     }
 
@@ -73,33 +84,13 @@ impl LLM {
         Ok(res)
     }
 
-    // TODO: Comment
-    pub async fn generate_quest(
-        &mut self,
-        prompt: &str,
-        history: &mut Vec<ChatMessage>,
-    ) -> Result<ChatMessageResponse, Error> {
-        let quest_request = ChatMessageRequest::new(
-            self.model.clone(),
-            vec![ChatMessage::user(format!(
-                "SYSTEM: {}, PROMPT: {}",
-                QUEST_SYSTEM.to_string(),
-                prompt.to_string()
-            ))],
-        );
-
-        let res = self
-            .ollama
-            .send_chat_messages_with_history(history, quest_request)
-            .await?;
-
-        Ok(res)
-    }
-
-    pub async fn generate_embeddings(&self, text: &str) -> Result<GenerateEmbeddingsResponse, Error> {
+    pub async fn generate_embeddings(
+        &self,
+        text: &str,
+    ) -> Result<GenerateEmbeddingsResponse, Error> {
         let request = GenerateEmbeddingsRequest::new(self.model.clone(), text.into());
         let res = self.ollama.generate_embeddings(request).await?;
-        
+
         Ok(res)
     }
 }
@@ -108,12 +99,34 @@ impl LLM {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use ollama_rs::generation::chat::MessageRole;
+
+    #[tokio::test]
+    async fn test_generate_dialogue() {
+        let mut llm = LLM::default();
+
+        let mut hist = Vec::new();
+        hist.push(ChatMessage::new(
+            MessageRole::User,
+            "We are talking about games".to_string(),
+        ));
+
+        let res = llm
+            .generate_dialogue("What colour is the sky?", &mut hist)
+            .await;
+
+        assert!(res.is_ok())
+    }
 
     #[tokio::test]
     async fn test_generate_embeddings() {
         let llm = LLM::default();
         let res = llm.generate_embeddings("What colour is the sky?").await;
-
         assert!(res.is_ok())
+    }
+
+    #[tokio::test]
+    async fn test_generate_dialogue_with_memory() {
+        todo!()
     }
 }

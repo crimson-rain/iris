@@ -1,25 +1,20 @@
-/* FILENAME: llm.rs
- *
- * DESCRIPTION
- *
- * Responsible for LLM calls and natural language processing.
- * Generating dialogues and quest using system prompt.
- *
- * NOTES / TODOS / FIXME
- * TODO: Create Test Cases
- *
- * AUTHOR:    Rezwan Rahman (RAH22529097)
- * CREATED:   16/11/2024
- * MODIFIED:  16/11/2024
-*/
+//! This module provides functionality for interacting with Ollama API.
+//! 
+//! It defines the `LLM` struct and methods which are associated with it.
+//! It is responsible for making API calls to the Ollama API.
+//! 
+//! ### Features
+//! - Create and Configure LLM to Interact To
+//! - Generating Responses and Embedding
 
-use crate::error::Error;
+use crate::error::IrisError;
 use crate::memory::Memory;
+use ollama_rs::Ollama;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
 use ollama_rs::generation::embeddings::request::GenerateEmbeddingsRequest;
 use ollama_rs::generation::embeddings::GenerateEmbeddingsResponse;
-use ollama_rs::Ollama;
+
 
 pub const DOCUMENTS_PATH: &str = "";
 pub const TOKENIZER_MODEL: &str = "bert-base-cased";
@@ -39,11 +34,33 @@ pub const DIALOGUE_SYSTEM: &'static str = r#"
   IMPORTANT: Do not include additional text or comments. Do NOT ADD JSON Formatting.
 "#;
 
+/// Struct representing the LLMs used to Interact with Ollama API.
+/// 
+/// The `LLM` struct is the primary interface for making API calls to Ollama for generating
+/// dialogue, embeddings, or other language tasks. It encapsulates the Ollama client and
+/// The model name is being used for these tasks. 
 pub struct LLM {
+    /// The Ollama client used for communicating with the Ollama API
     ollama: Ollama,
+
+    /// The name of the model used for generating responses or embeddings.
+    /// Examples: "phi4", "mistral", "llama3.2:latest"
     model: String,
 }
 
+/// Provides the default implementation for the `LLM` struct.
+/// 
+/// The default implementation initializes the `LLM` struct with:
+/// - A default-configured `Ollama` client.
+/// - A model name defined by the constant `MODEL`.
+/// 
+/// This lets users quickly initialise an `LLM` instance with sensible defaults.
+/// 
+/// # Example
+/// ```
+/// let llm = LLM::default();
+/// println!("Default Model: {}", llm.model);
+/// ```
 impl Default for LLM {
     fn default() -> Self {
         LLM {
@@ -54,7 +71,24 @@ impl Default for LLM {
 }
 
 impl LLM {
-    // TODO: Comment
+    /// Represents a constructor for the `LLM` struct, which is used to interact 
+    /// with the Ollama API via the `ollama-rs` library.
+    ///
+    /// # Arguments
+    /// * `model`   - A string slice (`&str`) representing the name of the model 
+    ///             to be used (e.g., "mistral", "llama3.2:latest", "phi4").
+    ///
+    /// # Returns
+    /// An initialised `LLM` instance with the specified model name.
+    ///
+    /// # Example
+    /// ```rust
+    /// // Create a new instance of LLM with the "mistral" model.
+    /// let llm = LLM::new("mistral");
+    ///
+    /// // Use the `llm` instance to interact with the Ollama API.
+    /// println!("Using model: {}", llm.model);
+    /// ```
     pub fn new(model: &str) -> Self {
         LLM {
             ollama: Ollama::default(),
@@ -62,13 +96,72 @@ impl LLM {
         }
     }
 
-    // TODO: Comment
+
+    /// Generate dialogue for an NPC based on the given, prompt, chat history, and memory.
+    ///
+    /// This method interacts with the Ollama API to produce dialogue which is relevant to the NPC's
+    /// character, persona, and memory context. It uses the system instructions prompts, histroy, and memory to
+    /// create contextually driven and authentic dialogue.
+    /// 
+    /// ### Arguments
+    /// * `prompt` - A string slice (`&str`) which holds the prompt or instructions
+    ///              created by the user.
+    /// 
+    /// * `histroy` - A vector which is made up of `ChatMessage` struct, that holds
+    ///              the message role and the contents of the message.
+    /// 
+    /// * `memory` - A vector made up of references of `Memory` structs.
+    ///
+    /// ### Returns
+    /// An initialised `LLM` instance with the specified model name.
+    ///
+    /// ### Example
+    /// ```rust
+    /// [tokio::main]
+    /// async fn main() {
+    ///     let mut llm = LLM::default();
+    ///     
+    ///     let mut history = vec![
+    ///         ChatMessage::new(MessageRole::User, "We are talking about adventures.".to_string()),
+    ///     ];
+    ///     
+    ///     let mut memory = vec![
+    ///         Memory::new("You are a brave knight in Aetheria."),
+    ///         Memory::new("You have a trusty steed named Thunder."),
+    ///     ];
+    ///     
+    ///     let prompt = "I need advice on my next quest.";
+    ///     
+    ///     let response = llm
+    ///         .generate_dialogue(prompt, &mut history, &mut memory.iter().collect())
+    ///         .await;
+    ///     
+    ///     match response {
+    ///         Ok(res) => {
+    ///             println!("Generated dialogue: {}", res.message.content);
+    ///         }
+    ///         Err(err) => {
+    ///             eprintln!("Error generating dialogue: {:?}", err);
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    /// 
+    /// ### Notes
+    /// - The `DIALOGUE_SYSTEM` constant defines the system prompt for generating NPC-specific responses.
+    /// - The `history` vector is updated to include the generated response.
+    /// - The `memory` vector helps maintain consistency in the NPC's persona and contextual knowledge.
+    /// 
+    /// ### Errors
+    /// - Returns an `IrisError`
+    ///     - The Ollama API failed to process the request.
+    ///     - The Response from the API is Invalid or Malformed.
     pub async fn generate_dialogue(
         &mut self,
         prompt: &str,
         history: &mut Vec<ChatMessage>,
         memory: &mut Vec<&Memory>,
-    ) -> Result<ChatMessageResponse, Error> {
+    ) -> Result<ChatMessageResponse, IrisError> {
         let memory_string = memory
             .iter()
             .map(|m| m.memory_to_str())
@@ -93,10 +186,11 @@ impl LLM {
         Ok(res)
     }
 
+    // TODO: Comment
     pub async fn generate_embeddings(
         &self,
         text: &str,
-    ) -> Result<GenerateEmbeddingsResponse, Error> {
+    ) -> Result<GenerateEmbeddingsResponse, IrisError> {
         let request = GenerateEmbeddingsRequest::new(self.model.clone(), text.into());
         let res = self.ollama.generate_embeddings(request).await?;
 
@@ -138,8 +232,14 @@ mod tests {
 
         println!("{:?}", res.as_ref().unwrap().message.content);
 
-        assert!(res.is_ok())
+        assert!(res.is_ok(), "Dialogue Generation Failed: {:?}", res);
+
+        assert_eq!(hist.len(), 3, "Chat History Wasn't Updated");
+        println!("Last Message: {:?}", hist.last().unwrap().content);
+        assert_eq!(hist.last().unwrap().content, res.unwrap().message.content, "Chat History Message Was Not Updated Successfully");
     }
+
+
 
     #[tokio::test]
     async fn test_generate_embeddings() {

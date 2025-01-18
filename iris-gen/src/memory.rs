@@ -1,24 +1,32 @@
-/* FILENAME: llm_character.rs
- *
- * DESCRIPTION
- *
- * Responsible for LLM calls and natural language processing.
- * Generating dialogues and quest using system prompt.
- *
- * NOTES
- *
- * AUTHOR:    Rezwan Rahman (RAH22529097)
- * CREATED:   17/11/2024
- * MODIFIED:  18/11/2024
-*/
+//! This module provides functionality for creating and managing NPC memories.
+//!  
+//! ### Key Components
+//! - `Memory`: Represents a single memory with a description timestamp and access count.
+//! - `MemoryStore`: Manages multiple memories, allowing for storage, retrieval, and sorting.
+//! 
+//! It defines the `LLM` struct and methods which are associated with it.
+//! It is responsible for making API calls to the Ollama API.
+//! 
+//! ### Features
+//! - Create and store NPC memories with timestamps.
+//! - Retrieve the most recent or relevant memories.
+//! - Manage memory access counts to track relevance.
+//! 
+//! This module is intended for systems that simulate NPC behaviors, enabling dynamic memory
+//! management and interaction history tracking.
+
 
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
+/// Represents a memory with description, timestamp, and access count.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Memory {
+    /// Short description of the memory's content.
     pub description: String,
+    /// Timestamp of when the memory was created (seconds since UNIX epoch).
     pub timestamp: u64,
+    /// The number of times this memory was accessed.
     pub access_count: u32,
 }
 

@@ -1,22 +1,13 @@
-/* FILENAME: error.rs
- *
- * DESCRIPTION
- * This file defines error types, using thiserror library.
- * This library allows us to avoid boiler plate code,
- * when defining a variety of errors which can occur in the code.
- *
- * NOTES
- *
- * AUTHOR:    Rezwan Rahman (RAH22529097)
- * CREATED:   16/11/2024
- * MODIFIED:  16/11/2024
-*/
+//! This module provides error handling for the Iris Gen Library.
+//! 
 
 use thiserror::Error;
 
+/// Error Type for `iris-gen`
+/// Defines the different types of errors which can occur with the library.
 #[derive(Error, Debug)]
-pub enum Error {
-    #[error(transparent)]
+pub enum IrisError {
+    #[error("Ollama Error: {0}")]
     OllamaGenerationError(#[from] ollama_rs::error::OllamaError),
     #[error("Failed to Parse JSON into Dialogue: {0}")]
     FailedToSerialize(#[from] serde_json::error::Error),

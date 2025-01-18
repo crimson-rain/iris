@@ -11,12 +11,10 @@ struct LLMCharacter;
 #[godot_api]
 impl ICharacterBody2D for LLMCharacter {
     fn init(_base: Base<CharacterBody2D>) -> Self {
-        todo!()
+        LLMCharacter
     }
 
-    fn process(&mut self, _delta: f64) {
-        todo!()
-    }
+    fn process(&mut self, _delta: f64) {}
 }
 
 // Test for the Library

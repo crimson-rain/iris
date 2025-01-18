@@ -22,7 +22,7 @@ struct LLMCharacter;
 
 #[godot_api]
 impl ICharacterBody2D for LLMCharacter {
-    fn init(base: Base<CharacterBody2D>) -> Self {
+    fn init(_base: Base<CharacterBody2D>) -> Self {
         todo!()
     }
 
@@ -34,7 +34,6 @@ impl ICharacterBody2D for LLMCharacter {
 // Test for the Library
 #[godot_api]
 impl LLMCharacter {}
-
 
 #[cfg(test)]
 mod tests {}

@@ -11,13 +11,11 @@
  * MODIFIED:  14/11/2024
 */
 
-#![deny(clippy::all)]
-
 pub mod error;
 pub mod llm;
+pub mod llm_character;
 pub mod memory;
 pub mod vec_store;
-pub mod llm_character;
 
 use godot::prelude::*;
 

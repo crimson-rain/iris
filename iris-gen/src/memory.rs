@@ -15,7 +15,7 @@
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Memory {
     pub description: String,
     pub timestamp: u64,
@@ -81,4 +81,37 @@ impl MemoryStore {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+
+    fn create_test_memory_store() -> MemoryStore {
+        let mut memory_store = MemoryStore::new();
+        memory_store.add_memory(format!("Memory 1"));
+        memory_store.add_memory(format!("Memory 2"));
+        memory_store.add_memory(format!("Memory 3"));
+        memory_store
+    }
+
+    #[test]
+    fn test_memory_struct() {
+        let memory = Memory::new(format!("Test Memory Description"));
+
+        assert_eq!(memory.description, format!("Test Memory Description"));
+        assert_eq!(memory.access_count, 0);
+    }
+
+    #[test]
+    fn test_access_count() {
+        let mut memory = Memory::new(format!("Test Memory Access Count"));
+        memory.access();
+
+        assert_eq!(memory.access_count, 1);
+    }
+
+    #[test]
+    fn test_memory_store() {
+        let memory_store = create_test_memory_store();
+        assert_eq!(memory_store.memories.len(), 3);
+        assert_eq!(memory_store.next_id, 3)
+    }
+}

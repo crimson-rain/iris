@@ -14,9 +14,9 @@
 */
 
 use crate::error::Error;
-use ollama_rs::Ollama;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
+use ollama_rs::Ollama;
 
 pub const DOCUMENTS_PATH: &str = "";
 pub const TOKENIZER_MODEL: &str = "bert-base-cased";
@@ -40,7 +40,11 @@ impl Default for LLM {
 }
 
 impl LLM {
-    pub async fn generate_dialogue(&mut self, prompt: &str, history: &mut Vec<ChatMessage>) -> Result<ChatMessageResponse, Error> {
+    pub async fn generate_dialogue(
+        &mut self,
+        prompt: &str,
+        history: &mut Vec<ChatMessage>,
+    ) -> Result<ChatMessageResponse, Error> {
         let dialogue_request = ChatMessageRequest::new(
             self.model.clone(),
             vec![ChatMessage::user(format!(
@@ -58,7 +62,11 @@ impl LLM {
         res.map_err(Error::OllamaGenerationError)
     }
 
-    pub async fn generate_quest(&mut self, prompt: &str, history: &mut Vec<ChatMessage>) -> Result<ChatMessageResponse, Error> {
+    pub async fn generate_quest(
+        &mut self,
+        prompt: &str,
+        history: &mut Vec<ChatMessage>,
+    ) -> Result<ChatMessageResponse, Error> {
         let quest_request = ChatMessageRequest::new(
             self.model.clone(),
             vec![ChatMessage::user(format!(

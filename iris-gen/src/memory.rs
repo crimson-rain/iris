@@ -30,7 +30,7 @@ pub struct Memory {
     pub access_count: u32,
 }
 
-// Memory Structure, used to store short term memory
+// Memory structure represents the memory which is created by parsing description.
 impl Memory {
     pub fn new(description: String) -> Self {
         Self {
@@ -43,11 +43,13 @@ impl Memory {
         }
     }
 
+    /// Increments the Access Count by 1
     pub fn access(&mut self) {
         self.access_count += 1;
     }
 }
 
+/// Display method used to print memory and convert to string
 impl fmt::Display for Memory {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -64,23 +66,29 @@ pub struct MemoryStore {
     next_id: u64,
 }
 
-// Memory Storage using a Hasmap
+/// Used to store memories
 impl MemoryStore {
-    // Add Memory to the Hashamp
+    /// Add Memory to Hashamp
     pub fn add_memory(&mut self, description: String) {
+        // Create memory struct
         let memory = Memory::new(description);
+        // Add memory into the hashmap
         self.memories.insert(self.next_id, memory);
+        // Increment next id
         self.next_id += 1;
     }
 
-    // Retrieve the most recent memory
+    // Retrieve the most recent memory using timestamp
     pub fn retrieve_recent(&self, count: usize) -> Vec<&Memory> {
+        // Retrieve all memories inside the hashmap and place them into a vector
         let mut memories: Vec<&Memory> = self.memories.values().collect();
+        // Sort the memories by timestamp
         memories.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
+        // Collect memories and return vector with reference memory
         memories.into_iter().take(count).collect()
     }
 
-    // Retrieve the most relevant memory.
+    /// Retrieve the most relevant memory using count
     pub fn retrieve_relevant(&self, query: &str, count: usize) -> Vec<&Memory> {
         let mut relevant: Vec<&Memory> = self
             .memories

@@ -1,3 +1,9 @@
-[gd_scene format=3 uid="uid://dfws7wtbrgikx"]
+[gd_scene load_steps=3 format=3 uid="uid://dfws7wtbrgikx"]
+
+[ext_resource type="PackedScene" uid="uid://covmaryt3r01n" path="res://entities/npcs/npc.tscn" id="1_8p1r6"]
+[ext_resource type="Resource" uid="uid://cr4d17d0wkopc" path="res://entities/npcs/mel/data/mel.tres" id="2_6tqw4"]
 
 [node name="Town" type="Node2D"]
+
+[node name="NPC" parent="." instance=ExtResource("1_8p1r6")]
+npc_res = ExtResource("2_6tqw4")

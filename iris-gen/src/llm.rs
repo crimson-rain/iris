@@ -81,7 +81,7 @@ impl LLM {
     /// An initialised `LLM` instance with the specified model name.
     ///
     /// # Example
-    /// ```rust
+    /// ```
     /// // Create a new instance of LLM with the "mistral" model.
     /// let llm = LLM::new("mistral");
     ///
@@ -114,7 +114,7 @@ impl LLM {
     /// An initialised `LLM` instance with the specified model name.
     ///
     /// ### Example
-    /// ```rust
+    /// ```
     /// [tokio::main]
     /// async fn main() {
     ///     let mut llm = LLM::default();

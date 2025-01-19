@@ -5,7 +5,7 @@
 //!
 //! ### Features
 //! - Create and Configure LLM to Interact To
-//! - Generating Responses and Embedding
+//! - Generating Dialogue Responses for NPCs and Embedding for Vector Stores
 
 use crate::error::IrisError;
 use crate::memory::Memory;
@@ -162,7 +162,7 @@ impl LLM {
     ) -> Result<ChatMessageResponse, IrisError> {
         let memory_string = memory
             .iter()
-            .map(|m| m.memory_to_str())
+            .map(|m| m.to_string())
             .collect::<Vec<String>>()
             .join(", ");
 
@@ -182,7 +182,46 @@ impl LLM {
         Ok(res)
     }
 
-    // TODO: Comment
+    /// Generate embeddings to store in a vector database. For later use such as RAG.
+    /// TODO: Implement Vector Database to Project
+    /// This method interacts with the Ollama API to produce an embedding it transforms
+    /// text into vector values to store in the vector database.
+    ///
+    /// ### Arguments
+    /// * `text` - A string slice (`&str`) which holds the text to embed.
+    ///
+    /// ### Returns
+    /// Returns a `Result<GenerateEmbeddingsResponse, IrisError>`
+    ///
+    /// ### Error
+    ///
+    /// ### Example
+    /// ```
+    /// [tokio::main]
+    /// async fn main() {
+    ///     let mut llm = LLM::default();
+    ///     
+    ///     let text = "Today is Sunday, and its a Bright Morning Day...";
+    ///     
+    ///     let response = llm
+    ///         .generate_embeddings(text)
+    ///         .await;
+    ///     
+    ///     match response {
+    ///         Ok(res) => {
+    ///             println!("Generated dialogue: {}", res.embeddings);
+    ///         }
+    ///         Err(err) => {
+    ///             eprintln!("Error generating dialogue: {:?}", err);
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ### Errors
+    /// - Returns an `IrisError`
+    ///     - The Ollama API failed to process the request.
+    ///     - The Response from the API is Invalid or Malformed.
     pub async fn generate_embeddings(
         &self,
         text: &str,

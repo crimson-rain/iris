@@ -15,6 +15,7 @@
 //! This module is intended for systems that simulate NPC behaviors, enabling dynamic memory
 //! management and interaction history tracking.
 
+use core::fmt;
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -45,9 +46,12 @@ impl Memory {
     pub fn access(&mut self) {
         self.access_count += 1;
     }
+}
 
-    pub fn memory_to_str(&self) -> String {
-        format!(
+impl fmt::Display for Memory {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
             "Description: {}, Timestamp: {}, Access Count: {}",
             self.description, self.timestamp, self.access_count
         )
@@ -122,4 +126,6 @@ mod tests {
         assert_eq!(memory_store.memories.len(), 3);
         assert_eq!(memory_store.next_id, 3)
     }
+
+    // TODO: Implement more complex memory tests such as using the reterieval functions.
 }

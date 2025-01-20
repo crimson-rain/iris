@@ -5,7 +5,6 @@ use ollama_rs::generation::chat::{ChatMessage, MessageRole};
 
 #[tokio::test]
 async fn parse_generated_dialogue() {
-
     let mut llm = LLM::default();
 
     let mut hist = Vec::new();
@@ -25,8 +24,8 @@ async fn parse_generated_dialogue() {
             &mut hist,
             &mut memory.retrieve_recent(3),
         )
-    .await;
-    
+        .await;
+
     let dia_struct = Dialogue::try_from(res.unwrap().message.content.as_str()).unwrap();
 
     assert!(!dia_struct.dialogue.is_empty());

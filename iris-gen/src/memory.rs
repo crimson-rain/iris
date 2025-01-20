@@ -18,6 +18,7 @@
 use core::fmt;
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
+use std::sync::atomic::{AtomicU64, Ordering};
 
 /// A Structure to store memories.
 ///
@@ -45,7 +46,7 @@ impl Memory {
             description,
             timestamp: SystemTime::now()
                 .duration_since(UNIX_EPOCH)
-                .unwrap()
+                .unwrap_or_else(|_| std::time::Duration::from_secs(0))
                 .as_secs(),
             access_count: 0,
         }
@@ -80,13 +81,13 @@ impl fmt::Display for Memory {
 pub struct MemoryStore {
     /// A collection of stored memories mapped to their unique IDs.
     memories: HashMap<u64, Memory>,
-    /// A counter to generate unique IDs for new memory entries.
-    /// It increments each time a new memory is added.
-    next_id: u64,
+    /// An AtomicU64 Value is used to safely increment values when multithreading is used.
+    next_id: AtomicU64,
 }
 
 impl MemoryStore {
     /// Adds memory into the Hashmap.
+    /// 
     /// ### Arguments
     /// * `text` - A string slice (`&str`) which holds the text to embed.
     ///
@@ -94,21 +95,23 @@ impl MemoryStore {
     ///
     /// ### Example
     /// ```
-    /// let memory_store = MemoryStore::new();
+    /// use iris_gen::memory::MemoryStore;
+    /// 
+    /// let mut memory_store = MemoryStore::default();
     ///
-    /// memory_store.add_memory(foramt!("Memory 1"));
-    /// memory_store.add_memory(format!("Memory 2"));
+    /// memory_store.add_memory("Memory 1".to_string());
+    /// memory_store.add_memory("Memory 2".to_string());
     ///```
     pub fn add_memory(&mut self, description: String) {
+        let id = self.next_id.fetch_add(1, Ordering::SeqCst);
         // Create memory struct
         let memory = Memory::new(description);
         // Add memory into the hashmap
-        self.memories.insert(self.next_id, memory);
-        // Increment next id
-        self.next_id += 1;
+        self.memories.insert(id, memory);
     }
 
-    /// Retrieve the most recent memory using timestamps
+    /// Retrieve the most recent memory using timestamps.
+    /// 
     /// ### Arguments
     /// * `count` - The number of recent memories to return.
     ///
@@ -117,10 +120,15 @@ impl MemoryStore {
     /// 
     /// ### Example
     /// ```
-    /// let memory_store = MemoryStore::new();
+    /// use iris_gen::memory::MemoryStore;
+    /// use iris_gen::memory::Memory;
+    /// 
+    /// let mut memory_store = MemoryStore::default();
     ///
-    /// memory_store.add_memory(foramt!("Memory 1"));
-    /// memory_store.add_memory(format!("Memory 2"));
+    /// memory_store.add_memory("Memory 1".to_string());
+    /// memory_store.add_memory("Memory 2".to_string());
+    /// 
+    /// let retrieved_memories: Vec<&Memory> = memory_store.retrieve_recent(2);
     ///```
     pub fn retrieve_recent(&self, count: usize) -> Vec<&Memory> {
         // Retrieve all memories inside the hashmap and place them into a vector
@@ -131,13 +139,33 @@ impl MemoryStore {
         memories.into_iter().take(count).collect()
     }
 
-    /// Retrieve the most relevant memory using count
+    /// Retrieve the most recent memory using the access count.
+    /// 
+    /// ### Arguments
+    /// * `count` - The number of recent memories to return.
+    ///
+    /// ### Returns
+    /// - `Vec<&Memory>` - Returns the a vector of memories.
+    /// 
+    /// ### Example
+    /// ```
+    /// use iris_gen::memory::MemoryStore;
+    /// use iris_gen::memory::Memory;
+    /// 
+    /// let mut memory_store = MemoryStore::default();
+    ///
+    /// memory_store.add_memory("Memory 1".to_string());
+    /// memory_store.add_memory("Memory 2".to_string());
+    /// 
+    /// let retrieved_memories: Vec<&Memory> = memory_store.retrieve_relevant("Memory", 2);
+    ///```
     pub fn retrieve_relevant(&self, query: &str, count: usize) -> Vec<&Memory> {
         let mut relevant: Vec<&Memory> = self
             .memories
             .values()
             .filter(|memory| memory.description.contains(query))
             .collect();
+
         relevant.sort_by(|a, b| b.access_count.cmp(&a.access_count));
         relevant.into_iter().take(count).collect()
     }
@@ -149,23 +177,23 @@ mod tests {
 
     fn create_test_memory_store() -> MemoryStore {
         let mut memory_store = MemoryStore::default();
-        memory_store.add_memory(format!("Memory 1"));
-        memory_store.add_memory(format!("Memory 2"));
-        memory_store.add_memory(format!("Memory 3"));
+        memory_store.add_memory("Memory 1".to_string());
+        memory_store.add_memory("Memory 2".to_string());
+        memory_store.add_memory("Memory 3".to_string());
         memory_store
     }
 
     #[test]
     fn test_memory_struct() {
-        let memory = Memory::new(format!("Test Memory Description"));
+        let memory = Memory::new("Test Memory Description".to_string());
 
-        assert_eq!(memory.description, format!("Test Memory Description"));
+        assert_eq!(memory.description, "Test Memory Description".to_string());
         assert_eq!(memory.access_count, 0);
     }
 
     #[test]
     fn access_count() {
-        let mut memory = Memory::new(format!("Test Memory Access Count"));
+        let mut memory = Memory::new("Test Memory Access Count".to_string());
         memory.access();
 
         assert_eq!(memory.access_count, 1);
@@ -175,7 +203,15 @@ mod tests {
     fn memory_store() {
         let memory_store = create_test_memory_store();
         assert_eq!(memory_store.memories.len(), 3);
-        assert_eq!(memory_store.next_id, 3)
+        assert_eq!(memory_store.next_id.load(Ordering::SeqCst), 3);
+    }
+
+    #[test]
+    fn test_empty_description() {
+        let mut memory_store = MemoryStore::default();
+        memory_store.add_memory("".to_string());
+        assert_eq!(memory_store.memories.len(), 1);
+        assert_eq!(memory_store.memories.get(&0).unwrap().description, "");
     }
 
     #[test]
@@ -188,8 +224,12 @@ mod tests {
     #[test]
     fn bound_check_retrieve_relevant() {
         let memory_store = create_test_memory_store();
-        memory_store.retrieve_relevant("Memory 1", usize::MAX);
-        memory_store.retrieve_relevant("Memory 1", usize::MIN);
+
+        let retrieved_memories = memory_store.retrieve_relevant("Memory 1", usize::MAX);
+        assert!(!retrieved_memories.is_empty());
+
+        let retrieved_memories = memory_store.retrieve_relevant("Memory 1", usize::MIN);
+        assert!(retrieved_memories.is_empty());
     }
 
     #[test]

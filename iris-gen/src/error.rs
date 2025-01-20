@@ -1,4 +1,6 @@
 //! This module provides error handling for the Iris Gen Library.
+//! 
+//! Makes use of thiserror to create an error enum for all errors which can occur in the library.
 
 use godot::global::godot_error;
 use thiserror::Error;

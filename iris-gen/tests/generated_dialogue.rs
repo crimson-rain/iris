@@ -1,4 +1,4 @@
-use iris_gen::llm::LLM; 
+use iris_gen::llm::LLM;
 use iris_gen::memory::MemoryStore;
 use ollama_rs::generation::chat::{ChatMessage, MessageRole};
 

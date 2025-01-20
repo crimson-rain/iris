@@ -60,13 +60,23 @@ impl fmt::Display for Memory {
     }
 }
 
+/// A Structure to manage and store memories using a Hashmap.
+/// 
+/// This struct provides functionality to store, retrieve, and manage
+/// memory entites, each identified by a ID.
+/// 
+/// ### Fields
+/// - `memories` - A HashMap that stores memory entites, indexed by unique `u64` identifer.
+/// - `next_id` - A counter to generate unique IDs for new memory entries.
 #[derive(Default)]
 pub struct MemoryStore {
+    /// A collection of stored memories mapped to their unique IDs.
     memories: HashMap<u64, Memory>,
+    /// A counter to generate unique IDs for new memory entries.
+    /// It increments each time a new memory is added.
     next_id: u64,
 }
 
-/// Used to store memories
 impl MemoryStore {
     /// Add Memory to Hashamp
     pub fn add_memory(&mut self, description: String) {

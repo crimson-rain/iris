@@ -19,7 +19,15 @@ use core::fmt;
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-/// Represents a memory with description, timestamp, and access count.
+/// A Structure to store memories.
+///
+/// The purpose of this structure is used to create
+/// NPC memories used for generation.
+///
+/// ### Fields
+/// - `description` - The contents of the memory.
+/// - `timestamp` - When the memory was created.
+/// - `access_count` - Represents the amount of times memory was accessed.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Memory {
     /// Short description of the memory's content.
@@ -43,13 +51,13 @@ impl Memory {
         }
     }
 
-    /// Increments the Access Count by 1
+    /// Increments the memory by 1 when the memory is accessed.
     pub fn access(&mut self) {
         self.access_count += 1;
     }
 }
 
-/// Display method used to print memory and convert to string
+/// Display method used to convert the memory into a String
 impl fmt::Display for Memory {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -61,10 +69,10 @@ impl fmt::Display for Memory {
 }
 
 /// A Structure to manage and store memories using a Hashmap.
-/// 
+///
 /// This struct provides functionality to store, retrieve, and manage
 /// memory entites, each identified by a ID.
-/// 
+///
 /// ### Fields
 /// - `memories` - A HashMap that stores memory entites, indexed by unique `u64` identifer.
 /// - `next_id` - A counter to generate unique IDs for new memory entries.
@@ -78,7 +86,19 @@ pub struct MemoryStore {
 }
 
 impl MemoryStore {
-    /// Add Memory to Hashamp
+    /// Adds memory into the Hashmap.
+    /// ### Arguments
+    /// * `text` - A string slice (`&str`) which holds the text to embed.
+    ///
+    /// ### Returns
+    ///
+    /// ### Example
+    /// ```
+    /// let memory_store = MemoryStore::new();
+    ///
+    /// memory_store.add_memory(foramt!("Memory 1"));
+    /// memory_store.add_memory(format!("Memory 2"));
+    ///```
     pub fn add_memory(&mut self, description: String) {
         // Create memory struct
         let memory = Memory::new(description);
@@ -88,7 +108,20 @@ impl MemoryStore {
         self.next_id += 1;
     }
 
-    // Retrieve the most recent memory using timestamp
+    /// Retrieve the most recent memory using timestamps
+    /// ### Arguments
+    /// * `count` - The number of recent memories to return.
+    ///
+    /// ### Returns
+    /// - `Vec<&Memory>` - Returns the a vector of memories.
+    /// 
+    /// ### Example
+    /// ```
+    /// let memory_store = MemoryStore::new();
+    ///
+    /// memory_store.add_memory(foramt!("Memory 1"));
+    /// memory_store.add_memory(format!("Memory 2"));
+    ///```
     pub fn retrieve_recent(&self, count: usize) -> Vec<&Memory> {
         // Retrieve all memories inside the hashmap and place them into a vector
         let mut memories: Vec<&Memory> = self.memories.values().collect();
@@ -131,7 +164,7 @@ mod tests {
     }
 
     #[test]
-    fn test_access_count() {
+    fn access_count() {
         let mut memory = Memory::new(format!("Test Memory Access Count"));
         memory.access();
 
@@ -139,11 +172,30 @@ mod tests {
     }
 
     #[test]
-    fn test_memory_store() {
+    fn memory_store() {
         let memory_store = create_test_memory_store();
         assert_eq!(memory_store.memories.len(), 3);
         assert_eq!(memory_store.next_id, 3)
     }
 
-    // TODO: Implement more complex memory tests such as using the reterieval functions.
+    #[test]
+    fn bound_check_retrieve_recent() {
+        let memory_store = create_test_memory_store();
+        memory_store.retrieve_recent(usize::MAX);
+        memory_store.retrieve_recent(usize::MIN);
+    }
+
+    #[test]
+    fn bound_check_retrieve_relevant() {
+        let memory_store = create_test_memory_store();
+        memory_store.retrieve_relevant("Memory 1", usize::MAX);
+        memory_store.retrieve_relevant("Memory 1", usize::MIN);
+    }
+
+    #[test]
+    fn retrieve_non_existant_values() {
+        let memory_store = create_test_memory_store();
+        memory_store.retrieve_relevant("THIS MEMORY DOESN'T EXIST", usize::MAX);
+        memory_store.retrieve_relevant("THIS MEMORY DOESN'T EXIST EITHER", usize::MIN);
+    }
 }

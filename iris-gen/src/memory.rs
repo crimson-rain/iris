@@ -17,8 +17,8 @@
 
 use core::fmt;
 use std::collections::HashMap;
-use std::time::{SystemTime, UNIX_EPOCH};
 use std::sync::atomic::{AtomicU64, Ordering};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 /// A Structure to store memories.
 ///
@@ -87,7 +87,7 @@ pub struct MemoryStore {
 
 impl MemoryStore {
     /// Adds memory into the Hashmap.
-    /// 
+    ///
     /// ### Arguments
     /// * `text` - A string slice (`&str`) which holds the text to embed.
     ///
@@ -96,7 +96,7 @@ impl MemoryStore {
     /// ### Example
     /// ```
     /// use iris_gen::memory::MemoryStore;
-    /// 
+    ///
     /// let mut memory_store = MemoryStore::default();
     ///
     /// memory_store.add_memory("Memory 1".to_string());
@@ -111,23 +111,23 @@ impl MemoryStore {
     }
 
     /// Retrieve the most recent memory using timestamps.
-    /// 
+    ///
     /// ### Arguments
     /// * `count` - The number of recent memories to return.
     ///
     /// ### Returns
     /// - `Vec<&Memory>` - Returns the a vector of memories.
-    /// 
+    ///
     /// ### Example
     /// ```
     /// use iris_gen::memory::MemoryStore;
     /// use iris_gen::memory::Memory;
-    /// 
+    ///
     /// let mut memory_store = MemoryStore::default();
     ///
     /// memory_store.add_memory("Memory 1".to_string());
     /// memory_store.add_memory("Memory 2".to_string());
-    /// 
+    ///
     /// let retrieved_memories: Vec<&Memory> = memory_store.retrieve_recent(2);
     ///```
     pub fn retrieve_recent(&self, count: usize) -> Vec<&Memory> {
@@ -140,23 +140,23 @@ impl MemoryStore {
     }
 
     /// Retrieve the most recent memory using the access count.
-    /// 
+    ///
     /// ### Arguments
     /// * `count` - The number of recent memories to return.
     ///
     /// ### Returns
     /// - `Vec<&Memory>` - Returns the a vector of memories.
-    /// 
+    ///
     /// ### Example
     /// ```
     /// use iris_gen::memory::MemoryStore;
     /// use iris_gen::memory::Memory;
-    /// 
+    ///
     /// let mut memory_store = MemoryStore::default();
     ///
     /// memory_store.add_memory("Memory 1".to_string());
     /// memory_store.add_memory("Memory 2".to_string());
-    /// 
+    ///
     /// let retrieved_memories: Vec<&Memory> = memory_store.retrieve_relevant("Memory", 2);
     ///```
     pub fn retrieve_relevant(&self, query: &str, count: usize) -> Vec<&Memory> {

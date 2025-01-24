@@ -1,5 +1,5 @@
 //! This module provides functionality for creating and managing NPC memories.
-//!  
+//!
 //! ### Key Components
 //! - `Memory`: Represents a single memory with a description timestamp and access count.
 //! - `MemoryStore`: Manages multiple memories, allowing for storage, retrieval, and sorting.
@@ -58,7 +58,7 @@ impl Memory {
     }
 }
 
-/// Display method used to convert the memory into a String
+/// Display Trait used to Convert the Memory Struct to String
 impl fmt::Display for Memory {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -139,7 +139,8 @@ impl MemoryStore {
         memories.into_iter().take(count).collect()
     }
 
-    /// Retrieve the most recent memory using the access count.
+    /// Retrieve the most relevant memory using the access count.
+    /// Access count is affected by how many times the memory has been interacted with.
     ///
     /// ### Arguments
     /// * `count` - The number of recent memories to return.

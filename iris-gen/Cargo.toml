@@ -7,18 +7,20 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-# Godot API Library to Interact with Godot
+# Godot API Bindings
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
 
-# Library to Interact with Ollama
+# Ollama API
 ollama-rs = "0.2.4"
 
-# Async Library
+# Vector Database
+
+# Async
 tokio = { version = "1.43.0", features = ["full"] }
 
-# Serialization and Deserialization Libraries
+# Serialization and Deserialization
 serde = { version = "1.0.217", features = ["derive"] }
 serde_json = "1.0.135"
 
-# Error Handling Library
+# Error Handling
 thiserror = "2.0.11"

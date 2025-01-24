@@ -14,7 +14,7 @@ pub mod llm;
 pub mod llm_character;
 pub mod memory;
 pub mod model;
-pub mod vec_store;
+pub mod vector_store;
 
 use godot::prelude::*;
 

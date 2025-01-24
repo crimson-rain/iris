@@ -20,7 +20,7 @@ struct LLMCharacter {
     description: GString,
 
     base: Base<CharacterBody2D>,
-    memory_store: MemoryStore
+    memory_store: MemoryStore,
 }
 
 #[godot_api]
@@ -31,7 +31,7 @@ impl ICharacterBody2D for LLMCharacter {
             profession: GString::new(),
             description: GString::new(),
             base,
-            memory_store: MemoryStore::default()
+            memory_store: MemoryStore::default(),
         }
     }
 

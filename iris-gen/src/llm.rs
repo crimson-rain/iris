@@ -127,22 +127,22 @@ impl LLM {
     /// #[tokio::main]
     /// async fn main() {
     ///     let mut language_model = LLM::default();
-    ///     
+    ///
     ///     let mut history = vec![
     ///         ChatMessage::new(MessageRole::User, "We are talking about adventures.".to_string()),
     ///     ];
-    ///     
+    ///
     ///     let mut memory = vec![
     ///         Memory::new(format!("You are a brave knight in Aetheria.")),
     ///         Memory::new(format!("You have a trusty steed named Thunder.")),
     ///     ];
-    ///     
+    ///
     ///     let prompt = "I need advice on my next quest.";
-    ///     
+    ///
     ///     let response = language_model
     ///         .generate_dialogue(prompt, &mut history, &mut memory.iter().collect())
     ///         .await;
-    ///     
+    ///
     ///     match response {
     ///         Ok(res) => {
     ///             println!("Generated dialogue: {}", res.message.content);
@@ -205,13 +205,13 @@ impl LLM {
     /// # #[tokio::main]
     /// async fn main() {
     ///     let mut language_model = LLM::default();
-    ///     
+    ///
     ///     let text = "Today is Sunday, and it's a Bright Morning Day...";
-    ///     
+    ///
     ///     let response = language_model
     ///         .generate_embeddings(text)
     ///         .await;
-    ///     
+    ///
     ///     match response {
     ///         Ok(res) => {
     ///             println!("Generated dialogue: {:?}", res.embeddings);

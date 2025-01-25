@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cq84scvf74c1x"]
 
-[ext_resource type="PackedScene" path="res://menus/scenes/credits/credits.tscn" id="1_h7dwp"]
+[ext_resource type="PackedScene" uid="uid://b858w4b1uhytj" path="res://menus/scenes/credits/credits.tscn" id="1_h7dwp"]
 [ext_resource type="Script" path="res://menus/scenes/end_credits/end_credits.gd" id="2_w31q5"]
-[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/scenes/music_players/background_music_player.tscn" id="3_vcqox"]
+[ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/scenes/music_players/background_music_player.tscn" id="3_vcqox"]
 [ext_resource type="Script" path="res://addons/maaacks_game_template/base/scripts/capture_focus.gd" id="4_6ftgl"]
 
 [node name="EndCredits" instance=ExtResource("1_h7dwp")]
@@ -10,6 +10,7 @@ script = ExtResource("2_w31q5")
 main_menu_scene = "res://menus/scenes/menus/main_menu/main_menu_with_animations.tscn"
 
 [node name="BackgroundMusicPlayer" parent="." index="0" instance=ExtResource("3_vcqox")]
+bus = &"Master"
 
 [node name="BackgroundColor" type="ColorRect" parent="." index="1"]
 layout_mode = 1
@@ -32,6 +33,15 @@ stretch_mode = 5
 
 [node name="ScrollContainer" parent="." index="3"]
 scroll_vertical = 0
+
+[node name="HeaderSpace" parent="ScrollContainer/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(0, 648)
+
+[node name="CreditsLabel" parent="ScrollContainer/VBoxContainer" index="1"]
+custom_minimum_size = Vector2(1152, 0)
+
+[node name="FooterSpace" parent="ScrollContainer/VBoxContainer" index="2"]
+custom_minimum_size = Vector2(0, 648)
 
 [node name="CenterContainer" type="CenterContainer" parent="." index="4"]
 layout_mode = 0

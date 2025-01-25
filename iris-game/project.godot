@@ -13,6 +13,7 @@ config_version=5
 config/name="iris-game"
 run/main_scene="res://menus/scenes/opening/opening_with_logo.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+boot_splash/bg_color=Color(0.105882, 0.105882, 0.105882, 1)
 config/icon="res://icon.svg"
 
 [autoload]

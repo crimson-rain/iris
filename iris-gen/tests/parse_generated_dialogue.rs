@@ -28,7 +28,12 @@ async fn parse_generated_dialogue() {
 
     let dia_struct = Dialogue::try_from(res.unwrap().message.content.as_str()).unwrap();
 
-    assert!(!dia_struct.dialogue.is_empty());
-    assert!(!dia_struct.npc.is_empty());
-    assert!(!dia_struct.choices.is_empty());
+    assert!(
+        !dia_struct.dialogue.is_empty(),
+        "Generated Dialogue is Empty"
+    );
+
+    assert!(!dia_struct.npc.is_empty(), "Generated NPC Name is Empty");
+
+    assert!(!dia_struct.choices.is_empty(), "Generated Choices is Empty");
 }

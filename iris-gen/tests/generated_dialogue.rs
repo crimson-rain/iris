@@ -25,12 +25,15 @@ async fn test_generate_dialogue() {
         )
         .await;
 
-    println!("{:?}", res.as_ref().unwrap().message.content);
-
     assert!(res.is_ok(), "Dialogue Generation Failed: {:?}", res);
 
+    assert!(
+        !hist.is_empty(),
+        "Chat History should not be empty after adding a message."
+    );
+
     assert_eq!(hist.len(), 3, "Chat History Wasn't Updated");
-    println!("Last Message: {:?}", hist.last().unwrap().content);
+
     assert_eq!(
         hist.last().unwrap().content,
         res.unwrap().message.content,

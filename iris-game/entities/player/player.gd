@@ -16,7 +16,7 @@ const SPEED = 300.0
 const ACCELERATION = 10.0
 
 ## Animation Player
-@onready var player_animation_player: AnimationPlayer = $PlayerAnimationPlayer
+@onready var player_animation_player: AnimationPlayer = $AnimationPlayer
 
 ## Handles the Physics Process in the Game, Such as Movement Etc.
 func _physics_process(_delta: float) -> void:
@@ -31,7 +31,7 @@ func movement() -> void:
 	else:
 		velocity = direction * SPEED
 	
-	update_animation(direction)
+	#update_animation(direction)
 	move_and_slide()
 
 ## Update the Animation Based on the Movement of the Player

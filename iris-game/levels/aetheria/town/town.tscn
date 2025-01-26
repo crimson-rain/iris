@@ -1,3 +1,11 @@
-[gd_scene format=3 uid="uid://dfws7wtbrgikx"]
+[gd_scene load_steps=3 format=3 uid="uid://dfws7wtbrgikx"]
+
+[ext_resource type="PackedScene" uid="uid://5gfdglugqy4" path="res://entities/player/player.tscn" id="1_6b4ms"]
+[ext_resource type="PackedScene" uid="uid://b5qnpy5nlflw3" path="res://entities/npcs/mel/mel.tscn" id="2_gqb8f"]
 
 [node name="Town" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_6b4ms")]
+
+[node name="Mel" parent="." instance=ExtResource("2_gqb8f")]
+position = Vector2(145, -7)

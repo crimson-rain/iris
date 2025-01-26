@@ -2,8 +2,6 @@
 //! Using Godot Binding we create a new NPC.
 #![deny(clippy::todo)]
 
-use std::thread;
-
 use crate::llm::LLM;
 use crate::memory::MemoryStore;
 use godot::builtin::GString;
@@ -62,7 +60,7 @@ impl ICharacterBody2D for LLMCharacter {
         }
     }
 
-    fn physics_process(&mut self, _delta: f64) {
+    fn process(&mut self, _delta: f64) {
         self.process_generated_dialogue();
     }
 }

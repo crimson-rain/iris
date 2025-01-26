@@ -130,9 +130,9 @@ impl MemoryStore {
     ///
     /// let retrieved_memories: Vec<&Memory> = memory_store.retrieve_recent(2);
     ///```
-    pub fn retrieve_recent(&self, count: usize) -> Vec<&Memory> {
+    pub fn retrieve_recent(&self, count: usize) -> Vec<Memory> {
         // Retrieve all memories inside the hashmap and place them into a vector
-        let mut memories: Vec<&Memory> = self.memories.values().collect();
+        let mut memories: Vec<Memory> = self.memories.values().cloned().collect();
         // Sort the memories by timestamp
         memories.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
         // Collect memories and return vector with reference memory

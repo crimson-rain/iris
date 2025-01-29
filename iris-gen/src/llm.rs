@@ -16,12 +16,11 @@ use ollama_rs::generation::embeddings::GenerateEmbeddingsResponse;
 use ollama_rs::Ollama;
 
 pub const DOCUMENTS_PATH: &str = "";
-pub const TOKENIZER_MODEL: &str = "bert-base-cased";
-pub const MAX_TOKENS: usize = 1000;
-pub const MODEL: &str = "phi4";
+pub const MODEL: &str = "deepseek-r1:14b";
 
 pub const DIALOGUE_SYSTEM: &str = r#"
   You are an NPC in a role-playing game. Use the provided character information to generate responses that are authentic to the character's persona.
+  Be Short and concise on your response.
 
   Format your response as:
   {

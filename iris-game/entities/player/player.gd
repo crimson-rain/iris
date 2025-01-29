@@ -11,9 +11,9 @@
 extends CharacterBody2D
 
 ## Speed of the Character, When Moving
-const SPEED = 300.0
+const SPEED = 145.0
 ## Acceleration of the Character, Increases the Speed with a Multiplier
-const ACCELERATION = 10.0
+const ACCELERATION = 15.0
 
 ## Animation Player
 @onready var player_animation_player: AnimationPlayer = $AnimationPlayer
@@ -31,19 +31,19 @@ func movement() -> void:
 	else:
 		velocity = direction * SPEED
 	
-	#update_animation(direction)
+	update_animation(direction)
 	move_and_slide()
 
 ## Update the Animation Based on the Movement of the Player
 func update_animation(direction: Vector2) -> void:
-	match direction:
-		Vector2(0, -1):
-			print("Up")
-		Vector2(0, 1):
-			print("Down")
-		Vector2(-1, 0):
-			print("Left")
-		Vector2(1, 0):
-			print("Right")
-		_:
-			print("Stop")
+	if direction.x < 0: 
+		player_animation_player.play("walk_left")
+	elif direction.x > 0:
+		player_animation_player.play("walk_right")
+	elif direction.y < 0:
+		player_animation_player.play("walk_up")
+	elif direction.y > 0:
+		player_animation_player.play("walk_down")
+	else:
+		player_animation_player.seek(0.35, true)
+		player_animation_player.pause()

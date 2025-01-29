@@ -2,8 +2,11 @@
 //! Using Godot Binding we create a new NPC.
 #![deny(clippy::todo)]
 
+use std::thread;
+
 use crate::llm::LLM;
 use crate::memory::MemoryStore;
+use crate::utils::parse_json::parse_json;
 use godot::builtin::GString;
 use godot::classes::{CharacterBody2D, ICharacterBody2D};
 use godot::global::godot_print;
@@ -70,7 +73,8 @@ impl LLMCharacter {
     fn process_generated_dialogue(&mut self) {
         if let Some(receiver) = &mut self.generation_channels.dialogue_reciever {
             while let Ok(response) = receiver.try_recv() {
-                godot_print!("CAPTURED: {}", response)
+                let parsed_response = parse_json(response.as_str()).unwrap();
+                godot_print!("{}", parsed_response)
             }
         }
     }
@@ -81,24 +85,26 @@ impl LLMCharacter {
 
         let prompt = "How is your day?";
         let npc_info = self.get_npc_info();
-        let final_prompt = format!("Character Info: {}, Prompt: {}", npc_info, prompt);
+        let combined_prompt = format!("Character Info: {}, Prompt: {}", npc_info, prompt);
 
         let mut history = self.history.clone();
 
         let sender = self.generation_channels.dialogue_sender.clone();
         let mut retrieve_memory = self.memory_store.retrieve_recent(3).clone();
 
-        let runtime = Runtime::new().expect("Failed to Create Runtime");
+        thread::spawn(move || {
+            let runtime = Runtime::new().expect("Failed to Create Runtime");
 
-        runtime.block_on(async move {
-            if let Ok(response) = llm
-                .generate_dialogue(final_prompt.as_str(), &mut history, &mut retrieve_memory)
-                .await
-            {
-                if let Some(sender) = sender {
-                    let _ = sender.send(response.message.content).await;
+            runtime.block_on(async move {
+                if let Ok(response) = llm
+                    .generate_dialogue(combined_prompt.as_str(), &mut history, &mut retrieve_memory)
+                    .await
+                {
+                    if let Some(sender) = sender {
+                        let _ = sender.send(response.message.content).await;
+                    }
                 }
-            }
+            });
         });
     }
 

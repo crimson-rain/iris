@@ -4,15 +4,18 @@
 [ext_resource type="Script" path="res://entities/npcs/mel/mel.gd" id="1_23yom"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qarr7"]
-radius = 9.0
 
 [node name="Mel" type="LLMCharacter"]
+id = "Mel"
+profession = "Bard"
+description = "A kind and caring bard."
 script = ExtResource("1_23yom")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_4rvrq")
 hframes = 3
 vframes = 4
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)

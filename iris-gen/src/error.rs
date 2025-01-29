@@ -15,6 +15,8 @@ pub enum IrisError {
     FailedToSerialize(#[from] serde_json::error::Error),
     #[error("I/O Error: {0}")]
     IOError(std::io::Error),
+    #[error("Parse Error: {0}")]
+    FailedToParse(String),
 }
 
 impl Drop for IrisError {

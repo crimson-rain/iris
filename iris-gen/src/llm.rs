@@ -139,7 +139,7 @@ impl LLM {
     ///     let prompt = "I need advice on my next quest.";
     ///
     ///     let response = language_model
-    ///         .generate_dialogue(prompt, &mut history, &mut memory.iter().collect())
+    ///         .generate_dialogue(prompt, &mut history, &mut memory)
     ///         .await;
     ///
     ///     match response {
@@ -186,7 +186,6 @@ impl LLM {
     }
 
     /// Generate embeddings to store in a vector database. For later use such as RAG.
-    /// TODO: Implement Vector Database to Project
     /// This method interacts with the Ollama API to produce an embedding it transforms
     /// text into vector values to store in the vector database.
     ///

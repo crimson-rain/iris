@@ -4,9 +4,6 @@
 //! - `Memory`: Represents a single memory with a description timestamp and access count.
 //! - `MemoryStore`: Manages multiple memories, allowing for storage, retrieval, and sorting.
 //!
-//! It defines the `LLM` struct and methods which are associated with it.
-//! It is responsible for making API calls to the Ollama API.
-//!
 //! ### Features
 //! - Create and store NPC memories with timestamps.
 //! - Retrieve the most recent or relevant memories.
@@ -14,6 +11,8 @@
 //!
 //! This module is intended for systems that simulate NPC behaviors, enabling dynamic memory
 //! management and interaction history tracking.
+//! 
+//! TODO: Implement a Size Limit, Maybe Implement a Method to Forget Memories Etc.
 
 use core::fmt;
 use std::collections::HashMap;
@@ -128,7 +127,7 @@ impl MemoryStore {
     /// memory_store.add_memory("Memory 1".to_string());
     /// memory_store.add_memory("Memory 2".to_string());
     ///
-    /// let retrieved_memories: Vec<&Memory> = memory_store.retrieve_recent(2);
+    /// let retrieved_memories: Vec<Memory> = memory_store.retrieve_recent(2);
     ///```
     pub fn retrieve_recent(&self, count: usize) -> Vec<Memory> {
         // Retrieve all memories inside the hashmap and place them into a vector

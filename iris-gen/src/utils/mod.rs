@@ -1,4 +1,3 @@
-//! Utilities for general use, not specific to the library.
-//! Stores helper functions etc, such as I/O utils.
+//! General purpose functions not specific to the library.
 
 pub mod parse_json;

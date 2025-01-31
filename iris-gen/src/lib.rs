@@ -7,7 +7,7 @@
 //!
 //! ### Future Works / Features
 //! - Implement Quest Generation
-//! - Hexagonal Architecture (Cost of Speed If Using APIs)
+//! - Hexagonal Architecture (Performance Cost If Using APIs)
 
 pub mod error;
 pub mod llm;

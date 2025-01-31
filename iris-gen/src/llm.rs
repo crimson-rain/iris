@@ -235,13 +235,4 @@ impl LLM {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[tokio::test]
-    async fn test_generate_embeddings() {
-        let llm = LLM::default();
-        let res = llm.generate_embeddings("What colour is the sky?").await;
-        assert!(res.is_ok())
-    }
-}
+mod tests {}

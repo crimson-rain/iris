@@ -2,8 +2,12 @@
 use crate::error::IrisError;
 
 pub fn parse_json(value: &str) -> Result<String, IrisError> {
-    let start = value.find('{').ok_or_else(|| IrisError::FailedToParse("No JSON found".to_string()))?;
-    let end = value.rfind('}').ok_or_else(|| IrisError::FailedToParse("Incomplete JSON".to_string()))?;
+    let start = value
+        .find('{')
+        .ok_or_else(|| IrisError::FailedToParse("No JSON found".to_string()))?;
+    let end = value
+        .rfind('}')
+        .ok_or_else(|| IrisError::FailedToParse("Incomplete JSON".to_string()))?;
 
     let json_str = &value[start..=end];
 
@@ -13,7 +17,7 @@ pub fn parse_json(value: &str) -> Result<String, IrisError> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn success_test_json() {
         let json_string = r#"{ name: "HelloWorld",
@@ -27,6 +31,9 @@ mod tests {
         let json_string = r#"{ name: "HelloWorld",
         "#;
 
-        assert!(parse_json(json_string).is_err(), "Failed to Parse JSON Text")
+        assert!(
+            parse_json(json_string).is_err(),
+            "Failed to Parse JSON Text"
+        )
     }
 }

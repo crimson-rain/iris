@@ -161,7 +161,7 @@ impl LLM {
         &mut self,
         prompt: &str,
         history: &mut Vec<ChatMessage>,
-        memory: &mut Vec<Memory>,
+        memory: &mut [Memory],
     ) -> Result<ChatMessageResponse, IrisError> {
         let memory_string = memory
             .iter()

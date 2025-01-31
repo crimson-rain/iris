@@ -11,8 +11,9 @@ pub fn parse_json(value: &str) -> Result<String, IrisError> {
     Ok(json_str.to_string())
 }
 
+#[cfg(test)]
 mod tests {
-    use super::parse_json;
+    use super::*;
     
     #[test]
     fn success_test_json() {

@@ -59,6 +59,19 @@ interact={
 
 locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/translations/menus_translations.en.translation", "res://addons/maaacks_game_template/base/translations/menus_translations.fr.translation")
 
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Enemies"
+2d_physics/layer_3="PlayerProjectiles"
+2d_physics/layer_4="EnemyProjectiles"
+2d_physics/layer_5="Terrain"
+2d_physics/layer_6="Interactables"
+2d_physics/layer_7="Grass"
+2d_physics/layer_8="Rocks"
+2d_physics/layer_9="Water"
+2d_physics/layer_10="Ladders"
+
 [maaacks_game_template]
 
 disable_plugin_dialogues=true

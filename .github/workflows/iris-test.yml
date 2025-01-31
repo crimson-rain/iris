@@ -1,4 +1,4 @@
-name: iris-gen CI
+name: Rust CI
 
 on:
   push:
@@ -19,35 +19,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: stable
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
 
-      - name: Cache Cargo registry
-        uses: actions/cache@v3
-        with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-registry-
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
 
-      - name: Cache Cargo build
-        uses: actions/cache@v3
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-build-
+      - name: List directory contents (debugging)
+        run: ls -la
+        working-directory: ./
 
       - name: Build project
         run: cargo build --verbose
+        working-directory: ./iris-gen
 
       - name: Run tests
         run: cargo test --verbose
+        working-directory: ./iris-gen
 
       - name: Run Clippy (Linting)
         run: cargo clippy -- -D warnings
+        working-directory: ./iris-gen
 
-      - name: Run Rustfmt (Code Formatting Check)
+      - name: Check Formatting
         run: cargo fmt -- --check
+        working-directory: ./iris-gen

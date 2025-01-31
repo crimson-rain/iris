@@ -1,6 +1,6 @@
+use iris_gen::data::dialogue::Dialogue;
 use iris_gen::llm::LLM;
 use iris_gen::memory::MemoryStore;
-use iris_gen::model::dialogue::Dialogue;
 use iris_gen::utils::parse_json::parse_json;
 use ollama_rs::generation::chat::{ChatMessage, MessageRole};
 

@@ -24,6 +24,3 @@ impl Drop for IrisError {
         godot_error!("Error: {}", self);
     }
 }
-
-unsafe impl Sync for IrisError {}
-unsafe impl Send for IrisError {}

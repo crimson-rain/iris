@@ -222,7 +222,7 @@ impl LLM {
     /// ```
     ///
     /// ### Notes
-    /// - The generated embedding is stored in a Matrix of float-32 values.
+    /// - The generated embedding is stored in a matrix of float values.
     pub async fn generate_embeddings(
         &self,
         text: &str,

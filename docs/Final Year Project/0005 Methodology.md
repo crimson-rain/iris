@@ -33,7 +33,7 @@ This is the current architecture of the LLM System. Currently working on the imp
 
 <p style="text-align: center">Fig 2. Dual Iterative Design for Rapid Prototyping and Developing Final Prototype</p>
 
-For Milestone 2, the focus will be on rapid development and prototyping, this phase prioritizes on achieving a functional, integrated solution with minimal testing on the features. The main goal of Milestone 2 is to ensure that the experiment is feasible. Once the experiment proves successful and the solution is verified to work as intended, the next phase will involve refactoring the codebase to align with industry-standards such as implementing design patterns and best practices. 
+For Milestone 2, the focus will be on rapid development and prototyping, this phase prioritizes on achieving a functional, integrated solution with minimal testing on the features. The main goal of Milestone 2 is to ensure that the experiment is feasible. Once the experiment proves successful and the solution is verified to work as intended, the next phase will involve refactoring the codebase to align with industry-standards such as implementing design patterns and best practices.
 
 The project will implement a dual iterative design approach
 1. Rapid Prototype Development Phase (Milestone 2):

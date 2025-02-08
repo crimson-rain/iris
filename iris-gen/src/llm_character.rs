@@ -4,10 +4,10 @@
 
 use std::thread;
 
-use crate::llm::LLM;
+use crate::agent::orchestrator::Orchestrator;
 use crate::memory::MemoryStore;
+use crate::schemas::dialogue::Dialogue;
 use crate::utils::generation_channels::GenerationChannels;
-use crate::utils::parse_json::parse_json;
 use godot::builtin::GString;
 use godot::classes::{CharacterBody2D, ICharacterBody2D};
 use godot::global::godot_print;
@@ -47,7 +47,7 @@ struct LLMCharacter {
     base: Base<CharacterBody2D>,
     memory_store: MemoryStore,
     history: Vec<ChatMessage>,
-    generation_channels: GenerationChannels<String>,
+    generation_channels: GenerationChannels<Dialogue>,
 }
 
 /// Implement ICharacterBody2D which allows us to have access to Godot functions.
@@ -77,8 +77,7 @@ impl LLMCharacter {
     fn process_generated_dialogue(&mut self) {
         if let Some(receiver) = &mut self.generation_channels.receiver {
             while let Ok(response) = receiver.try_recv() {
-                let parsed_response = parse_json(response.as_str()).unwrap();
-                godot_print!("{}", parsed_response)
+                godot_print!("{:?}", response);
             }
         }
     }
@@ -86,7 +85,7 @@ impl LLMCharacter {
     /// TODO: Optimize this function to reduce redundant cloning and improve performance.
     #[func]
     fn request_dialogue_generation(&mut self) {
-        let mut llm = LLM::default();
+        let mut orchestrator = Orchestrator::default();
 
         let prompt = "How is your day?";
         let npc_info = self.get_npc_info();
@@ -103,12 +102,12 @@ impl LLMCharacter {
             let runtime = Runtime::new().expect("Failed to Create Runtime");
 
             runtime.block_on(async move {
-                if let Ok(response) = llm
-                    .generate_dialogue(combined_prompt.as_str(), &mut history, &mut retrieve_memory)
+                if let Ok(response) = orchestrator
+                    .orchestrate_dialogue(&mut history, &mut retrieve_memory, &combined_prompt)
                     .await
                 {
                     if let Some(sender) = sender {
-                        let _ = sender.send(response.message.content).await;
+                        let _ = sender.send(response).await;
                     }
                 }
             });

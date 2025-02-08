@@ -1,6 +1,6 @@
 //! This module provides functionality for creating and managing NPC memories.
 
-use crate::error::IrisError;
+use crate::{error::IrisError, utils::parse_json::parse_json};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -13,8 +13,10 @@ pub struct Dialogue {
 impl TryFrom<&str> for Dialogue {
     type Error = IrisError;
 
-    fn try_from(data: &str) -> Result<Self, Self::Error> {
-        serde_json::from_str::<Dialogue>(data).map_err(IrisError::FailedToSerialize)
+    fn try_from(data: &str) -> Result<Self, IrisError> {
+        let format_json = parse_json(data)?;
+        serde_json::from_str::<Dialogue>(format_json.as_str())
+            .map_err(IrisError::FailedToSerialize)
     }
 }
 

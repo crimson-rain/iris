@@ -9,11 +9,11 @@
 //! - Implement Quest Generation
 //! - Hexagonal Architecture (Performance Cost If Using APIs)
 
-pub mod data;
+pub mod agent;
 pub mod error;
-pub mod llm;
 pub mod llm_character;
 pub mod memory;
+pub mod schemas;
 pub mod utils;
 pub mod vector_store;
 

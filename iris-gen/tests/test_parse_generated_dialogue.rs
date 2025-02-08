@@ -1,13 +1,11 @@
-use iris_gen::data::dialogue::Dialogue;
-use iris_gen::llm::LLM;
+use iris_gen::agent::orchestrator::Orchestrator;
 use iris_gen::memory::MemoryStore;
-use iris_gen::utils::parse_json::parse_json;
 use ollama_rs::generation::chat::{ChatMessage, MessageRole};
 
 #[tokio::test]
 async fn parse_generated_dialogue() {
     // Instantiate LLM
-    let mut llm = LLM::default();
+    let mut llm = Orchestrator::default();
 
     // Create histroy
     let mut hist = Vec::new();
@@ -24,25 +22,17 @@ async fn parse_generated_dialogue() {
 
     // Generate response
     let res = llm
-        .generate_dialogue(
-            "Hello, I'm looking to do an adventure",
+        .orchestrate_dialogue(
             &mut hist,
             &mut memory.retrieve_recent(3),
+            "Hello, I'm looking to do an adventure",
         )
-        .await;
+        .await
+        .unwrap();
 
-    // Parse value to json
-    let parsed_json = parse_json(res.unwrap().message.content.as_str()).unwrap();
+    assert!(!res.dialogue.is_empty(), "Generated Dialogue is Empty");
 
-    // Serialize json to dialogue struct
-    let dia_struct = Dialogue::try_from(parsed_json.as_str()).unwrap();
+    assert!(!res.npc.is_empty(), "Generated NPC Name is Empty");
 
-    assert!(
-        !dia_struct.dialogue.is_empty(),
-        "Generated Dialogue is Empty"
-    );
-
-    assert!(!dia_struct.npc.is_empty(), "Generated NPC Name is Empty");
-
-    assert!(!dia_struct.choices.is_empty(), "Generated Choices is Empty");
+    assert!(!res.choices.is_empty(), "Generated Choices is Empty");
 }

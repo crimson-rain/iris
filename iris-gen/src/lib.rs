@@ -23,7 +23,3 @@ struct IrisGen;
 
 #[gdextension]
 unsafe impl ExtensionLibrary for IrisGen {}
-
-// Test for the Library
-#[cfg(test)]
-mod tests {}

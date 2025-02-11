@@ -14,10 +14,9 @@ impl Orchestrator {
     pub async fn orchestrate_dialogue(
         &mut self,
         history: &mut Vec<ChatMessage>,
-        memory: &mut Vec<Memory>,
+        memory: &mut [Memory],
         prompt: &str,
     ) -> Result<Dialogue, IrisError> {
-        
         // Iterate Memories and Convert to String
         let memories = memory
             .iter()

@@ -50,8 +50,6 @@ pub const DIALOGUE_SYSTEM: &str = r#"
   }
 "#;
 
-
-
 pub struct Model {
     ollama: Ollama,
     model: String,

@@ -1,6 +1,5 @@
 use iris_gen::agent::orchestrator::Orchestrator;
 use iris_gen::memory::MemoryStore;
-use ollama_rs::generation::chat::{ChatMessage, MessageRole};
 
 #[tokio::test]
 async fn parse_generated_dialogue() {
@@ -9,10 +8,6 @@ async fn parse_generated_dialogue() {
 
     // Create histroy
     let mut hist = Vec::new();
-    hist.push(ChatMessage::new(
-        MessageRole::User,
-        "We are talking about games".to_string(),
-    ));
 
     // Create memory
     let mut memory = MemoryStore::default();

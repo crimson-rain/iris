@@ -12,7 +12,8 @@
 //! This module is intended for systems that simulate NPC behaviors, enabling dynamic memory
 //! management and interaction history tracking.
 //!
-//! TODO: Implement a Size Limit, Maybe Implement a Method to Forget Memories Etc.
+//! TODO: Implement a size limit, maybe implement a method to forget memories Etc.
+//! TODO: Refactor memory module | Figure out better ways to handle and manage memory.
 
 use core::fmt;
 use std::collections::HashMap;
@@ -235,7 +236,12 @@ mod tests {
     #[test]
     fn retrieve_non_existant_values() {
         let memory_store = create_test_memory_store();
-        memory_store.retrieve_relevant("THIS MEMORY DOESN'T EXIST", usize::MAX);
-        memory_store.retrieve_relevant("THIS MEMORY DOESN'T EXIST EITHER", usize::MIN);
+        let res = memory_store.retrieve_relevant("NON EXISTANT MEMORY", usize::MAX);
+
+        let expected_res: Vec<&Memory> = Vec::new();
+        assert_eq!(res, expected_res);
+
+        let res = memory_store.retrieve_relevant("NON EXISTANT MEMORY 2", usize::MIN);
+        assert_eq!(res, expected_res);
     }
 }

@@ -8,7 +8,7 @@ use ollama_rs::generation::embeddings::request::GenerateEmbeddingsRequest;
 use ollama_rs::generation::embeddings::GenerateEmbeddingsResponse;
 use ollama_rs::Ollama;
 
-pub const MODEL: &str = "deepseek-r1:14b";
+pub const MODEL: &str = "phi4";
 
 pub const DIALOGUE_SYSTEM: &str = r#"
   You are an NPC in a role-playing game. Stay in character at all times and respond in a manner authentic to the NPC's persona.

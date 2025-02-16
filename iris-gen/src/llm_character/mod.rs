@@ -21,7 +21,7 @@ use tokio::runtime::Runtime;
 /// ### Fields
 /// ---
 /// #### Godot Fields
-/// - `id` - A GString that stores the ID, can be the name of the NPC itself.
+/// - `id`          -   A GString that stores the ID, can be the name of the NPC itself.
 /// - `profession`  -   A GString storing the NPC’s role and job.
 /// - `description` -   A GString which stores the general description of the NPC,
 ///                     describing the general characteristics.
@@ -66,6 +66,8 @@ impl ICharacterBody2D for LLMCharacter {
         }
     }
 
+    // WARN: Do not define this in Godot, as it will overwrite this function
+    // and will not process generated dialogue.
     fn process(&mut self, _delta: f64) {
         self.process_generated_dialogue();
     }

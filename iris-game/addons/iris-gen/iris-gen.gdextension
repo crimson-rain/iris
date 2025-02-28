@@ -8,3 +8,4 @@ LLMCharacter = "res://assets/icons/llm-character.svg"
 
 [libraries]
 windows.debug.x86_64 = "res://../iris-gen/target/debug/iris_gen.dll"
+linux.debug.x86_64 = "res://../iris-gen/target/debug/iris-gen.dll"

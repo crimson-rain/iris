@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu18txivadis0"]
+
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/scenes/menus/options_menu/mini_options_menu.tscn" id="1_7o30d"]
+[ext_resource type="Script" path="res://menus/scenes/menus/options_menu/mini_options_menu_with_reset.gd" id="2_feloj"]
+[ext_resource type="PackedScene" path="res://menus/scenes/menus/options_menu/game/reset_game_control/reset_game_control.tscn" id="3_wpqsg"]
+
+[node name="MiniOptionsMenu" instance=ExtResource("1_7o30d")]
+script = ExtResource("2_feloj")
+
+[node name="ResetGameControl" parent="." index="3" instance=ExtResource("3_wpqsg")]
+layout_mode = 2
+
+[connection signal="reset_confirmed" from="ResetGameControl" to="." method="_on_reset_game_control_reset_confirmed"]

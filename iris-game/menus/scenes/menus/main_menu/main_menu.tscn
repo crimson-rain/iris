@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cq64gnkrk1bak"]
+
+[ext_resource type="PackedScene" uid="uid://c6k5nnpbypshi" path="res://addons/maaacks_game_template/base/scenes/menus/main_menu/main_menu.tscn" id="1_d25m6"]
+[ext_resource type="Script" path="res://menus/scenes/menus/main_menu/main_menu.gd" id="2_mmmbi"]
+[ext_resource type="PackedScene" uid="uid://b5ktg1mwqqxgx" path="res://menus/scenes/menus/options_menu/master_options_menu_with_tabs.tscn" id="3_17g7p"]
+[ext_resource type="PackedScene" uid="uid://b858w4b1uhytj" path="res://menus/scenes/credits/credits.tscn" id="4_c8agl"]
+[ext_resource type="AudioStream" uid="uid://bjkylv3h5en8g" path="res://assets/audio/meadow.mp3" id="5_he7c1"]
+
+[node name="MainMenu" instance=ExtResource("1_d25m6")]
+script = ExtResource("2_mmmbi")
+game_scene_path = "res://levels/aetheria/town/town_center.tscn"
+options_packed_scene = ExtResource("3_17g7p")
+credits_packed_scene = ExtResource("4_c8agl")
+
+[node name="BackgroundMusicPlayer" parent="." index="1"]
+bus = &"Master"
+
+[node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0"]
+text = "IRIS"
+
+[node name="SubTitleLabel" parent="MenuContainer/SubTitleMargin/SubTitleContainer" index="0"]
+text = "Emergent Dialogue and Quests"
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="." index="8"]
+stream = ExtResource("5_he7c1")
+autoplay = true
+parameters/looping = true

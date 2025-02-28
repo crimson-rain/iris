@@ -1,2 +1,3 @@
-# IRIS - Emergent Dialogue and Quest Generation
-A project to create emergent, context-aware dialogue and quests using the LLMs.
+# IRIS
+
+An Emergent Dialogue and Quest Generation System Making Use of LLMs.

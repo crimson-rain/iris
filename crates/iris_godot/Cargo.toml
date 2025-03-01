@@ -1,0 +1,12 @@
+[package]
+name = "iris_godot"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "iris"
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
+thiserror.workspace = true

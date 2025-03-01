@@ -4,5 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+# Internal Crates
+iris_gen = { path = "../iris_gen" }
+
+# External Crates
 bevy_ecs = "0.15.3"
 thiserror.workspace = true

@@ -8,5 +8,10 @@ name = "iris"
 crate-type = ["cdylib"]
 
 [dependencies]
+# Internal Crates
+iris_ecs = { path = "../iris_ecs" }
+
+# External Crates
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
 thiserror.workspace = true
+bevy_ecs = "0.15.3"

@@ -930,6 +930,7 @@ name = "iris_ecs"
 version = "0.1.0"
 dependencies = [
  "bevy_ecs",
+ "iris_gen",
  "thiserror",
 ]
 
@@ -945,7 +946,9 @@ dependencies = [
 name = "iris_godot"
 version = "0.1.0"
 dependencies = [
+ "bevy_ecs",
  "godot",
+ "iris_ecs",
  "thiserror",
 ]
 

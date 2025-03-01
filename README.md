@@ -5,9 +5,9 @@
   <em>Summer Wars (2009)</em>
 </p>
 
-**Intelligent Response and Interaction System (IRIS)** is a system used to generate emergent, dynamic and contextually aware dialogue and interactions for NPCs
-using LLMs. Aiming to move beyond just static, pre-written lines by allowing NPCs to responsd dynamically and adapt their dialogue based on player interactions,
-world events and character personalities.
+**Intelligent Response and Interaction System (IRIS)** is a system used to generate emergent, dynamic, and contextually aware interactions for NPCs using LLMs. 
+It aims to move beyond static, pre-written lines by allowing NPCs to respond dynamically and adapt their interactions with the player based on player choices, 
+world events, and character personalities.
 
 ## Getting Started
 Clone the Repo...

@@ -6,7 +6,7 @@ mod tests {
     use super::*;
     use bevy_ecs::prelude::*;
     use components::{CurrentNPC, GenerationResponse};
-    use systems::dialogue_generation_system;
+    use systems::dialogue_generate_system;
 
     #[test]
     fn test_generation() {
@@ -24,7 +24,7 @@ mod tests {
 
         let mut schedule = Schedule::default();
 
-        schedule.add_systems(dialogue_generation_system);
+        schedule.add_systems(dialogue_generate_system);
         schedule.run(&mut world);
     }
 }

@@ -12,7 +12,7 @@ mod tests {
     fn test_generation() {
         let mut world = World::new();
 
-        let _entity = world
+        let entity = world
             .spawn((
                 CurrentNPC,
                 GenerationResponse {
@@ -26,5 +26,10 @@ mod tests {
 
         schedule.add_systems(dialogue_generate_system);
         schedule.run(&mut world);
+
+        let generated = world.get::<GenerationResponse>(entity).unwrap();
+
+        assert_eq!(generated.dialogue, "Hello, World!");
+        assert_eq!(generated.choices, vec!["Hello".to_string(), "Goodbye".to_string()]);
     }
 }

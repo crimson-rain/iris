@@ -19,20 +19,18 @@ mod tests {
 
     #[test]
     fn success_test_json() {
-        let json_string = r#"{ name: "HelloWorld",
-        }"#;
+        let json_string = r#"{ name: "HelloWorld",}"#;
 
         assert!(parse_json(json_string).is_ok(), "Failed to Parse JSON Text")
     }
 
     #[test]
     fn failed_test_json() {
-        let json_string = r#"{ name: "HelloWorld",
-        "#;
+        let json_string = r#"{ name: "HelloWorld","#;
 
         assert!(
             parse_json(json_string).is_err(),
-            "Failed to Parse JSON Text"
+            "Successfully parsed JSON, when it is meant to be a failure case."
         )
     }
 }

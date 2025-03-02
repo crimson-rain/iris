@@ -1,9 +1,9 @@
 [workspace]
 members = [
-    "crates/iris_ecs",
     "crates/iris_gen",
-    "crates/iris_godot"
-, "crates/iris_utils"]
+    "crates/iris_godot", 
+    "crates/iris_utils"
+]
 
 resolver = "3"
 

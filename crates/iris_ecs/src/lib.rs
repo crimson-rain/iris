@@ -4,6 +4,5 @@
 //! The reason this project will use ECS is because of the data orientated nature of the ECS architecture,
 //! as well as its modularity and scalability.
 
-pub mod error;
 pub mod generation;
-pub mod physics;
+pub mod error;

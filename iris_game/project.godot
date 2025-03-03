@@ -13,3 +13,13 @@ config_version=5
 config/name="iris_game"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Dialogue="*res://systems/dialogue/dialogue.gd"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/inferred_declaration=2
+gdscript/warnings/confusable_local_declaration=2

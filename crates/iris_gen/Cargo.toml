@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 ollama-rs = "0.2.6"
 thiserror.workspace = true
+tokio = { version = "1.43.0", features = ["full"] }

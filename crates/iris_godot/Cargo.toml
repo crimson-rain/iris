@@ -9,7 +9,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 # Internal Crates
-iris_ecs = { path = "../iris_ecs" }
+iris_gen = { path = "../iris_gen" }
 
 # External Crates
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }

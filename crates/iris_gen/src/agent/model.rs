@@ -19,7 +19,7 @@ impl Default for Model {
         Self {
             ollama: Ollama::default(),
             llm_model: LLM_MODEL.to_string(),
-            embed_model: EMBED_MODEL.to_string()
+            embed_model: EMBED_MODEL.to_string(),
         }
     }
 }
@@ -46,7 +46,7 @@ impl Model {
 
         Ok(res)
     }
-// TODO: Embedding Model
+    // TODO: Embedding Model
     pub async fn generate_embeddings(
         &self,
         raw_text: &str,
@@ -71,10 +71,14 @@ mod tests {
         let prompt = "Hello, World!";
 
         let generated_text = model.generate_request(prompt, &mut hist).await;
-        
+
         assert!(generated_text.is_ok(), "Failed to Generate Text");
         assert!(!hist.is_empty(), "History is Empty");
-        assert_eq!(hist.len(), 3, "Chat History wasn't Updated from Last Generation.");
+        assert_eq!(
+            hist.len(),
+            3,
+            "Chat History wasn't Updated from Last Generation."
+        );
     }
 
     #[tokio::test]

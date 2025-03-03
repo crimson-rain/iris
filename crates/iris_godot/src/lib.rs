@@ -6,6 +6,7 @@
 //! This library is responsible for connecting all the components together and have these components accessible in godot.
 
 pub mod error;
+pub mod nodes;
 
 use godot::prelude::*;
 

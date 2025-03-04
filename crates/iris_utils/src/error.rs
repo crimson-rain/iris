@@ -7,6 +7,8 @@ pub enum IrisUtilError {
     IO(#[from] IOError),
     #[error("Parse Error: {0}")]
     Parse(#[from] ParseError),
+    #[error("File System Error: {0}")]
+    FSError(#[from] FSError),
 }
 
 #[derive(Debug, Error)]
@@ -15,6 +17,12 @@ pub enum IOError {
     NotFound,
     #[error("Permission Denied")]
     PermissionDenied,
+}
+
+#[derive(Debug, Error)]
+pub enum FSError {
+    #[error("No Models Found")]
+    NoModelsFound,
 }
 
 #[derive(Debug, Error)]

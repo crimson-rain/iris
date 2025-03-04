@@ -5,4 +5,7 @@ use thiserror::Error;
 pub enum IrisGenError {
     #[error("Ollama Error: {0}")]
     OllamaError(#[from] OllamaError),
+
+    #[error("No Models Found")]
+    NoModelsFound,
 }

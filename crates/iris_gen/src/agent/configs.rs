@@ -1,4 +1,4 @@
-//! `agent/config.rs` 
+//! `agent/config.rs`
 //!
 //! This module holds all configurations for loading and creating an LLM instance.
 //! As well instructions which can be used for the LLM generation.

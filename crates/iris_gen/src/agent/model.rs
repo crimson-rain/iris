@@ -50,7 +50,7 @@ impl Model {
 
         Ok(res)
     }
-    // TODO: Embedding Model
+
     pub async fn generate_embeddings(
         &self,
         raw_text: &str,

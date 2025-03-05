@@ -1,5 +1,7 @@
-//! `agent/config.rs` holds all configuraiton needed to load LLMs as well as
-//! instructions for generations.
+//! `agent/config.rs` 
+//!
+//! This module holds all configurations for loading and creating an LLM instance.
+//! As well instructions which can be used for the LLM generation.
 
 pub const LLM_MODEL: &str = "phi4";
 
@@ -36,6 +38,24 @@ pub const DIALOGUE_SYSTEM_PROMPT: &str = r#"
   - Return output **ONLY** in valid JSON format (do not include explanations).
   - Do **not** add escape characters, markdown, or formatting hints.
   - Do **not** include extra commentary (e.g., "Here's your JSON: ...").
+
+  ## Response Format (DO NOT ALTER):
+  {
+    "dialogue": "NPC's response here.",
+    "npc": "{npc_name}",
+    "choices": ["Option 1", "Option 2", "Option 3"]
+  }
+"#;
+
+pub const QUEST_SYSTEM_PROMPT: &str = r#"
+  You are an NPC in a role-playing game. Stay in character at all times and respond in a manner authentic to the NPC's persona.
+  
+  ## NPC Details:
+  - **Name**: {npc_name}
+  - **Role**: {npc_role} (e.g., Merchant, Guard, Mage)
+  - **Personality**: {npc_personality} (e.g., Grumpy, Helpful, Mysterious)
+  - **Backstory**: {npc_backstory}
+  - **Relationship to Player**: {npc_relationship}
 
   ## Response Format (DO NOT ALTER):
   {

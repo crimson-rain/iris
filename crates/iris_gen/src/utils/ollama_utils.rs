@@ -1,17 +1,24 @@
-use ollama_rs::{models::{LocalModel, ModelInfo}, Ollama};
+//! `utils/mod.rs`
+//!
+//! General purpose utility/helper functions used in the project.
+
+use ollama_rs::Ollama;
+use ollama_rs::models::{LocalModel, ModelInfo};
 
 use crate::error::IrisGenError;
 
-pub async fn list_ollama_models(ollama: &Ollama) -> Result<Vec<LocalModel>, IrisGenError>{
+pub async fn list_ollama_models(ollama: &Ollama) -> Result<Vec<LocalModel>, IrisGenError> {
     let res = ollama.list_local_models().await?;
     Ok(res)
 }
 
-pub async fn load_model_info(ollama: &Ollama, model_name: String) -> Result<ModelInfo, IrisGenError>{
+pub async fn load_model_info(
+    ollama: &Ollama,
+    model_name: String,
+) -> Result<ModelInfo, IrisGenError> {
     let res = ollama.show_model_info(model_name).await?;
     Ok(res)
 }
-
 
 #[cfg(test)]
 mod tests {

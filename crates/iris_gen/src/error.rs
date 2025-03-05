@@ -1,3 +1,7 @@
+//! `error.rs`
+//!
+//!
+
 use ollama_rs::error::OllamaError;
 use thiserror::Error;
 

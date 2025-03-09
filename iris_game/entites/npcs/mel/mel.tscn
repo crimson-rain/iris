@@ -1,17 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://bpu36j4d52byx"]
+[gd_scene load_steps=5 format=3 uid="uid://bpu36j4d52byx"]
 
+[ext_resource type="Script" uid="uid://btp2jy08wohwd" path="res://entites/npcs/mel/mel.gd" id="1_8pco5"]
 [ext_resource type="Texture2D" uid="uid://dlv6mn3mkb1ss" path="res://entites/npcs/mel/data/sprite/character_6_frame32x32.png" id="1_lj4tc"]
+[ext_resource type="Script" uid="uid://665we8egjj65" path="res://entites/npcs/mel/iris.gd" id="2_ryxte"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3yce"]
 height = 22.0
 
 [node name="Mel" type="NPC"]
+script = ExtResource("1_8pco5")
+
+[node name="Iris" type="Iris" parent="."]
+script = ExtResource("2_ryxte")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_p3yce")
-
-[node name="Iris" type="Iris" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_lj4tc")

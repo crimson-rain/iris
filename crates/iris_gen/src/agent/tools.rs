@@ -2,6 +2,7 @@
 //!
 //! WIP - Work in Progress: To be Completed.
 
+#![allow(unused)]
 
 /// Get the weather for a given city.
 ///
@@ -46,9 +47,8 @@ mod tests {
             Coordinator::new_with_tools(ollama, "mistral-small:24b".to_string(), history, tools);
 
         let user_messages = vec![
-            "Whats the weather in London?",
-            "What's the CPU temperature?",
-            "CallFoo"
+            "Can I get the weather for a city please?",
+            "Dhaka",
         ];
 
         for user_message in user_messages {

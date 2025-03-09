@@ -1,8 +1,107 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqa0ih02nfn4c"]
+[gd_scene load_steps=10 format=3 uid="uid://dqa0ih02nfn4c"]
 
 [ext_resource type="Texture2D" uid="uid://d2bfs7x7h4ijg" path="res://entites/player/data/sprites/player_sprite.png" id="1_gxcxq"]
+[ext_resource type="Script" uid="uid://ci1b3oy8br8rn" path="res://entites/player/player.gd" id="1_qevvu"]
 
-[node name="Player" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gxcxq"]
+height = 22.0
+
+[sub_resource type="Animation" id="Animation_1dsfc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_t8255"]
+resource_name = "move_down"
+loop_mode = 1
+step = 0.333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_3u14a"]
+resource_name = "move_left"
+loop_mode = 1
+step = 0.333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_y1j2n"]
+resource_name = "move_right"
+step = 0.333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_qevvu"]
+resource_name = "move_up"
+step = 0.333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qurni"]
+_data = {
+&"RESET": SubResource("Animation_1dsfc"),
+&"move_down": SubResource("Animation_t8255"),
+&"move_left": SubResource("Animation_3u14a"),
+&"move_right": SubResource("Animation_y1j2n"),
+&"move_up": SubResource("Animation_qevvu")
+}
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_qevvu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CapsuleShape2D_gxcxq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_gxcxq")
@@ -11,5 +110,8 @@ vframes = 4
 frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qurni")
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]

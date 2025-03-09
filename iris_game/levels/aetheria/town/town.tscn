@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://cghnfxvj82wly"]
+[gd_scene load_steps=8 format=4 uid="uid://cghnfxvj82wly"]
 
 [ext_resource type="Texture2D" uid="uid://c8gdabuup6lpx" path="res://assets/atlas/marketplace.png" id="1_ygp28"]
 [ext_resource type="Texture2D" uid="uid://be2n11wvb8xei" path="res://assets/atlas/oriental.png" id="2_aooww"]
 [ext_resource type="PackedScene" uid="uid://dqa0ih02nfn4c" path="res://entites/player/player.tscn" id="2_ygp28"]
+[ext_resource type="PackedScene" uid="uid://bpu36j4d52byx" path="res://entites/npcs/mel/mel.tscn" id="4_37vvx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_37vvx"]
 texture = ExtResource("1_ygp28")
@@ -1527,3 +1528,6 @@ tile_map_data = PackedByteArray("AADw//n/AQABAAMAAADw//r/AQABAAMAAADw//v/AQABAAM
 tile_set = SubResource("TileSet_c0jn6")
 
 [node name="Player" parent="." instance=ExtResource("2_ygp28")]
+
+[node name="Mel" parent="." instance=ExtResource("4_37vvx")]
+position = Vector2(150, 6)

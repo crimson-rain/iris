@@ -36,7 +36,7 @@ mod tests {
     async fn get_model_info() {
         let ollama = Ollama::default();
 
-        let models = load_model_info(&ollama, "phi4".to_string()).await.unwrap();
+        let models = load_model_info(&ollama, "phi4-mini".to_string()).await.unwrap();
         println!("{:?}", models.template)
     }
 }

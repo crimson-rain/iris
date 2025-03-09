@@ -59,4 +59,3 @@ mod tests {
             println!("Assistant: {}", resp.unwrap().message.content);
         }
     }
-}

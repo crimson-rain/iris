@@ -129,6 +129,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1505bd5d3d116872e7271a6d4e16d81d0c8570876c8de68093a09ac269d8aac0"
 
 [[package]]
+<<<<<<< HEAD
 name = "atty"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -152,6 +153,8 @@ dependencies = [
 ]
 
 [[package]]
+=======
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
 name = "autocfg"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -613,6 +616,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "feeef44e73baff3a26d371801df019877a9866a8c493d315ab00177843314f35"
 
 [[package]]
+<<<<<<< HEAD
 name = "ego-tree"
 version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -634,6 +638,8 @@ dependencies = [
 ]
 
 [[package]]
+=======
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
 name = "encoding_rs"
 version = "0.8.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -643,12 +649,15 @@ dependencies = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "endian-type"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c34f04666d835ff5d62e058c3995147c06f42fe86ff053337632bca83e42702d"
 
 [[package]]
+=======
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
 name = "equivalent"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1340,7 +1349,11 @@ dependencies = [
  "reqwest",
  "schemars",
  "serde",
+<<<<<<< HEAD
  "thiserror 2.0.11",
+=======
+ "thiserror",
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
  "tokio",
 ]
 
@@ -1676,7 +1689,11 @@ dependencies = [
  "calc",
  "html2md",
  "log",
+<<<<<<< HEAD
  "regex",
+=======
+ "ollama-rs-macros",
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
  "reqwest",
  "schemars",
  "scraper",
@@ -1696,7 +1713,11 @@ checksum = "0804f6ccb2caba80d5ced8a151d88b343e1284b5260a79eadea58e561726a923"
 dependencies = [
  "proc-macro2",
  "quote",
+<<<<<<< HEAD
  "syn 2.0.98",
+=======
+ "syn",
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
 ]
 
 [[package]]
@@ -2126,9 +2147,15 @@ dependencies = [
 
 [[package]]
 name = "ring"
+<<<<<<< HEAD
 version = "0.17.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ed9b823fa29b721a59671b41d6b06e66b29e0628e207e8b1c3ceeda701ec928d"
+=======
+version = "0.17.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "70ac5d832aa16abd7d1def883a8545280c20a60f523a370aa3a9617c2b8550ee"
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
 dependencies = [
  "cc",
  "cfg-if",
@@ -2467,6 +2494,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
+<<<<<<< HEAD
 name = "str-buf"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2550,12 +2578,15 @@ dependencies = [
 ]
 
 [[package]]
+=======
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
 name = "subtle"
 version = "2.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
 
 [[package]]
+<<<<<<< HEAD
 name = "syn"
 version = "1.0.109"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2567,6 +2598,8 @@ dependencies = [
 ]
 
 [[package]]
+=======
+>>>>>>> 84b9dec92ebd2ee4303310d7dfba6d825720debb
 name = "syn"
 version = "2.0.98"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2604,6 +2637,27 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3c879d448e9d986b661742763247d3693ed13609438cf3d006f51f5368a5ba6b"
 dependencies = [
  "bitflags 2.8.0",
+ "core-foundation",
+ "system-configuration-sys",
+]
+
+[[package]]
+name = "system-configuration-sys"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8e1d1b10ced5ca923a1fcb8d03e96b8d3268065d724548c0211415ff6ac6bac4"
+dependencies = [
+ "core-foundation-sys",
+ "libc",
+]
+
+[[package]]
+name = "system-configuration"
+version = "0.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3c879d448e9d986b661742763247d3693ed13609438cf3d006f51f5368a5ba6b"
+dependencies = [
+ "bitflags",
  "core-foundation",
  "system-configuration-sys",
 ]

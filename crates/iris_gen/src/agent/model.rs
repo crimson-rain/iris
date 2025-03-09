@@ -93,8 +93,6 @@ mod tests {
 
         let generated_embedding = model.generate_embeddings(raw_text).await;
 
-        assert!(generated_embedding.is_ok(), "Failed to Generate Embeddings");
-
-        // TODO: Create a Test Which Validates We get the Right Data Type back.
+        assert!(generated_embedding.is_ok(), "Failed to Generate Embeddings"); 
     }
 }

@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-ollama-rs = "0.2.6"
+ollama-rs = { version = "0.2.6", features = ["tool-implementations"] }
+ollama-rs-macros = "0.2.6"
+reqwest = "0.12.12"
+schemars = "0.8.22"
+serde = { version = "1.0.218", features = ["derive"] }
 thiserror.workspace = true
 tokio = { version = "1.43.0", features = ["full"] }

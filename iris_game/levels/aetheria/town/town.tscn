@@ -1531,3 +1531,6 @@ tile_set = SubResource("TileSet_c0jn6")
 
 [node name="Mel" parent="." instance=ExtResource("4_37vvx")]
 position = Vector2(150, 6)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.2, 1.2)

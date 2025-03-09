@@ -113,5 +113,3 @@ frame = 1
 libraries = {
 &"": SubResource("AnimationLibrary_qurni")
 }
-
-[node name="Camera2D" type="Camera2D" parent="."]

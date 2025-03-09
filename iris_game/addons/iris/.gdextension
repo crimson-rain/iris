@@ -3,6 +3,10 @@ entry_symbol = "gdext_rust_init"
 compatibility_minimum = 4.1
 reloadable = true
 
+
+[icons]
+Iris = "res://assets/icons/iris.svg"
+
 [libraries]
 linux.debug.x86_64 =     "res://../target/debug/libiris.so"
 linux.release.x86_64 =   "res://../target/release/libiris.so"

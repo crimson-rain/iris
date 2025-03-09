@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0hrsrpsbcnks"
-path="res://.godot/imported/character_2_frame16x20.png-cdcd881771e571d7ef962f2c386b139a.ctex"
+uid="uid://c8gdabuup6lpx"
+path="res://.godot/imported/marketplace.png-df6ea14188fdb5b3d8fc699ed2110065.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/npc_sprites/character_2/character_2_frame16x20.png"
-dest_files=["res://.godot/imported/character_2_frame16x20.png-cdcd881771e571d7ef962f2c386b139a.ctex"]
+source_file="res://assets/atlas/marketplace.png"
+dest_files=["res://.godot/imported/marketplace.png-df6ea14188fdb5b3d8fc699ed2110065.ctex"]
 
 [params]
 

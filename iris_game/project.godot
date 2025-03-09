@@ -23,3 +23,7 @@ Dialogue="*res://systems/dialogue/dialogue.gd"
 gdscript/warnings/untyped_declaration=2
 gdscript/warnings/inferred_declaration=2
 gdscript/warnings/confusable_local_declaration=2
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

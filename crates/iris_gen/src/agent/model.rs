@@ -1,6 +1,4 @@
 //! `agent/model.rs`
-//!
-//!
 
 use ollama_rs::Ollama;
 use ollama_rs::generation::chat::request::ChatMessageRequest;

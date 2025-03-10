@@ -1,7 +1,10 @@
 extends NPC
 
 @onready var iris: Iris = $Iris
+@onready var interaction_area: InteractionArea = $InteractionArea
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
-		iris.generate_dialogue()
+func _ready() -> void:
+	interaction_area.interact = Callable(self, "_on_interact")
+
+func _on_interact() -> void:
+	iris.generate_dialogue()

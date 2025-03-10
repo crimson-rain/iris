@@ -1,13 +1,3 @@
-## File: player.gd
-## Created: 2025-01-14
-## Modified: 2025-03-09
-##
-## Description
-## This is the script for the main player.
-## Manages the players movements and animation logic.
-##
-## Author: Rezwan Rahman (crimson-rain//RAH22529097)
-
 extends CharacterBody2D
 
 ## Speed of the Character, When Moving

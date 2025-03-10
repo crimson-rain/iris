@@ -96,7 +96,7 @@ _data = {
 &"move_up": SubResource("Animation_qevvu")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_qevvu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

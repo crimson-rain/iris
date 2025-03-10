@@ -1,0 +1,125 @@
+\documentclass[a4paper,12pt]{report}
+
+% Packages
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Title Page
+\title{
+    \vspace{2in}
+    \textbf{Final Year Project Report}\\
+    \Large Emergent Dialogue and Quest Generation using LLMs
+    \vfill
+}
+\author{
+    Rezwan Rahman \\
+    RAH22529097 \\
+    BACHELOR OF SCIENCE IN COMPUTING \\
+    The University of Roehampton \\
+    \date{April 2025}
+}
+\date{}
+
+% Page Style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyfoot[C]{\thepage}
+
+% Spacing
+\onehalfspacing
+
+% Document
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\newpage
+
+% Declaration
+\begingroup
+\section*{Declaration}
+I hereby certify that this report constitutes my own work, that where the language of others is used, quotation marks so indicate, and that appropriate credit is given where I have used the language, ideas, expressions, or writings of others. 
+\vspace{1em}
+\setlength{\parindent}{0pt}
+
+I declare that this report describes the original work that has not been previously presented for the award of any other degree of any other institution.
+
+
+
+\begin{flushright}
+    Rezwan Rahman \\
+    10/03/2025
+\end{flushright}
+\endgroup
+
+\newpage
+
+% Acknowledgements
+\section*{Acknowledgements}
+I would like to express my deepest gratitude to my supervisor, Dr. Rogerio Da-Silva, for their invaluable guidance and support throughout this project...
+
+\newpage
+
+% Abstract
+\section*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+A brief summary of your project: problem statement, objectives, methodology, and main findings...
+
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Chapters and Main Body
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+\section{Background}
+Provide background information on your topic...
+
+\section{Objectives}
+List your project objectives clearly...
+
+\section{Problem Statement}
+Define the problem you are tackling...
+
+\section{Report Overview}
+Describe the upcoming sections in order -- this provides your reader with a road map of the report.
+
+\chapter{Literature and Technology Review}
+Summarize relevant research and findings related to your project...
+
+\section{Literature Review}
+
+\section{Technology Review}
+
+\chapter{Methodology}
+Explain the methods, tools, and technologies used in your project...
+
+\chapter{Implementation}
+Describe how you implemented your project, with diagrams or code snippets if needed...
+
+\chapter{Results and Discussion}
+Present your findings, including tables, graphs, and interpretations...
+
+\chapter{Conclusion and Future Work}
+Summarize your project and suggest future improvements...
+
+\newpage
+
+% References
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

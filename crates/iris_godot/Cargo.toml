@@ -10,8 +10,10 @@ crate-type = ["cdylib"]
 [dependencies]
 # Internal Crates
 iris_gen = { path = "../iris_gen" }
+iris_utils = { path = "../iris_utils" }
 
 # External Crates
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
 thiserror.workspace = true
 bevy_ecs = "0.15.3"
+tokio = { version = "1.44.1", features = ["full"] }

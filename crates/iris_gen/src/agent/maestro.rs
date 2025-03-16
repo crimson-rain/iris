@@ -1,5 +1,6 @@
 //! `agent/maestro.rs`
 
+use crate::error::IrisGenError;
 use ollama_rs::generation::chat::ChatMessage;
 use super::model::Model;
 
@@ -18,8 +19,9 @@ impl Default for Maestro {
 }
 
 impl Maestro {
-    pub async fn conduct_dialogue_gen(&mut self) -> String {
-        self.model.generate_request("How is your day?", &mut self.history).await.unwrap().message.content
+    pub async fn conduct_dialogue_gen(&mut self, prompt: String) -> Result<String, IrisGenError> {
+        let resp = self.model.generate_request(&prompt, &mut self.history).await?;
+        Ok(resp.message.content)
     }
 
     pub fn conduct_quest_gen(&self) -> String {

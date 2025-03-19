@@ -3,7 +3,7 @@ extends MarginContainer
 @onready var label: Label = $MarginContainer/Label
 @onready var timer: Timer = $LetterDisplayTimer
 
-const MAX_WIDTH: int = 256
+const MAX_WIDTH: int = 512
 
 var text: String = ""
 var letter_index: int = 0
@@ -27,8 +27,8 @@ func display_text(text_to_display: String) -> void:
 		await resized # Resize Y
 		custom_minimum_size.y = size.y
 	
-	global_position.x -= size.x / 2
-	global_position.y -= size.y + 24
+	global_position.x -= (size.x / 2) * scale.x
+	global_position.y -= (size.y + 32) * scale.y
 	
 	label.text = ""
 	_display_letter()

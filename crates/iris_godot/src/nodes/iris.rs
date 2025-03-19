@@ -1,5 +1,5 @@
-use godot::obj::Gd;
-use godot::builtin::GString;
+use godot::obj::{Gd, WithBaseField};
+use godot::builtin::{GString, Variant};
 use godot::classes::{INode, Node};
 use godot::global::godot_print;
 use godot::obj::Base;
@@ -30,13 +30,19 @@ impl INode for Iris {
 }
 
 #[godot_api]
-impl Iris {
+impl Iris { 
     #[func]
     fn process_generated_dialogue(&mut self) {
-        if let Some(reciever) = &mut self.channels.reciever {
-            while let Ok(res) = reciever.try_recv() {
-                godot_print!("{:?}", res);
+        let mut dialogue_arr = Vec::new();
+
+        if let Some(receiver) = &mut self.channels.reciever {
+            while let Ok(res) = receiver.try_recv() {
+                dialogue_arr.push(res);
             }
+        }
+
+        for dialogue in dialogue_arr {
+            self.base_mut().emit_signal("dialogue_generated", &[Variant::from(dialogue)]);
         }
     }
 

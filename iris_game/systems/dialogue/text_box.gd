@@ -19,11 +19,11 @@ func display_text(text_to_display: String) -> void:
 	label.text = text_to_display
 	
 	await resized
-	custom_minimum_size = min(size.x, MAX_WIDTH)
+	custom_minimum_size.x = min(size.x, MAX_WIDTH)
 	
 	if size.x > MAX_WIDTH:
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD
-		await resized # Resize X
+		await resized # Resize Xw
 		await resized # Resize Y
 		custom_minimum_size.y = size.y
 	
@@ -34,9 +34,14 @@ func display_text(text_to_display: String) -> void:
 	_display_letter()
 
 func _display_letter() -> void:
+	if letter_index >= text.length():
+		finished_displaying.emit()
+		return
+
 	label.text += text[letter_index]
 	
 	letter_index += 1
+	
 	if letter_index >= text.length():
 		finished_displaying.emit()
 		return

@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://d08jsb6eg7yky"]
+[gd_scene load_steps=4 format=3 uid="uid://d08jsb6eg7yky"]
 
 [ext_resource type="Script" uid="uid://fswdcig2jbfp" path="res://systems/dialogue/text_box.gd" id="1_1d1oy"]
 [ext_resource type="Texture2D" uid="uid://cr7320ap77otm" path="res://systems/dialogue/data/sprites/dialogue_box.png" id="1_aphp2"]
+[ext_resource type="FontFile" uid="uid://bqv52ocdvugdv" path="res://assets/fonts/vhs-gothic.ttf" id="3_50kdc"]
 
 [node name="TextBox" type="MarginContainer"]
-offset_right = 204.0
-offset_bottom = 52.0
+anchors_preset = -1
+anchor_right = 0.043
+anchor_bottom = 0.025
+offset_right = 49.464
+offset_bottom = 15.8
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_1d1oy")
 metadata/_edit_use_anchors_ = true
@@ -30,10 +34,9 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 15
-text = "Hello, Crimson,
-How are you?
-This is a sample Text to Test the Capabilities of the Model."
+theme_override_fonts/font = ExtResource("3_50kdc")
+theme_override_font_sizes/font_size = 10
+text = "Sample Text"
 vertical_alignment = 1
 
 [node name="LetterDisplayTimer" type="Timer" parent="."]

@@ -7,14 +7,13 @@
 [node name="Town" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("2_ygp28")]
-position = Vector2(-105, 10)
 collision_mask = 3
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
 
 [node name="Mel" parent="." instance=ExtResource("4_37vvx")]
-position = Vector2(150, 6)
+position = Vector2(150, 0)
 collision_mask = 1
 
 [node name="TownTile" parent="." instance=ExtResource("3_aooww")]

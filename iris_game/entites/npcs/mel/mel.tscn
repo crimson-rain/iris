@@ -39,3 +39,5 @@ metadata/_custom_type_script = "uid://kamh7aikg4ab"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_ryxte")
+
+[connection signal="dialogue_generated" from="Iris" to="." method="_on_iris_dialogue_generated"]

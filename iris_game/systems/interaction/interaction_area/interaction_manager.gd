@@ -22,8 +22,8 @@ func _process(_delta: float) -> void:
 		active_areas.sort_custom(_sort_by_nearest)
 		label.text = base_text + active_areas[0].action_name
 		label.global_position = active_areas[0].global_position
-		label.global_position.y -= 36
-		label.global_position.x -= label.size.x / 3.2
+		label.global_position.y += 16
+		label.global_position.x -= label.size.x / 3.3
 		label.show()
 	else:
 		label.hide()

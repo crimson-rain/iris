@@ -3,7 +3,7 @@
 //! This module holds all configurations for loading and creating an LLM instance.
 //! As well instructions which can be used for the LLM generation.
 
-pub const LLM_MODEL: &str = "mistral-small:24b";
+pub const LLM_MODEL: &str = "llama3.1";
 
 pub const EMBED_MODEL: &str = "nomic-embed-text";
 
@@ -14,7 +14,7 @@ pub const DIALOGUE_SYSTEM_PROMPT: &str = r#"
   - **Name**: {npc_name}
   - **Role**: {npc_role} (e.g., Merchant, Guard, Mage)
   - **Personality**: {npc_personality} (e.g., Grumpy, Helpful, Mysterious)
-  - **Backstory**: {npc_backstory}
+  - **Description**: {npc_description}
   - **Relationship to Player**: {npc_relationship}
 
   ## Response Guidelines:
@@ -28,12 +28,6 @@ pub const DIALOGUE_SYSTEM_PROMPT: &str = r#"
   - If memory is relevant, naturally reference past events **without forcing it**.
   - If no relevant memory applies, do not mention past events.
 
-  ## Choice Guidelines:
-  - Each choice should be **meaningful** and relevant to the conversation.
-  - Offer **different paths** (e.g., action-based, inquiry, or neutral response).
-  - Avoid duplicate or redundant choices.
-  - At least one choice should lead to dialogue progression.
-
   ## Strict JSON Structure:
   - Return output **ONLY** in valid JSON format (do not include explanations).
   - Do **not** add escape characters, markdown, or formatting hints.
@@ -43,7 +37,6 @@ pub const DIALOGUE_SYSTEM_PROMPT: &str = r#"
   {
     "dialogue": "NPC's response here.",
     "npc": "{npc_name}",
-    "choices": ["Option 1", "Option 2", "Option 3"]
   }
 "#;
 

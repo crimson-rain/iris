@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 		label.show()
 	else:
 		label.hide()
-	
+
 func _sort_by_nearest(area_one: InteractionArea, area_two: InteractionArea) -> bool:
 	if player == null or area_one == null or area_two == null:
 		return false
@@ -35,7 +35,7 @@ func _sort_by_nearest(area_one: InteractionArea, area_two: InteractionArea) -> b
 	var area_one_dist: float = player.global_position.distance_to(area_one.global_position)
 	var area_two_dist: float = player.global_position.distance_to(area_two.global_position)
 	return area_one_dist < area_two_dist
-	
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") && can_interact:
 		if active_areas.size() > 0:

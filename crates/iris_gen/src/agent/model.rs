@@ -1,5 +1,7 @@
 //! `agent/model.rs`
 
+use ollama_rs::coordinator::Coordinator;
+use ollama_rs::generation::tools::ToolGroup;
 use ollama_rs::Ollama;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
@@ -57,6 +59,27 @@ impl Model {
 
         let res = self.ollama.generate_embeddings(req).await?;
 
+        Ok(res)
+    }
+
+    pub async fn generate_request_with_tools<T: ToolGroup>(
+        &self,
+        prompt: &str,
+        mut history: Vec<ChatMessage>,
+        tools: T, 
+    ) -> Result<ChatMessageResponse, IrisGenError> {
+        // TODO - Perhaps move this into Maestro.
+
+        if history.is_empty() {
+            history.push(ChatMessage::system(DIALOGUE_SYSTEM_PROMPT.to_string()));
+        }
+
+        let mut coordinator = Coordinator::new_with_tools(self.ollama.clone(), self.llm_model.clone(), history, tools);
+
+        let formatted_prompt = ChatMessage::user(prompt.to_owned());
+
+        let res = coordinator.chat(vec![formatted_prompt]).await?;
+        
         Ok(res)
     }
 }

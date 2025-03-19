@@ -1,7 +1,7 @@
 extends Area2D
 class_name InteractionArea
 
-@export var action_name: String = "interact"
+@export var action_name: String = "Talk"
 
 var interact: Callable = func() -> void:
 	pass
@@ -12,8 +12,6 @@ func _ready() -> void:
 
 func _on_body_entered(_body: CharacterBody2D) -> void:
 	InteractionManager.register_area(self)
-	print("Entered")
 
 func _on_body_exited(_body: CharacterBody2D) -> void:
 	InteractionManager.unregister_area(self)
-	print("Exited")

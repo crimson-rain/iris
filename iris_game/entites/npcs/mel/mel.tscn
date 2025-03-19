@@ -1,12 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bpu36j4d52byx"]
+[gd_scene load_steps=6 format=3 uid="uid://bpu36j4d52byx"]
 
 [ext_resource type="Script" uid="uid://btp2jy08wohwd" path="res://entites/npcs/mel/mel.gd" id="1_8pco5"]
 [ext_resource type="Texture2D" uid="uid://dlv6mn3mkb1ss" path="res://entites/npcs/mel/data/sprite/character_6_frame32x32.png" id="1_lj4tc"]
 [ext_resource type="Script" uid="uid://kamh7aikg4ab" path="res://systems/interaction/interaction_area/interaction_area.gd" id="4_ryxte"]
-
-[sub_resource type="GDScript" id="GDScript_8pco5"]
-script/source = "extends Iris
-"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3yce"]
 height = 22.0
@@ -15,12 +11,16 @@ height = 22.0
 radius = 75.2396
 
 [node name="Mel" type="NPC"]
+id = "Mel"
+role = "Bard"
+personality = "Cheerful"
+description = "A Cheerful and Charasmatic Bard"
+relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_8pco5")
 
 [node name="Iris" type="Iris" parent="."]
-script = SubResource("GDScript_8pco5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)

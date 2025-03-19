@@ -6,6 +6,7 @@ reloadable = true
 
 [icons]
 Iris = "res://assets/icons/iris.svg"
+NPC = "res://assets/icons/npc.png"
 
 [libraries]
 linux.debug.x86_64 =     "res://../target/debug/libiris.so"

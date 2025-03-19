@@ -1,6 +1,7 @@
 //! `agent/tools.rs`
 //!
 //! WIP - Work in Progress: To be Completed.
+//! - Implement a larger Variety.
 
 #![allow(unused)]
 
@@ -8,7 +9,7 @@
 ///
 /// * city - City to get the weather for.
 #[ollama_rs_macros::function]
-async fn get_weather(city: String) -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
+pub async fn get_weather(city: String) -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
     Ok(reqwest::get(format!("https://wttr.in/{city}?format=%C+%t"))
         .await?
         .text()
@@ -17,13 +18,13 @@ async fn get_weather(city: String) -> Result<String, Box<dyn std::error::Error +
 
 /// Get the CPU temperature in Celsius.
 #[ollama_rs_macros::function]
-async fn get_cpu_temperature() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
+pub async fn get_cpu_temperature() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
     Ok("42.7".to_string())
 }
 
 /// Get Foo and returns bar.
 #[ollama_rs_macros::function]
-async fn get_foo() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
+pub async fn get_foo() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
     Ok("LLM Generated Bar!".to_string())
 } 
 

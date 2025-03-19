@@ -41,15 +41,17 @@ impl Iris {
     }
 
     #[func]
-    pub fn generate_dialogue(&self) {
+    pub fn generate_dialogue(&self, prompt: String, npc_data: String) {
         let sender = self.channels.sender.clone();
 
         std::thread::spawn(move || {
             let runtime = Runtime::new().expect("Failed to Create a Tokio Runtime");
             runtime.block_on(async move {
                 let mut maestro = Maestro::default();
-
-                if let Ok(res) = maestro.conduct_dialogue_gen("Hello, How are you? Also what's the weather in Tokyo?".to_string()).await {
+                
+                // Format NPC Data and Prompt and Generate Dialogue
+                let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
+                if let Ok(res) = maestro.conduct_dialogue_gen(formatted_prompt).await {
                     if let Some(sender) = sender {
                         let _ = sender.send(res).await;
                     }

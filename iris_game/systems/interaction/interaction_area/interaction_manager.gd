@@ -1,3 +1,10 @@
+# interaction_manager.gd | 19.03.2025
+#
+# DESCRIPTION
+# The interaction manager is responsible for allowing two objects to interact,
+# as well as organize multiple objects which can interact by prioritizing the one closest to the
+# player.
+
 extends Node2D
 
 @onready var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")

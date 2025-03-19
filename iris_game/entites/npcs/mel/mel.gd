@@ -1,3 +1,7 @@
+# mel.gd | 19.03.2025
+# 
+# NPC script for Mel
+
 extends NPC
 
 @onready var iris: Iris = $Iris

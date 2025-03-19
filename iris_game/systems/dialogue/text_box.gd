@@ -1,3 +1,8 @@
+# text_box.gd | 19.03.2025
+# 
+# Handles the logic for rendering and displaying the text box as well as displaying text box.
+# Also responsible for re-sizing and scaling the text box to fit text.
+
 extends MarginContainer
 
 @onready var label: Label = $MarginContainer/Label
@@ -28,7 +33,7 @@ func display_text(text_to_display: String) -> void:
 		custom_minimum_size.y = size.y
 	
 	global_position.x -= (size.x / 2) * scale.x
-	global_position.y -= (size.y + 32) * scale.y
+	global_position.y -= (size.y + 48) * scale.y
 	
 	label.text = ""
 	_display_letter()

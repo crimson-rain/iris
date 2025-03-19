@@ -1,3 +1,9 @@
+# interaction_area.gd | 19.03.2025
+#
+# DESCRIPTION
+# Interaction area allows for players to interact with certain entites.
+# This section handles the registering and de-registering of CharacterBody2D entering the area.
+
 extends Area2D
 class_name InteractionArea
 

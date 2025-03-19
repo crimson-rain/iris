@@ -1,3 +1,10 @@
+# dialogue_manager.gd | 19.03.2025
+#
+# DESCRIPTION
+# Dialogue Managers handles the displaying and rendering of dialogue.
+# This is a universal function and can be used to display either pre-written or dynamically generated dialogues.
+# It will scale correctly, and will be display above an entities global position.
+
 extends Node
 
 @onready var text_box_scene: PackedScene = preload("res://systems/dialogue/text_box.tscn")

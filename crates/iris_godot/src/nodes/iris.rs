@@ -1,10 +1,10 @@
-use godot::obj::{Gd, WithBaseField};
 use godot::builtin::{GString, Variant};
 use godot::classes::{INode, Node};
 use godot::global::godot_print;
-use godot::obj::Base;
+use godot::obj::{Base, Gd, WithBaseField};
 use godot::prelude::{GodotClass, godot_api};
 use iris_gen::agent::maestro::Maestro;
+use iris_utils::constructs::Dialogue;
 use iris_utils::asyn::channels::Channels;
 use tokio::runtime::Runtime;
 
@@ -12,7 +12,7 @@ use tokio::runtime::Runtime;
 #[class(base=Node)]
 struct Iris {
     channels: Channels<String>,
-    base: Base<Node>, 
+    base: Base<Node>,
 }
 
 #[godot_api]
@@ -20,7 +20,7 @@ impl INode for Iris {
     fn init(base: Base<Node>) -> Self {
         Iris {
             channels: Channels::default(),
-            base
+            base,
         }
     }
 
@@ -30,19 +30,20 @@ impl INode for Iris {
 }
 
 #[godot_api]
-impl Iris { 
+impl Iris {
     #[func]
     fn process_generated_dialogue(&mut self) {
-        let mut dialogue_arr = Vec::new();
+        let mut dialogue_arr: Vec<Dialogue> = Vec::new();
 
         if let Some(receiver) = &mut self.channels.reciever {
             while let Ok(res) = receiver.try_recv() {
-                dialogue_arr.push(res);
+                dialogue_arr.push(serde_json::from_str(&res).unwrap());
             }
         }
 
         for dialogue in dialogue_arr {
-            self.base_mut().emit_signal("dialogue_generated", &[Variant::from(dialogue)]);
+            self.base_mut()
+                .emit_signal("dialogue_generated", &[Variant::from(dialogue.dialogue)]);
         }
     }
 
@@ -54,7 +55,7 @@ impl Iris {
             let runtime = Runtime::new().expect("Failed to Create a Tokio Runtime");
             runtime.block_on(async move {
                 let mut maestro = Maestro::default();
-                
+
                 // Format NPC Data and Prompt and Generate Dialogue
                 let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
                 if let Ok(res) = maestro.conduct_dialogue_gen(formatted_prompt).await {

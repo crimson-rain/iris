@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcxahmp5rltfj"]
+
+[ext_resource type="FontFile" uid="uid://bqv52ocdvugdv" path="res://assets/fonts/vhs-gothic.ttf" id="1_lna5q"]
+
+[node name="ChatBox" type="MarginContainer"]
+offset_right = 420.0
+offset_bottom = 36.0
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_lna5q")
+placeholder_text = "Type here..."

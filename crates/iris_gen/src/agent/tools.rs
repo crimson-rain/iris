@@ -26,7 +26,7 @@ pub async fn get_cpu_temperature() -> Result<String, Box<dyn std::error::Error +
 #[ollama_rs_macros::function]
 pub async fn get_foo() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
     Ok("LLM Generated Bar!".to_string())
-} 
+}
 
 #[cfg(test)]
 mod tests {
@@ -47,10 +47,7 @@ mod tests {
         let mut coordinator =
             Coordinator::new_with_tools(ollama, "mistral-small:24b".to_string(), history, tools);
 
-        let user_messages = vec![
-            "Can I get the weather for a city please?",
-            "Dhaka",
-        ];
+        let user_messages = vec!["Can I get the weather for a city please?", "Dhaka"];
 
         for user_message in user_messages {
             println!("User: {user_message}");

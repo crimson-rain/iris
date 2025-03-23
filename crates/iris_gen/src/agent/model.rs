@@ -1,12 +1,12 @@
 //! `agent/model.rs`
 
-use ollama_rs::coordinator::Coordinator;
-use ollama_rs::generation::tools::ToolGroup;
 use ollama_rs::Ollama;
+use ollama_rs::coordinator::Coordinator;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
 use ollama_rs::generation::embeddings::GenerateEmbeddingsResponse;
 use ollama_rs::generation::embeddings::request::GenerateEmbeddingsRequest;
+use ollama_rs::generation::tools::ToolGroup;
 
 use crate::error::IrisGenError;
 
@@ -66,7 +66,7 @@ impl Model {
         &self,
         prompt: &str,
         mut history: Vec<ChatMessage>,
-        tools: T, 
+        tools: T,
     ) -> Result<ChatMessageResponse, IrisGenError> {
         // TODO - Perhaps move this into Maestro.
 
@@ -74,12 +74,17 @@ impl Model {
             history.push(ChatMessage::system(DIALOGUE_SYSTEM_PROMPT.to_string()));
         }
 
-        let mut coordinator = Coordinator::new_with_tools(self.ollama.clone(), self.llm_model.clone(), history, tools);
+        let mut coordinator = Coordinator::new_with_tools(
+            self.ollama.clone(),
+            self.llm_model.clone(),
+            history,
+            tools,
+        );
 
         let formatted_prompt = ChatMessage::user(prompt.to_owned());
 
         let res = coordinator.chat(vec![formatted_prompt]).await?;
-        
+
         Ok(res)
     }
 }
@@ -114,6 +119,6 @@ mod tests {
 
         let generated_embedding = model.generate_embeddings(raw_text).await;
 
-        assert!(generated_embedding.is_ok(), "Failed to Generate Embeddings"); 
+        assert!(generated_embedding.is_ok(), "Failed to Generate Embeddings");
     }
 }

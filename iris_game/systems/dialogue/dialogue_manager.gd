@@ -7,6 +7,8 @@
 
 extends Node
 
+signal user_responded(response: String)
+
 @onready var text_box_scene: PackedScene = preload("res://systems/dialogue/text_box.tscn")
 @onready var chat_box_scene: PackedScene = preload("res://systems/text_input/text_input.tscn")
 
@@ -16,11 +18,15 @@ var current_line_index: int = 0
 var text_box: Control
 var text_box_position: Vector2
 
+var chat_box: Control
+
 var is_dialogue_active: bool = false
 var can_advance_line: bool = false
 var chat_box_active: bool = false  # Prevent multiple chat boxes
 
 func start_dialogue(position: Vector2, lines: Array[String]) -> void:
+	print("Completed Dialogue Generation [Dialogue]: ", lines)
+	
 	if is_dialogue_active or chat_box_active:  # Prevent restarting if chat is active
 		return
 	
@@ -34,12 +40,16 @@ func _show_text_box() -> void:
 	if current_line_index >= dialogue_line.size():
 		_end_dialogue()
 		return
-	
+
+	print("Adding text box to the scene tree")
 	text_box = text_box_scene.instantiate()
 	text_box.finished_displaying.connect(_on_text_box_finished_displaying)
 	get_tree().root.add_child(text_box)
 	text_box.global_position = text_box_position
+
+	print("Sending text to text box: ", dialogue_line[current_line_index])
 	text_box.display_text(dialogue_line[current_line_index])
+
 	can_advance_line = false
 
 func _on_text_box_finished_displaying() -> void:
@@ -58,6 +68,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func _end_dialogue() -> void:
 	is_dialogue_active = false
 	can_advance_line = false
+	
+	if text_box and is_instance_valid(text_box):
+		text_box.queue_free()
+		text_box = null
+	
 	_show_chat_box()  # Display chat box when dialogue ends
 
 func _show_chat_box() -> void:
@@ -66,6 +81,12 @@ func _show_chat_box() -> void:
 		return 
 	
 	chat_box_active = true
-	var chat_box: Control = chat_box_scene.instantiate()
+	chat_box = chat_box_scene.instantiate()
 	get_tree().root.add_child(chat_box)
+	chat_box.generated_dialogue.connect(_process_user_response)
 	chat_box.global_position = text_box_position
+
+func _process_user_response(response: String) -> void:
+	chat_box_active = false
+	chat_box.queue_free()
+	user_responded.emit(response)

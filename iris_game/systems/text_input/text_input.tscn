@@ -1,12 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c48u2v4m5i0hs"]
+[gd_scene load_steps=3 format=3 uid="uid://c48u2v4m5i0hs"]
 
 [ext_resource type="FontFile" uid="uid://bqv52ocdvugdv" path="res://assets/fonts/vhs-gothic.ttf" id="1_0a00w"]
+[ext_resource type="Script" uid="uid://c7vdqykx126do" path="res://systems/text_input/text_input.gd" id="1_rfuhp"]
 
 [node name="TextInput" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+script = ExtResource("1_rfuhp")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -17,7 +19,7 @@ offset_bottom = 8.0
 layout_mode = 2
 
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 25)
+custom_minimum_size = Vector2(100, 20)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_0a00w")
 theme_override_font_sizes/font_size = 10
@@ -25,3 +27,5 @@ theme_override_font_sizes/font_size = 10
 [node name="Button" type="Button" parent="MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]

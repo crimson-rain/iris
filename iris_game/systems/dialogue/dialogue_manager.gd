@@ -8,6 +8,7 @@
 extends Node
 
 @onready var text_box_scene: PackedScene = preload("res://systems/dialogue/text_box.tscn")
+@onready var chat_box_scene: PackedScene = preload("res://systems/text_input/text_input.tscn")
 
 var dialogue_line: Array[String] = []
 var current_line_index: int = 0
@@ -17,18 +18,23 @@ var text_box_position: Vector2
 
 var is_dialogue_active: bool = false
 var can_advance_line: bool = false
+var chat_box_active: bool = false  # Prevent multiple chat boxes
 
 func start_dialogue(position: Vector2, lines: Array[String]) -> void:
-	if is_dialogue_active:
+	if is_dialogue_active or chat_box_active:  # Prevent restarting if chat is active
 		return
 	
 	dialogue_line = lines
 	text_box_position = position
-	_show_text_box()
-	
+	current_line_index = 0  # Reset to avoid repeats
 	is_dialogue_active = true
+	_show_text_box()
 
 func _show_text_box() -> void:
+	if current_line_index >= dialogue_line.size():
+		_end_dialogue()
+		return
+	
 	text_box = text_box_scene.instantiate()
 	text_box.finished_displaying.connect(_on_text_box_finished_displaying)
 	get_tree().root.add_child(text_box)
@@ -40,17 +46,26 @@ func _on_text_box_finished_displaying() -> void:
 	can_advance_line = true
 
 func _unhandled_input(event: InputEvent) -> void:
-	if (
-		event.is_action_pressed("continue") &&
-		is_dialogue_active &&
-		can_advance_line
-	):
+	if event.is_action_pressed("continue") and is_dialogue_active and can_advance_line:
 		text_box.queue_free()
 		
 		current_line_index += 1
 		if current_line_index >= dialogue_line.size():
-			is_dialogue_active = false
-			current_line_index = 0
-			return
-		
-		_show_text_box()
+			_end_dialogue()
+		else:
+			_show_text_box()
+
+func _end_dialogue() -> void:
+	is_dialogue_active = false
+	can_advance_line = false
+	_show_chat_box()  # Display chat box when dialogue ends
+
+func _show_chat_box() -> void:
+	# Prevents Multiple Chats
+	if chat_box_active:
+		return 
+	
+	chat_box_active = true
+	var chat_box: Control = chat_box_scene.instantiate()
+	get_tree().root.add_child(chat_box)
+	chat_box.global_position = text_box_position

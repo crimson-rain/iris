@@ -42,7 +42,7 @@ func _display_letter() -> void:
 	if letter_index >= text.length():
 		finished_displaying.emit()
 		return
-
+	
 	label.text += text[letter_index]
 	
 	letter_index += 1
@@ -58,7 +58,6 @@ func _display_letter() -> void:
 			timer.start(space_time)
 		_:
 			timer.start(letter_time)
-
 
 func _on_letter_display_timer_timeout() -> void:
 	_display_letter()

@@ -14,6 +14,9 @@ func _physics_process(_delta: float) -> void:
 
 ## Handles the Movement of the Player Currently Manages 4-D Movement
 func movement() -> void:
+	if DialogueManager.is_dialogue_active or DialogueManager.chat_box_active:
+		return
+	
 	var direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if direction == Vector2.ZERO:

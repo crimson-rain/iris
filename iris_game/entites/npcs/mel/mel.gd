@@ -1,6 +1,6 @@
 # mel.gd | 19.03.2025
 # 
-# NPC script for Mel
+# NPC Script for Mel, can be exapanded so that it can be globally used by all NPCs, requires renaming.
 
 extends NPC
 
@@ -12,9 +12,12 @@ func _ready() -> void:
 	DialogueManager.user_responded.connect(_handle_user_response)
 	
 func _on_interact(prompt: String) -> void:
+	if DialogueManager.is_dialogue_active or DialogueManager.chat_box_active:
+		return
+	
 	iris.generate_dialogue(prompt, self.get_npc())
 
-# Currently, using an Array to Parse Response to Dialogue Manager, instead of just Parsing String Fix this Later
+# Remove the need for an array or keep it?
 func _on_iris_dialogue_generated(response: String) -> void:
 	DialogueManager.start_dialogue(self.position, [response])
 

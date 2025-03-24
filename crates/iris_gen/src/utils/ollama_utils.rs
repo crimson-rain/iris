@@ -22,6 +22,8 @@ pub async fn load_model_info(
 
 #[cfg(test)]
 mod tests {
+    use crate::agent::configs::LLM_MODEL;
+
     use super::*;
 
     #[tokio::test]
@@ -36,7 +38,7 @@ mod tests {
     async fn get_model_info() {
         let ollama = Ollama::default();
 
-        let models = load_model_info(&ollama, "phi4-mini".to_string())
+        let models = load_model_info(&ollama, LLM_MODEL.to_string())
             .await
             .unwrap();
         println!("{:?}", models.template)

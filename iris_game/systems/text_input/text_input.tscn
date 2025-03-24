@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c48u2v4m5i0hs"]
+[gd_scene load_steps=7 format=3 uid="uid://c48u2v4m5i0hs"]
 
 [ext_resource type="FontFile" uid="uid://bqv52ocdvugdv" path="res://assets/fonts/vhs-gothic.ttf" id="1_0a00w"]
 [ext_resource type="Script" uid="uid://c7vdqykx126do" path="res://systems/text_input/text_input.gd" id="1_rfuhp"]
+[ext_resource type="Texture2D" uid="uid://digrl15lbrgab" path="res://assets/icons/reply.svg" id="3_elpnn"]
+[ext_resource type="Texture2D" uid="uid://cjfiqehsfxuu1" path="res://assets/icons/exit.svg" id="4_8hufg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_elpnn"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hufg"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="TextInput" type="Control"]
 layout_mode = 3
@@ -12,20 +20,47 @@ script = ExtResource("1_rfuhp")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_right = 244.0
-offset_bottom = 8.0
+offset_right = 124.0
+offset_bottom = 20.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 20)
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
+theme_override_colors/background_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(0.500095, 0.500095, 0.500095, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_0a00w")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 4
+placeholder_text = "Type Here..."
 
-[node name="Button" type="Button" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(20, 0)
+[node name="SubmitButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 25)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/icon_max_width = 10
+theme_override_fonts/font = ExtResource("1_0a00w")
+theme_override_font_sizes/font_size = 4
+theme_override_styles/focus = SubResource("StyleBoxFlat_elpnn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8hufg")
+icon = ExtResource("3_elpnn")
+icon_alignment = 1
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="ExitButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/icon_max_width = 10
+theme_override_fonts/font = ExtResource("1_0a00w")
+theme_override_font_sizes/font_size = 4
+theme_override_styles/focus = SubResource("StyleBoxFlat_elpnn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8hufg")
+icon = ExtResource("4_8hufg")
+icon_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

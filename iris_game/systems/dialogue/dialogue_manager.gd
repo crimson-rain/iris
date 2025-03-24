@@ -84,9 +84,14 @@ func _show_chat_box() -> void:
 	chat_box = chat_box_scene.instantiate()
 	get_tree().root.add_child(chat_box)
 	chat_box.generated_dialogue.connect(_process_user_response)
+	chat_box.exit_signal.connect(_process_exit_signal)
 	chat_box.global_position = text_box_position
 
 func _process_user_response(response: String) -> void:
 	chat_box_active = false
 	chat_box.queue_free()
 	user_responded.emit(response)
+
+func _process_exit_signal() -> void:
+	chat_box_active = false
+	chat_box.queue_free()

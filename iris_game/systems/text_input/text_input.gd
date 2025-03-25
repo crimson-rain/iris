@@ -1,3 +1,7 @@
+# text_input.gd | 19.03.2025
+# 
+# 
+
 extends Control
 
 @onready var text_edit: TextEdit = $MarginContainer/HBoxContainer/TextEdit

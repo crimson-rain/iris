@@ -6,6 +6,6 @@
 //! as well as accessing external data using vector stores.
 
 pub mod agent;
-pub mod rag;
 pub mod error;
+pub mod rag;
 pub mod utils;

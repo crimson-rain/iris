@@ -44,7 +44,12 @@ mod tests {
     async fn test_conduct_dialogue_gen() {
         let mut maestro = Maestro::default();
 
-        assert!(maestro.conduct_dialogue_gen("What is the Weather in Tokyo?".to_string()).await.is_ok());
+        assert!(
+            maestro
+                .conduct_dialogue_gen("What is the Weather in Tokyo?".to_string())
+                .await
+                .is_ok()
+        );
     }
 
     #[tokio::test]

@@ -36,6 +36,8 @@ mod tests {
     use ollama_rs::coordinator::Coordinator;
     use ollama_rs::generation::chat::ChatMessage;
 
+    use crate::agent::configs::LLM_MODEL;
+
     use super::*;
 
     #[tokio::test]
@@ -45,7 +47,7 @@ mod tests {
         let tools = ollama_rs_macros::tool_group![get_weather, get_cpu_temperature, get_foo];
 
         let mut coordinator =
-            Coordinator::new_with_tools(ollama, "mistral-small:24b".to_string(), history, tools);
+            Coordinator::new_with_tools(ollama, LLM_MODEL.to_string(), history, tools);
 
         let user_messages = vec!["Can I get the weather for a city please?", "Dhaka"];
 

@@ -31,7 +31,25 @@ impl Maestro {
         Ok(resp.message.content)
     }
 
-    pub fn conduct_quest_gen(&self) -> String {
-        "Conducted Quest Generation".to_string()
+    pub async fn conduct_quest_gen(&self) -> Result<String, IrisGenError> {
+        Ok("Conducted Quest Generation".to_string())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_conduct_dialogue_gen() {
+        let mut maestro = Maestro::default();
+
+        assert!(maestro.conduct_dialogue_gen("What is the Weather in Tokyo?".to_string()).await.is_ok());
+    }
+
+    #[tokio::test]
+    async fn test_conduct_quest_gen() {
+        let maestro = Maestro::default();
+        assert!(maestro.conduct_quest_gen().await.is_ok())
     }
 }

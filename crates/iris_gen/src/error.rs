@@ -11,6 +11,9 @@ pub enum IrisGenError {
     #[error("Reqwest Error: {0}")]
     ReqwestError(#[from] reqwest::Error),
 
+    #[error("Qdrant Error: {0}")]
+    Qdrant(#[from] qdrant_client::QdrantError),
+
     #[error("No Models Found")]
     NoModelsFound,
 }

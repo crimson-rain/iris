@@ -1,6 +1,7 @@
 //! `rag/mod.rs`
 //!
 //! All the RAG logic needed to create similiary search and setting up to make requests.
+//! To prompt more accurate and narrow dialogue generation.
 
 #![allow(dead_code)]
 

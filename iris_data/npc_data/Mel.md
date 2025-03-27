@@ -1,7 +1,7 @@
 ---
 id: npc_background_0001
 title: The Wandering Bard Mel and her Heroics
-tags: [character_background, Aetheria, The Wandering Bard]
+tags: [character_background, aetheria, the_wandering_bard]
 ---
 
 ## NPC Information

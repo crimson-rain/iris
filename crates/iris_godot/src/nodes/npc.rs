@@ -37,7 +37,7 @@ impl ICharacterBody2D for NPC {
 #[godot_api]
 impl NPC {
     #[func]
-    pub fn get_npc(&self) -> String {
+    pub fn get_npc_info(&self) -> String {
         format!(
             "ID: {}, Role: {}, Personality: {}, Description: {}, Relation To Player: {}",
             self.id, self.role, self.personality, self.description, self.relation_to_player

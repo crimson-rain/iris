@@ -7,8 +7,10 @@
 
 use qdrant_client::Qdrant;
 use qdrant_client::qdrant::{
-    CreateCollection, CreateCollectionBuilder, Distance, PointStruct, UpsertPointsBuilder, VectorParamsBuilder
+    CreateCollection, CreateCollectionBuilder, Distance, PointStruct, UpsertPointsBuilder,
+    VectorParamsBuilder,
 };
+
 use tokio::fs;
 use tokio::io::AsyncReadExt;
 
@@ -66,8 +68,6 @@ async fn add_vectors() -> Result<(), IrisGenError> {
         .upsert_points(UpsertPointsBuilder::new("test_collection", points))
         .await?;
 
-
-
     dbg!(response);
     Ok(())
 }
@@ -78,7 +78,7 @@ async fn collection_info() -> Result<(), IrisGenError> {
         .build()?;
 
     let collection_list = client.list_collections().await?;
-    
+
     dbg!(collection_list);
 
     Ok(())
@@ -90,14 +90,11 @@ async fn create_npc_collection() -> Result<(), IrisGenError> {
         .build()?;
 
     if client.collection_exists("npc_collection").await? {
-        return Ok(())
+        return Ok(());
     }
 
-
-
     Ok(())
-} 
-
+}
 
 async fn load_npc_data(folder: &str) -> Result<Vec<(String, String)>, Box<dyn std::error::Error>> {
     let mut npc_data = Vec::new();
@@ -106,9 +103,7 @@ async fn load_npc_data(folder: &str) -> Result<Vec<(String, String)>, Box<dyn st
     while let Some(entry) = dir.next_entry().await? {
         let path = entry.path();
         if path.is_file() {
-            let mut file = fs::File::open(&path).await?;
-            let mut content = String::new();
-            file.read_to_string(&mut content).await?;
+            let content = fs::read_to_string(&path).await?;
             let filename = path.file_name().unwrap().to_string_lossy().to_string();
             npc_data.push((filename, content));
         }
@@ -134,5 +129,15 @@ mod tests {
     #[tokio::test]
     async fn list_collections() {
         assert!(collection_info().await.is_ok());
+    }
+
+    #[tokio::test]
+    async fn test_load_data() {
+        let folder = "C:/Archive/iris/iris_data/npc_data";
+
+        let npc_data = load_npc_data(&folder).await;
+
+        println!("{:?}", &npc_data);
+        assert!(npc_data.is_ok())
     }
 }

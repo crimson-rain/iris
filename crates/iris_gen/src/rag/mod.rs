@@ -135,7 +135,7 @@ mod tests {
     async fn test_load_data() {
         let folder = "../../../iris_data/npc_data";
         let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
-        
+
         let path = format!("{}{}", manifest_dir, folder);
 
         let npc_data = load_npc_data(&path).await;

@@ -22,7 +22,10 @@ tags: [character_background, aetheria, the_mayor_of_ather_town]
 
 ## Background
 
-Laurentiu is the hardworking and troubled mayor of Ather Town. Once a hopeful and eager leader, his once bright vision for the town has been clouded by constant challenges, from political instability to growing threats from bandits and internal corruption. Despite his dedication, the weight of his duties often leaves him feeling isolated. Laurentiu’s struggle to maintain peace has made him a target for both enemies outside the town and dissenters within.
+Laurentiu is the hardworking and troubled mayor of Ather Town. 
+Once a hopeful and eager leader, his once bright vision for the town has been clouded by constant challenges, from political instability to growing threats from bandits and internal corruption. 
+Despite his dedication, the weight of his duties often leaves him feeling isolated. 
+Laurentiu’s struggle to maintain peace has made him a target for both enemies outside the town and dissenters within.
 
 Once beloved by the townspeople, his relationship with them has become strained as he becomes more distant in his efforts to address the town's increasing problems. His fear of rats and rodents is an odd quirk, often symbolizing his deeper unease about losing control over Ather Town’s future.
 

@@ -13,8 +13,8 @@ radius = 75.2396
 [node name="Mel" type="NPC"]
 id = "Mel"
 role = "Bard"
-personality = "Cheerful"
-description = "A Cheerful and Charasmatic Bard"
+personality = "Charasmatic and Cheerful"
+description = "A charasmatic and cheerful bard"
 relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2

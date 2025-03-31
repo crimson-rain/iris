@@ -5,7 +5,7 @@
 
 #![allow(unused)]
 
-/// Get the weather for a given city.
+/// Get the temperature and weather for a given city.
 ///
 /// * city - City to get the weather for.
 #[ollama_rs_macros::function]
@@ -14,12 +14,6 @@ pub async fn get_weather(city: String) -> Result<String, Box<dyn std::error::Err
         .await?
         .text()
         .await?)
-}
-
-/// Get the CPU temperature in Celsius.
-#[ollama_rs_macros::function]
-pub async fn get_cpu_temperature() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
-    Ok("42.7".to_string())
 }
 
 /// Get Foo and returns bar.
@@ -44,8 +38,7 @@ mod tests {
     async fn test_tool() {
         let ollama = Ollama::default();
         let history = vec![];
-        let tools = ollama_rs_macros::tool_group![get_weather, get_cpu_temperature, get_foo];
-
+        let tools = ollama_rs_macros::tool_group![get_weather, get_foo];
         let mut coordinator =
             Coordinator::new_with_tools(ollama, LLM_MODEL.to_string(), history, tools);
 

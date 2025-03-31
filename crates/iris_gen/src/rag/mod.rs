@@ -7,12 +7,11 @@
 
 use qdrant_client::Qdrant;
 use qdrant_client::qdrant::{
-    CreateCollection, CreateCollectionBuilder, Distance, PointStruct, UpsertPointsBuilder,
+    CreateCollectionBuilder, PointStruct, UpsertPointsBuilder,
     VectorParamsBuilder,
 };
 
 use tokio::fs;
-use tokio::io::AsyncReadExt;
 
 use crate::error::IrisGenError;
 

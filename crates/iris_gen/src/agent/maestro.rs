@@ -23,11 +23,14 @@ impl Default for Maestro {
 
 impl Maestro {
     pub async fn conduct_dialogue_gen(&mut self, prompt: String) -> Result<String, IrisGenError> {
-        let tools = tool_group![super::tools::get_weather, super::tools::get_cpu_temperature];
+        let tools = tool_group![super::tools::get_weather];
         let resp = self
             .model
             .generate_request_with_tools(&prompt, self.history.clone(), tools)
             .await?;
+
+        self.history.push(resp.message.clone());
+
         Ok(resp.message.content)
     }
 

@@ -37,6 +37,11 @@ impl Maestro {
     pub async fn conduct_quest_gen(&self) -> Result<String, IrisGenError> {
         Ok("Conducted Quest Generation".to_string())
     }
+
+    pub async fn conduct_embed_gen(&self, data: String) -> Result<Vec<Vec<f32>>, IrisGenError> {
+        let embeds = self.model.generate_embeddings(&data).await.unwrap();
+        Ok(embeds.embeddings)
+    }
 }
 
 #[cfg(test)]

@@ -42,19 +42,17 @@ async fn create_collection() -> Result<(), IrisGenError> {
 
     println!("Collection Created Successfully");
 
-    add_vectors().await?;
-
     Ok(())
 }
 
-async fn add_vectors() -> Result<(), IrisGenError> {
+async fn add_vectors(data: Vec<String>, embeds: Vec<f32>) -> Result<(), IrisGenError> {
     let client = Qdrant::from_url("http://localhost:6334")
         .skip_compatibility_check()
         .build()?;
 
     let points = vec![PointStruct::new(
         42,
-        vec![0.0_f32; 512],
+        vec![0.0_f32; 768],
         [
             ("great", true.into()),
             ("level", 9000.into()),
@@ -95,7 +93,7 @@ async fn create_npc_collection() -> Result<(), IrisGenError> {
     Ok(())
 }
 
-async fn load_npc_data(folder: &str) -> Result<Vec<(String, String)>, Box<dyn std::error::Error>> {
+async fn load_npc_data(folder: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
     let mut npc_data = Vec::new();
     let mut dir = fs::read_dir(folder).await?;
 
@@ -103,8 +101,7 @@ async fn load_npc_data(folder: &str) -> Result<Vec<(String, String)>, Box<dyn st
         let path = entry.path();
         if path.is_file() {
             let content = fs::read_to_string(&path).await?;
-            let filename = path.file_name().unwrap().to_string_lossy().to_string();
-            npc_data.push((filename, content));
+            npc_data.push(content);
         }
     }
 
@@ -113,6 +110,10 @@ async fn load_npc_data(folder: &str) -> Result<Vec<(String, String)>, Box<dyn st
 
 #[cfg(test)]
 mod tests {
+    use qdrant_client::qdrant::SearchPointsBuilder;
+
+    use crate::agent::maestro;
+
     use super::*;
 
     #[tokio::test]
@@ -132,13 +133,76 @@ mod tests {
 
     #[tokio::test]
     async fn test_load_data() {
-        let folder = "../../../iris_data/npc_data";
+        let folder_dir = "../../../iris_data/npc_data";
         let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
 
-        let path = format!("{}{}", manifest_dir, folder);
+        let path = format!("{}{}", manifest_dir, folder_dir);
 
         let npc_data = load_npc_data(&path).await;
 
         assert!(npc_data.is_ok())
+    }
+
+    #[tokio::test]
+    async fn test_load_data_to_qdrant() {
+        // Load NPC Data
+        let folder_dir = "../../../iris_data/npc_data";
+        let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
+
+        let path = format!("{}{}", manifest_dir, folder_dir);
+        
+        let npc_data = load_npc_data(&path).await.unwrap();
+
+        // Create NPC Collection in Qdrant
+        let client = Qdrant::from_url("http://localhost:6334")
+            .skip_compatibility_check()
+            .build().unwrap();
+        
+        let  _ = client
+            .create_collection(CreateCollectionBuilder::new("npc_knowledge_base").vectors_config(
+                    VectorParamsBuilder::new(768, qdrant_client::qdrant::Distance::Cosine)
+                    ),
+                )
+            .await;
+
+        // Prepare Qdrant Data
+        let maestro = maestro::Maestro::default();
+
+        let mut points = Vec::new();
+
+        for (i, data) in npc_data.iter().enumerate() {
+            let embeds = maestro.conduct_embed_gen(data.to_string()).await.unwrap();
+
+            assert_eq!(embeds[0].len(), 768, "Embedding Size Mismatch");
+
+            let point = qdrant_client::qdrant::PointStruct::new(
+                i as u64, 
+                embeds[0].clone(), 
+                [("text", data.clone().into())]
+            );
+
+            points.push(point)
+        }
+
+        let resp = client
+            .upsert_points(qdrant_client::qdrant::UpsertPointsBuilder::new("npc_knowledge_base", points))
+            .await
+            .unwrap();
+
+        dbg!(resp);
+
+        let query_text = "Mel";
+
+        let query_vector = maestro.conduct_embed_gen(query_text.to_string()).await.unwrap();
+
+        let search_request = SearchPointsBuilder::new(
+            "npc_knowledge_base", 
+            query_vector[0].clone(), 
+            1,
+        ).with_payload(true);
+
+        let response = client.search_points(search_request).await.unwrap();
+
+        dbg!(response);
     }
 }

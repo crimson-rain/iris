@@ -3,7 +3,9 @@
 //! All the RAG logic needed to create similiary search and setting up to make requests.
 //! To prompt more accurate and narrow dialogue generation.
 
-#![allow(dead_code)]
+#![allow(unused)]
+
+mod data_scehmas;
 
 use qdrant_client::Qdrant;
 use qdrant_client::qdrant::{
@@ -139,7 +141,7 @@ mod tests {
         let path = format!("{}{}", manifest_dir, folder_dir);
 
         let npc_data = load_npc_data(&path).await;
-
+        println!("{:?}", npc_data);
         assert!(npc_data.is_ok())
     }
 
@@ -166,19 +168,33 @@ mod tests {
             .await;
 
         // Prepare Qdrant Data
-        let maestro = maestro::Maestro::default();
+        let mut maestro = maestro::Maestro::default();
 
         let mut points = Vec::new();
 
         for (i, data) in npc_data.iter().enumerate() {
             let embeds = maestro.conduct_embed_gen(data.to_string()).await.unwrap();
-
             assert_eq!(embeds[0].len(), 768, "Embedding Size Mismatch");
+
+            let npc = serde_json::from_str::<crate::rag::data_scehmas::NPCData>(&data).unwrap();
+
+            let npc_information = serde_json::to_string(&npc.npc_information).unwrap();
+            let notable_traits = npc.notable_traits.clone();
+            let relationships = serde_json::to_string(&npc.relationships.clone()).unwrap();
+            let equipment = serde_json::to_string(&npc.equipment.clone()).unwrap();
+
 
             let point = qdrant_client::qdrant::PointStruct::new(
                 i as u64, 
                 embeds[0].clone(), 
-                [("text", data.clone().into())]
+                [
+                    ("title", npc.title.into()),
+                    ("npc_information", npc_information.into()),
+                    ("notable_traits", notable_traits.into()),
+                    ("background", npc.background.into()),
+                    ("relationships", relationships.into()),
+                    ("equiment", equipment.into())
+                ]
             );
 
             points.push(point)
@@ -203,6 +219,12 @@ mod tests {
 
         let response = client.search_points(search_request).await.unwrap();
 
-        dbg!(response);
+        dbg!(&response);
+
+        let prompt = format!("RAG RESULT: {:?}, PROMPT: Hey Mel, Who is Josephio?", response);
+
+        let gen_response = maestro.conduct_dialogue_gen(prompt).await.unwrap();
+
+        dbg!(gen_response);
     }
 }

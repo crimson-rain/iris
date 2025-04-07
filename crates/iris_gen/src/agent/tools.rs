@@ -1,11 +1,8 @@
 //! `agent/tools.rs`
-//!
-//! WIP - Work in Progress: To be Completed.
-//! - Implement a larger Variety.
 
 #![allow(unused)]
 
-/// Get the temperature and weather for a given city.
+/// Makes an API call to a Weather API to get the weather for a given city.
 ///
 /// * city - City to get the weather for.
 #[ollama_rs_macros::function]
@@ -14,12 +11,6 @@ pub async fn get_weather(city: String) -> Result<String, Box<dyn std::error::Err
         .await?
         .text()
         .await?)
-}
-
-/// Get Foo and returns bar.
-#[ollama_rs_macros::function]
-pub async fn get_foo() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
-    Ok("LLM Generated Bar!".to_string())
 }
 
 #[cfg(test)]
@@ -38,7 +29,7 @@ mod tests {
     async fn test_tool() {
         let ollama = Ollama::default();
         let history = vec![];
-        let tools = ollama_rs_macros::tool_group![get_weather, get_foo];
+        let tools = ollama_rs_macros::tool_group![get_weather];
         let mut coordinator =
             Coordinator::new_with_tools(ollama, LLM_MODEL.to_string(), history, tools);
 

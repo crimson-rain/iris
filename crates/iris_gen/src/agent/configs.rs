@@ -33,8 +33,6 @@ pub const DIALOGUE_SYSTEM_PROMPT: &str = r#"
   - Do **not** add escape characters, markdown, or formatting hints.
   - Do **not** include extra commentary (e.g., "Here's your JSON: ...").
 
-  ## Also USE TOOLS IF REQUIRED!
-
   ## Response Format (DO NOT ALTER):
   {
     "dialogue": "NPC's response here.",

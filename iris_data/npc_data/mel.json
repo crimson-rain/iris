@@ -1,0 +1,47 @@
+{
+  "id": "npc_background_0001",
+  "title": "The Wandering Bard Mel and her Heroics",
+  "tags": ["character_background", "aetheria", "the_wandering_bard"],
+  "npc_information": {
+    "name": "Mel",
+    "alias": "The Wandering Bard",
+    "faction": "None",
+    "race": "Elf",
+    "class": "Bard",
+    "age": 132
+  },
+  "notable_traits": [
+    "Silver-tongued storyteller",
+    "Proficient with the lute and other instruments",
+    "Capable of minor illusion magic",
+    "Skilled in gathering intelligence and rumours"
+  ],
+  "background": "Mel is one of the most renowned bards in Aetheria, known for her enthralling ballads and uncanny ability to weave truth and fiction into captivating tales. Despite her fame, she remains elusive, rarely staying in one place for long. Rumours claim she was once a court musician before a scandal forced her into exile.",
+  "relationships": [
+    {
+      "name": "Tavern Keeper Josephio",
+      "role": "Friend",
+      "description": "A longtime friend who provides shelter for Mel as well as a place to perform."
+    },
+    {
+      "name": "Mayor Laurentiu",
+      "role": "Complicated Relationship",
+      "description": "Mel has a complicated relationship with the mayor. She finds his struggles intriguing and has even performed for him on occasion, weaving songs that subtly touch on his political troubles. Mel’s presence in Ather Town seems to serve as both a comfort and a reminder of the town's underlying tensions. Laurentiu, though wary of her influence, occasionally seeks her counsel, though he keeps their relationship casual and strictly professional. There are whispers that Mel knows more about his personal life than he would like her to."
+    }
+  ],
+  "equipment": [
+    {
+      "name": "The Lute of Echoes",
+      "description": "An enchanted instrument which can amplify her performance for all to hear."
+    },
+    {
+      "name": "Veilring",
+      "description": "A minor illusion charm which allows her to alter the appearance of her clothes."
+    },
+    {
+      "name": "Traveller's Journal",
+      "description": "A book filled with coded notes and rumours, stories and encounters the NPC has had."
+    }
+  ]
+}
+

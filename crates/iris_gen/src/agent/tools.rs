@@ -31,7 +31,8 @@ mod tests {
         let history = vec![];
         let tools = ollama_rs_macros::tool_group![get_weather];
         let mut coordinator =
-            Coordinator::new_with_tools(ollama, LLM_MODEL.to_string(), history, tools);
+            Coordinator::new(ollama, LLM_MODEL.to_string(), history)
+            .add_tool(get_weather);
 
         let user_messages = vec!["Can I get the weather for a city please?", "Dhaka"];
 

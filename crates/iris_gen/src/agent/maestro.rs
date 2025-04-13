@@ -5,7 +5,6 @@
 use super::model::Model;
 use crate::error::IrisGenError;
 use ollama_rs::generation::chat::ChatMessage;
-use ollama_rs_macros::tool_group;
 
 pub struct Maestro {
     model: Model,
@@ -23,13 +22,13 @@ impl Default for Maestro {
 
 impl Maestro {
     pub async fn conduct_dialogue_gen(&mut self, prompt: String) -> Result<String, IrisGenError> {
-        let tools = tool_group![super::tools::get_weather];
         let resp = self
             .model
-            .generate_request_with_tools(&prompt, self.history.clone(), tools)
+            .generate_request_with_tools(&prompt, self.history.clone())
             .await?;
 
-        self.history.push(resp.message.clone());
+        self.history.push(ChatMessage::new(ollama_rs::generation::chat::MessageRole::User, prompt));
+        self.history.push(ChatMessage::new(ollama_rs::generation::chat::MessageRole::Assistant, resp.message.content.clone()));
 
         Ok(resp.message.content)
     }
@@ -41,6 +40,10 @@ impl Maestro {
     pub async fn conduct_embed_gen(&self, data: String) -> Result<Vec<Vec<f32>>, IrisGenError> {
         let embeds = self.model.generate_embeddings(&data).await.unwrap();
         Ok(embeds.embeddings)
+    }
+
+    pub async fn conduct_rag(&self, prompt: String) -> Result<String, IrisGenError> {
+        todo!()
     }
 }
 
@@ -54,7 +57,7 @@ mod tests {
 
         assert!(
             maestro
-                .conduct_dialogue_gen("What is the Weather in Tokyo?".to_string())
+                .conduct_dialogue_gen("How are you?, Mel".to_string())
                 .await
                 .is_ok()
         );

@@ -76,7 +76,7 @@ impl Iris {
 
     #[func]
     pub fn generate_quest(&self) {
-        godot_print!("Hello, User");
+        godot_error!("generate_quest not implemented!");
     }
 
     #[signal]

@@ -6,7 +6,6 @@ use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
 use ollama_rs::generation::embeddings::GenerateEmbeddingsResponse;
 use ollama_rs::generation::embeddings::request::GenerateEmbeddingsRequest;
-use ollama_rs::generation::tools::ToolGroup;
 
 use crate::error::IrisGenError;
 
@@ -62,28 +61,23 @@ impl Model {
         Ok(res)
     }
 
-    pub async fn generate_request_with_tools<T: ToolGroup>(
+    pub async fn generate_request_with_tools(
         &self,
         prompt: &str,
         mut history: Vec<ChatMessage>,
-        tools: T,
     ) -> Result<ChatMessageResponse, IrisGenError> {
-        // TODO - Perhaps move this into Maestro.
+
 
         if history.is_empty() {
             history.push(ChatMessage::system(DIALOGUE_SYSTEM_PROMPT.to_string()));
         }
 
-        let mut coordinator = Coordinator::new_with_tools(
-            self.ollama.clone(),
-            self.llm_model.clone(),
-            history,
-            tools,
-        );
+        let mut coordinator = Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history)
+            .add_tool(crate::agent::tools::get_weather);
 
         let formatted_prompt = ChatMessage::user(prompt.to_owned());
 
-        let res = coordinator.chat(vec![formatted_prompt]).await?;
+        let res = coordinator.chat(vec![formatted_prompt]).await?; 
 
         Ok(res)
     }

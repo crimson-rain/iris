@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct NPCData {
@@ -8,7 +8,7 @@ pub struct NPCData {
     pub notable_traits: Vec<String>,
     pub background: String,
     pub relationships: Vec<Relations>,
-    pub equipment: Vec<Equipment>
+    pub equipment: Vec<Equipment>,
 }
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -25,7 +25,7 @@ pub struct NPCInformation {
 pub struct Relations {
     name: String,
     role: String,
-    description: String
+    description: String,
 }
 
 #[derive(Serialize, Deserialize, Clone)]

@@ -7,92 +7,117 @@
 
 mod data_scehmas;
 
+use std::u64;
+
+use data_scehmas::NPCData;
 use qdrant_client::Qdrant;
 use qdrant_client::qdrant::{
-    CreateCollectionBuilder, PointStruct, UpsertPointsBuilder,
+    CreateCollectionBuilder, PointStruct, SearchPointsBuilder, UpsertPointsBuilder,
     VectorParamsBuilder,
 };
 
 use tokio::fs;
 
+use crate::agent::maestro::Maestro;
 use crate::error::IrisGenError;
 
-async fn connect_to_qdrant() -> Result<(), IrisGenError> {
-    let _client = Qdrant::from_url("http://localhost:6334")
-        .skip_compatibility_check()
-        .build()?;
-
-    Ok(())
+pub struct RAG {
+    client: qdrant_client::Qdrant,
 }
 
-async fn create_collection() -> Result<(), IrisGenError> {
-    let client = Qdrant::from_url("http://localhost:6334")
-        .skip_compatibility_check()
-        .build()?;
-
-    if client.collection_exists("test_collection").await? {
-        let _ = client.delete_collection("test_collection").await?;
+impl RAG {
+    pub async fn new() -> Self {
+        Self {
+            client: connect_to_qdrant().await.unwrap(),
+        }
     }
 
-    client
-        .create_collection(
-            CreateCollectionBuilder::new("test_collection").vectors_config(
-                VectorParamsBuilder::new(4, qdrant_client::qdrant::Distance::Dot),
-            ),
-        )
-        .await?;
+    pub async fn init_collection(&self, maestro: &Maestro) -> Result<(), IrisGenError> {
+        if self.client.collection_exists("npc_collection").await? {
+            return Ok(());
+        }
 
-    println!("Collection Created Successfully");
+        // Load NPC data
+        let folder_dir = "../../../iris_data/npc_data";
+        let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
 
-    Ok(())
-}
+        let path = format!("{}{}", manifest_dir, folder_dir);
 
-async fn add_vectors(data: Vec<String>, embeds: Vec<f32>) -> Result<(), IrisGenError> {
-    let client = Qdrant::from_url("http://localhost:6334")
-        .skip_compatibility_check()
-        .build()?;
+        let npc_data = load_npc_data(&path).await.unwrap();
 
-    let points = vec![PointStruct::new(
-        42,
-        vec![0.0_f32; 768],
-        [
-            ("great", true.into()),
-            ("level", 9000.into()),
-            ("text", "Hi Qdrant".into()),
-            ("list", vec![1.234f32, 0.815].into()),
-        ],
-    )];
+        // Create Collection
+        let _ = self
+            .client
+            .create_collection(
+                CreateCollectionBuilder::new("npc_collection").vectors_config(
+                    VectorParamsBuilder::new(768, qdrant_client::qdrant::Distance::Cosine),
+                ),
+            )
+            .await?;
 
-    let response = client
-        .upsert_points(UpsertPointsBuilder::new("test_collection", points))
-        .await?;
+        // Prepare Points from NPC Data
+        let mut points = Vec::new();
 
-    dbg!(response);
-    Ok(())
-}
+        for (i, data) in npc_data.iter().enumerate() {
+            let embeds = maestro.conduct_embed_gen(data.to_string()).await?;
 
-async fn collection_info() -> Result<(), IrisGenError> {
-    let client = Qdrant::from_url("http://localhost:6334")
-        .skip_compatibility_check()
-        .build()?;
+            let npc: NPCData = serde_json::from_str(&data)?;
 
-    let collection_list = client.list_collections().await?;
+            let npc_information = serde_json::to_string(&npc.npc_information)?;
+            let notable_traits = npc.notable_traits.clone();
+            let relationships = serde_json::to_string(&npc.relationships.clone())?;
+            let equipment = serde_json::to_string(&npc.equipment.clone())?;
 
-    dbg!(collection_list);
+            let point = qdrant_client::qdrant::PointStruct::new(
+                i as u64,
+                embeds[0].clone(),
+                [
+                    ("title", npc.title.into()),
+                    ("npc_information", npc_information.into()),
+                    ("notable_traits", notable_traits.into()),
+                    ("background", npc.background.into()),
+                    ("relationships", relationships.into()),
+                    ("equiment", equipment.into()),
+                ],
+            );
 
-    Ok(())
-}
+            points.push(point);
+        }
 
-async fn create_npc_collection() -> Result<(), IrisGenError> {
-    let client = Qdrant::from_url("http://localhost:6334")
-        .skip_compatibility_check()
-        .build()?;
+        // Insert data
+        let resp = self
+            .client
+            .upsert_points(UpsertPointsBuilder::new("npc_collection", points))
+            .await?;
 
-    if client.collection_exists("npc_collection").await? {
-        return Ok(());
+        Ok(())
     }
 
-    Ok(())
+    pub async fn rag_resp(
+        &self,
+        maestro: &Maestro,
+        prompt: String,
+    ) -> Result<String, IrisGenError> {
+        let query_embeds = maestro.conduct_embed_gen(prompt.to_string()).await?;
+
+        let search_request = SearchPointsBuilder::new(
+            "npc_collection", 
+            query_embeds[0].clone(), 
+            1
+        ).with_payload(true);
+
+        let response = self.client.search_points(search_request).await?;
+
+        Ok(format!("{:?}", response))
+    }
+}
+
+async fn connect_to_qdrant() -> Result<qdrant_client::Qdrant, IrisGenError> {
+    let client = Qdrant::from_url("http://localhost:6334")
+        .skip_compatibility_check()
+        .build()?;
+
+    Ok(client)
 }
 
 async fn load_npc_data(folder: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
@@ -112,119 +137,5 @@ async fn load_npc_data(folder: &str) -> Result<Vec<String>, Box<dyn std::error::
 
 #[cfg(test)]
 mod tests {
-    use qdrant_client::qdrant::SearchPointsBuilder;
 
-    use crate::agent::maestro;
-
-    use super::*;
-
-    #[tokio::test]
-    async fn test_qdrant() {
-        assert!(connect_to_qdrant().await.is_ok());
-    }
-
-    #[tokio::test]
-    async fn test_collection() {
-        assert!(create_collection().await.is_ok());
-    }
-
-    #[tokio::test]
-    async fn list_collections() {
-        assert!(collection_info().await.is_ok());
-    }
-
-    #[tokio::test]
-    async fn test_load_data() {
-        let folder_dir = "../../../iris_data/npc_data";
-        let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
-
-        let path = format!("{}{}", manifest_dir, folder_dir);
-
-        let npc_data = load_npc_data(&path).await;
-        println!("{:?}", npc_data);
-        assert!(npc_data.is_ok())
-    }
-
-    #[tokio::test]
-    async fn test_load_data_to_qdrant() {
-        // Load NPC Data
-        let folder_dir = "../../../iris_data/npc_data";
-        let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
-
-        let path = format!("{}{}", manifest_dir, folder_dir);
-        
-        let npc_data = load_npc_data(&path).await.unwrap();
-
-        // Create NPC Collection in Qdrant
-        let client = Qdrant::from_url("http://localhost:6334")
-            .skip_compatibility_check()
-            .build().unwrap();
-        
-        let  _ = client
-            .create_collection(CreateCollectionBuilder::new("npc_knowledge_base").vectors_config(
-                    VectorParamsBuilder::new(768, qdrant_client::qdrant::Distance::Cosine)
-                    ),
-                )
-            .await;
-
-        // Prepare Qdrant Data
-        let mut maestro = maestro::Maestro::default();
-
-        let mut points = Vec::new();
-
-        for (i, data) in npc_data.iter().enumerate() {
-            let embeds = maestro.conduct_embed_gen(data.to_string()).await.unwrap();
-            assert_eq!(embeds[0].len(), 768, "Embedding Size Mismatch");
-
-            let npc = serde_json::from_str::<crate::rag::data_scehmas::NPCData>(&data).unwrap();
-
-            let npc_information = serde_json::to_string(&npc.npc_information).unwrap();
-            let notable_traits = npc.notable_traits.clone();
-            let relationships = serde_json::to_string(&npc.relationships.clone()).unwrap();
-            let equipment = serde_json::to_string(&npc.equipment.clone()).unwrap();
-
-
-            let point = qdrant_client::qdrant::PointStruct::new(
-                i as u64, 
-                embeds[0].clone(), 
-                [
-                    ("title", npc.title.into()),
-                    ("npc_information", npc_information.into()),
-                    ("notable_traits", notable_traits.into()),
-                    ("background", npc.background.into()),
-                    ("relationships", relationships.into()),
-                    ("equiment", equipment.into())
-                ]
-            );
-
-            points.push(point)
-        }
-
-        let resp = client
-            .upsert_points(qdrant_client::qdrant::UpsertPointsBuilder::new("npc_knowledge_base", points))
-            .await
-            .unwrap();
-
-        dbg!(resp);
-
-        let query_text = "Mel";
-
-        let query_vector = maestro.conduct_embed_gen(query_text.to_string()).await.unwrap();
-
-        let search_request = SearchPointsBuilder::new(
-            "npc_knowledge_base", 
-            query_vector[0].clone(), 
-            1,
-        ).with_payload(true);
-
-        let response = client.search_points(search_request).await.unwrap();
-
-        dbg!(&response);
-
-        let prompt = format!("RAG RESULT: {:?}, PROMPT: Hey Mel, Who is Josephio?", response);
-
-        let gen_response = maestro.conduct_dialogue_gen(prompt).await.unwrap();
-
-        dbg!(gen_response);
-    }
 }

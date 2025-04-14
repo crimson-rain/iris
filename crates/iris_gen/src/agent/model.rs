@@ -66,18 +66,17 @@ impl Model {
         prompt: &str,
         mut history: Vec<ChatMessage>,
     ) -> Result<ChatMessageResponse, IrisGenError> {
-
-
         if history.is_empty() {
             history.push(ChatMessage::system(DIALOGUE_SYSTEM_PROMPT.to_string()));
         }
 
-        let mut coordinator = Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history)
-            .add_tool(crate::agent::tools::get_weather);
+        let mut coordinator =
+            Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history)
+                .add_tool(crate::agent::tools::get_weather);
 
         let formatted_prompt = ChatMessage::user(prompt.to_owned());
 
-        let res = coordinator.chat(vec![formatted_prompt]).await?; 
+        let res = coordinator.chat(vec![formatted_prompt]).await?;
 
         Ok(res)
     }

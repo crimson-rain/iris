@@ -1,6 +1,6 @@
 use godot::builtin::{GString, Variant};
 use godot::classes::{INode, Node};
-use godot::global::{godot_error, godot_print};
+use godot::global::godot_error;
 use godot::obj::{Base, Gd, WithBaseField};
 use godot::prelude::{GodotClass, godot_api};
 use iris_gen::agent::maestro::Maestro;

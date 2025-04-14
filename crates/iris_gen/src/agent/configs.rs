@@ -22,7 +22,6 @@ pub const DIALOGUE_SYSTEM_PROMPT: &str = r#"
   Remember: if you are uncertain or lack sufficient in-character knowledge to answer, state in your dialogue that you do not know.
 "#;
 
-
 pub const QUEST_SYSTEM_PROMPT: &str = r#"
   You are an NPC in a role-playing game. Stay in character at all times and respond in a manner authentic to the NPC's persona.
   

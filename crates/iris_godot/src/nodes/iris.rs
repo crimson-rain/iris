@@ -1,11 +1,11 @@
 use godot::builtin::{GString, Variant};
 use godot::classes::{INode, Node};
-use godot::global::{godot_error, godot_print};
+use godot::global::godot_error;
 use godot::obj::{Base, Gd, WithBaseField};
 use godot::prelude::{GodotClass, godot_api};
 use iris_gen::agent::maestro::Maestro;
-use iris_utils::constructs::Dialogue;
 use iris_utils::asyn::channels::Channels;
+use iris_utils::constructs::Dialogue;
 use tokio::runtime::Runtime;
 
 #[derive(GodotClass)]
@@ -58,14 +58,14 @@ impl Iris {
 
                 // Format NPC Data and Prompt and Generate Dialogue
                 let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
-                
+
                 // Handle Errors and Send if Results are Ok()
                 match maestro.conduct_dialogue_gen(formatted_prompt).await {
                     Ok(res) => {
                         if let Some(sender) = sender {
                             let _ = sender.send(res).await;
                         }
-                    },
+                    }
                     Err(err) => {
                         godot_error!("Failed to Generate Dialogue: {:?}", err);
                     }
@@ -76,7 +76,7 @@ impl Iris {
 
     #[func]
     pub fn generate_quest(&self) {
-        godot_print!("Hello, User");
+        godot_error!("generate_quest not implemented!");
     }
 
     #[signal]

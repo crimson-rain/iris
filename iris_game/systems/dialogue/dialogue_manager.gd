@@ -40,16 +40,16 @@ func _show_text_box() -> void:
 	if current_line_index >= dialogue_line.size():
 		_end_dialogue()
 		return
-
+	
 	print("Adding text box to the scene tree")
 	text_box = text_box_scene.instantiate()
 	text_box.finished_displaying.connect(_on_text_box_finished_displaying)
 	get_tree().root.add_child(text_box)
 	text_box.global_position = text_box_position
-
+	
 	print("Sending text to text box: ", dialogue_line[current_line_index])
 	text_box.display_text(dialogue_line[current_line_index])
-
+	
 	can_advance_line = false
 
 func _on_text_box_finished_displaying() -> void:
@@ -85,7 +85,7 @@ func _show_chat_box() -> void:
 	get_tree().root.add_child(chat_box)
 	chat_box.generated_dialogue.connect(_process_user_response)
 	chat_box.exit_signal.connect(_process_exit_signal)
-	chat_box.global_position = text_box_position
+	chat_box.global_position = text_box_position + Vector2(50, 50)
 
 func _process_user_response(response: String) -> void:
 	chat_box_active = false

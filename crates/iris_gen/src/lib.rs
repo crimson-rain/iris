@@ -7,4 +7,5 @@
 
 pub mod agent;
 pub mod error;
+pub mod rag;
 pub mod utils;

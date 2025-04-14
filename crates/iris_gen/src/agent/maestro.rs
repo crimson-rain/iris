@@ -4,8 +4,8 @@
 
 use super::model::Model;
 use crate::error::IrisGenError;
+use crate::rag::RAG;
 use ollama_rs::generation::chat::ChatMessage;
-use ollama_rs_macros::tool_group;
 
 pub struct Maestro {
     model: Model,
@@ -23,15 +23,67 @@ impl Default for Maestro {
 
 impl Maestro {
     pub async fn conduct_dialogue_gen(&mut self, prompt: String) -> Result<String, IrisGenError> {
-        let tools = tool_group![super::tools::get_weather, super::tools::get_cpu_temperature];
+        let rag_res = self.conduct_rag(&prompt).await?;
+
+        let formatted_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
+
         let resp = self
             .model
-            .generate_request_with_tools(&prompt, self.history.clone(), tools)
+            .generate_request_with_tools(&formatted_prompt, self.history.clone())
             .await?;
+
+        self.history.push(ChatMessage::new(
+            ollama_rs::generation::chat::MessageRole::User,
+            formatted_prompt,
+        ));
+        self.history.push(ChatMessage::new(
+            ollama_rs::generation::chat::MessageRole::Assistant,
+            resp.message.content.clone(),
+        ));
+
         Ok(resp.message.content)
     }
 
-    pub fn conduct_quest_gen(&self) -> String {
-        "Conducted Quest Generation".to_string()
+    pub async fn conduct_quest_gen(&self) -> Result<String, IrisGenError> {
+        Ok("Conducted Quest Generation".to_string())
+    }
+
+    pub async fn conduct_embed_gen(&self, data: String) -> Result<Vec<Vec<f32>>, IrisGenError> {
+        let embeds = self.model.generate_embeddings(&data).await.unwrap();
+        Ok(embeds.embeddings)
+    }
+
+    pub async fn conduct_rag(&self, prompt: &String) -> Result<String, IrisGenError> {
+        let rag = RAG::new().await;
+        let _ = rag.init_collection(self).await;
+
+        let rag_resp = rag.rag_resp(self, prompt.to_string()).await?;
+
+        Ok(rag_resp)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_conduct_dialogue_gen() {
+        let mut maestro = Maestro::default();
+
+        assert!(
+            maestro
+                .conduct_dialogue_gen("How are you?, Mel".to_string())
+                .await
+                .is_ok()
+        );
+
+        dbg!(maestro.history);
+    }
+
+    #[tokio::test]
+    async fn test_conduct_quest_gen() {
+        let maestro = Maestro::default();
+        assert!(maestro.conduct_quest_gen().await.is_ok())
     }
 }

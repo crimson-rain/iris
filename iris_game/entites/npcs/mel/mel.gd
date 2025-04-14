@@ -15,7 +15,7 @@ func _on_interact(prompt: String) -> void:
 	if DialogueManager.is_dialogue_active or DialogueManager.chat_box_active:
 		return
 	
-	iris.generate_dialogue(prompt, self.get_npc())
+	iris.generate_dialogue(prompt, self.get_npc_info())
 
 # Remove the need for an array or keep it?
 func _on_iris_dialogue_generated(response: String) -> void:
@@ -23,4 +23,4 @@ func _on_iris_dialogue_generated(response: String) -> void:
 
 func _handle_user_response(response: String) -> void:
 	print("Response: ", response)
-	iris.generate_dialogue(response, self.get_npc())
+	iris.generate_dialogue(response, self.get_npc_info())

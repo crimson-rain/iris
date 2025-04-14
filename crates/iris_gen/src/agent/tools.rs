@@ -1,11 +1,8 @@
 //! `agent/tools.rs`
-//!
-//! WIP - Work in Progress: To be Completed.
-//! - Implement a larger Variety.
 
 #![allow(unused)]
 
-/// Get the weather for a given city.
+/// Makes an API call to a Weather API to get the weather for a given city.
 ///
 /// * city - City to get the weather for.
 #[ollama_rs_macros::function]
@@ -16,18 +13,6 @@ pub async fn get_weather(city: String) -> Result<String, Box<dyn std::error::Err
         .await?)
 }
 
-/// Get the CPU temperature in Celsius.
-#[ollama_rs_macros::function]
-pub async fn get_cpu_temperature() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
-    Ok("42.7".to_string())
-}
-
-/// Get Foo and returns bar.
-#[ollama_rs_macros::function]
-pub async fn get_foo() -> Result<String, Box<dyn std::error::Error + Sync + Send>> {
-    Ok("LLM Generated Bar!".to_string())
-}
-
 #[cfg(test)]
 mod tests {
     use std::vec;
@@ -36,16 +21,17 @@ mod tests {
     use ollama_rs::coordinator::Coordinator;
     use ollama_rs::generation::chat::ChatMessage;
 
+    use crate::agent::configs::LLM_MODEL;
+
     use super::*;
 
     #[tokio::test]
     async fn test_tool() {
         let ollama = Ollama::default();
         let history = vec![];
-        let tools = ollama_rs_macros::tool_group![get_weather, get_cpu_temperature, get_foo];
-
+        let tools = ollama_rs_macros::tool_group![get_weather];
         let mut coordinator =
-            Coordinator::new_with_tools(ollama, "mistral-small:24b".to_string(), history, tools);
+            Coordinator::new(ollama, LLM_MODEL.to_string(), history).add_tool(get_weather);
 
         let user_messages = vec!["Can I get the weather for a city please?", "Dhaka"];
 

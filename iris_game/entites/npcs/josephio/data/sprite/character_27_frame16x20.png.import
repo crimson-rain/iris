@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dab8nnpex3a85"
-path="res://.godot/imported/character_27_frame32x32.png-bd5045a5267105766e657d329acb8780.ctex"
+uid="uid://haqpapqree3y"
+path="res://.godot/imported/character_27_frame16x20.png-9616a748e58792ae05717be6070e796a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/npc_sprites/character_27/character_27_frame32x32.png"
-dest_files=["res://.godot/imported/character_27_frame32x32.png-bd5045a5267105766e657d329acb8780.ctex"]
+source_file="res://entites/npcs/josephio/data/sprite/character_27_frame16x20.png"
+dest_files=["res://.godot/imported/character_27_frame16x20.png-9616a748e58792ae05717be6070e796a.ctex"]
 
 [params]
 

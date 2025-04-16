@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://dou174up85v71"]
+
+[ext_resource type="Script" uid="uid://icwwlq2wtws5" path="res://entites/npcs/josephio/josephio.gd" id="1_2ncmk"]
+[ext_resource type="Texture2D" uid="uid://dab8nnpex3a85" path="res://entites/npcs/josephio/data/sprite/character_27_frame32x32.png" id="2_2ncmk"]
+[ext_resource type="Script" uid="uid://kamh7aikg4ab" path="res://systems/interaction/interaction_area/interaction_area.gd" id="3_4e8k6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3yce"]
+height = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ryxte"]
+radius = 75.2396
+
+[node name="Josephio" type="NPC"]
+id = "Laurentiu"
+role = "Mayor"
+personality = "Tired and Agitated"
+description = "The mayor of Aether Town.
+Absoloute hates Squirrels with a passion and wishes to remove them ."
+relation_to_player = "Ally"
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_2ncmk")
+
+[node name="Iris" type="Iris" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CapsuleShape2D_p3yce")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2ncmk")
+hframes = 3
+vframes = 4
+frame = 1
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 0
+script = ExtResource("3_4e8k6")
+metadata/_custom_type_script = "uid://kamh7aikg4ab"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_ryxte")
+
+[connection signal="dialogue_generated" from="Iris" to="." method="_on_iris_dialogue_generated"]

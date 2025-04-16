@@ -10,9 +10,9 @@ struct NPC {
     id: GString,
     #[export]
     role: GString,
-    #[export]
+    #[export(multiline)]
     personality: GString,
-    #[export]
+    #[export(multiline)]
     description: GString,
     #[export]
     relation_to_player: GString,

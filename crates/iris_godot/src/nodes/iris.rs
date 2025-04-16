@@ -1,19 +1,21 @@
 use godot::builtin::{GString, Variant};
 use godot::classes::{INode, Node};
-use godot::global::godot_error;
+use godot::global::{godot_error, godot_print};
 use godot::obj::{Base, Gd, WithBaseField};
 use godot::prelude::{GodotClass, godot_api};
 use iris_gen::agent::maestro::Maestro;
 use iris_utils::asyn::channels::Channels;
 use iris_utils::constructs::Dialogue;
 use tokio::runtime::Runtime;
+use tokio::sync::Mutex;
+use std::sync::Arc;
 
 #[derive(GodotClass)]
 #[class(base=Node)]
 struct Iris {
     channels: Channels<String>,
     base: Base<Node>,
-    maestro: Option<Maestro>,
+    maestro: Option<Arc<Mutex<Maestro>>>,
 }
 
 #[godot_api]
@@ -22,7 +24,7 @@ impl INode for Iris {
         Iris {
             channels: Channels::default(),
             base,
-            maestro: Some(Maestro::default()),
+            maestro: Some(Arc::new(Mutex::new(Maestro::default()))),
         }
     }
 
@@ -51,16 +53,21 @@ impl Iris {
 
     #[func]
     pub fn generate_dialogue(&mut self, prompt: String, npc_data: String) {
+
+        // FIXME: REMOVE THIS LATER
+        godot_print!("{}", &prompt);
         let sender = self.channels.sender.clone();
-        let maestro = self.maestro.as_mut().expect("Failed to Initialize");
+        let maestro = self.maestro.clone().expect("Failed to Initialize");
 
         std::thread::spawn({
-            let mut maestro = maestro.clone(); 
             move || {
                 let runtime = Runtime::new().expect("Failed to Create a Tokio Runtime");
                 runtime.block_on(async move {
                     let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
-                    match maestro.conduct_dialogue_gen(formatted_prompt).await {
+
+                    let mut locked_maestro = maestro.lock().await;
+
+                    match locked_maestro.conduct_dialogue_gen(formatted_prompt).await {
                         Ok(res) => {
                             if let Some(sender) = sender {
                                 let _ = sender.send(res).await;

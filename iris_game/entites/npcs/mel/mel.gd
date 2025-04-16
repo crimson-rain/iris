@@ -22,5 +22,4 @@ func _on_iris_dialogue_generated(response: String) -> void:
 	DialogueManager.start_dialogue(self.position, [response])
 
 func _handle_user_response(response: String) -> void:
-	print("Response: ", response)
 	iris.generate_dialogue(response, self.get_npc_info())

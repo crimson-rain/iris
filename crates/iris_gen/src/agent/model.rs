@@ -11,6 +11,7 @@ use crate::error::IrisGenError;
 
 use super::configs::{DIALOGUE_SYSTEM_PROMPT, EMBED_MODEL, LLM_MODEL};
 
+#[derive(Clone)]
 pub struct Model {
     ollama: Ollama,
     llm_model: String,
@@ -33,6 +34,7 @@ impl Model {
         prompt: &str,
         history: &mut Vec<ChatMessage>,
     ) -> Result<ChatMessageResponse, IrisGenError> {
+
         if history.is_empty() {
             history.push(ChatMessage::system(DIALOGUE_SYSTEM_PROMPT.to_string()));
         };

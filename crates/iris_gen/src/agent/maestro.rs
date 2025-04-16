@@ -7,6 +7,7 @@ use crate::error::IrisGenError;
 use crate::rag::RAG;
 use ollama_rs::generation::chat::ChatMessage;
 
+#[derive(Clone)]
 pub struct Maestro {
     model: Model,
     history: Vec<ChatMessage>,
@@ -25,21 +26,24 @@ impl Maestro {
     pub async fn conduct_dialogue_gen(&mut self, prompt: String) -> Result<String, IrisGenError> {
         let rag_res = self.conduct_rag(&prompt).await?;
 
-        let formatted_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
+        let rag_inject_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
 
         let resp = self
             .model
-            .generate_request_with_tools(&formatted_prompt, self.history.clone())
+            .generate_request_with_tools(&rag_inject_prompt, self.history.clone())
             .await?;
 
         self.history.push(ChatMessage::new(
             ollama_rs::generation::chat::MessageRole::User,
-            formatted_prompt,
+            prompt.clone(),
         ));
+
         self.history.push(ChatMessage::new(
             ollama_rs::generation::chat::MessageRole::Assistant,
             resp.message.content.clone(),
         ));
+
+        dbg!(&self.history);
 
         Ok(resp.message.content)
     }
@@ -49,7 +53,7 @@ impl Maestro {
     }
 
     pub async fn conduct_embed_gen(&self, data: String) -> Result<Vec<Vec<f32>>, IrisGenError> {
-        let embeds = self.model.generate_embeddings(&data).await.unwrap();
+        let embeds = self.model.generate_embeddings(&data).await?;
         Ok(embeds.embeddings)
     }
 
@@ -85,5 +89,23 @@ mod tests {
     async fn test_conduct_quest_gen() {
         let maestro = Maestro::default();
         assert!(maestro.conduct_quest_gen().await.is_ok())
+    }
+
+    
+    #[tokio::test]
+    async fn test_conduct_dialogue_gen_with_history() {
+        let mut maestro = Maestro::default();
+        maestro
+            .conduct_dialogue_gen("What is your name?".to_string())
+            .await
+            .unwrap();
+
+        let response = maestro
+            .conduct_dialogue_gen("And whats the weather like in Roehampton?".to_string())
+            .await
+            .unwrap();
+
+        println!("Second response: {}", response);
+        dbg!(maestro.history);
     }
 }

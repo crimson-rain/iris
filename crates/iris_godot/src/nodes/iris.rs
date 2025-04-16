@@ -13,6 +13,7 @@ use tokio::runtime::Runtime;
 struct Iris {
     channels: Channels<String>,
     base: Base<Node>,
+    maestro: Option<Maestro>,
 }
 
 #[godot_api]
@@ -21,6 +22,7 @@ impl INode for Iris {
         Iris {
             channels: Channels::default(),
             base,
+            maestro: Some(Maestro::default()),
         }
     }
 
@@ -48,29 +50,28 @@ impl Iris {
     }
 
     #[func]
-    pub fn generate_dialogue(&self, prompt: String, npc_data: String) {
+    pub fn generate_dialogue(&mut self, prompt: String, npc_data: String) {
         let sender = self.channels.sender.clone();
+        let maestro = self.maestro.as_mut().expect("Failed to Initialize");
 
-        std::thread::spawn(move || {
-            let runtime = Runtime::new().expect("Failed to Create a Tokio Runtime");
-            runtime.block_on(async move {
-                let mut maestro = Maestro::default();
-
-                // Format NPC Data and Prompt and Generate Dialogue
-                let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
-
-                // Handle Errors and Send if Results are Ok()
-                match maestro.conduct_dialogue_gen(formatted_prompt).await {
-                    Ok(res) => {
-                        if let Some(sender) = sender {
-                            let _ = sender.send(res).await;
+        std::thread::spawn({
+            let mut maestro = maestro.clone(); 
+            move || {
+                let runtime = Runtime::new().expect("Failed to Create a Tokio Runtime");
+                runtime.block_on(async move {
+                    let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
+                    match maestro.conduct_dialogue_gen(formatted_prompt).await {
+                        Ok(res) => {
+                            if let Some(sender) = sender {
+                                let _ = sender.send(res).await;
+                            }
+                        }
+                        Err(err) => {
+                            godot_error!("Failed to Generate Dialogue: {:?}", err);
                         }
                     }
-                    Err(err) => {
-                        godot_error!("Failed to Generate Dialogue: {:?}", err);
-                    }
-                }
-            });
+                });
+            }
         });
     }
 

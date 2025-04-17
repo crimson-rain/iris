@@ -7,8 +7,6 @@
 
 mod data_scehmas;
 
-use std::u64;
-
 use data_scehmas::NPCData;
 use qdrant_client::Qdrant;
 use qdrant_client::qdrant::{

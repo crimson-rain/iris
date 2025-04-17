@@ -25,8 +25,6 @@ var can_advance_line: bool = false
 var chat_box_active: bool = false  # Prevent multiple chat boxes
 
 func start_dialogue(position: Vector2, lines: Array[String]) -> void:
-	print("Completed Dialogue Generation [Dialogue]: ", lines)
-	
 	if is_dialogue_active or chat_box_active:  # Prevent restarting if chat is active
 		return
 	
@@ -41,13 +39,11 @@ func _show_text_box() -> void:
 		_end_dialogue()
 		return
 	
-	print("Adding text box to the scene tree")
 	text_box = text_box_scene.instantiate()
 	text_box.finished_displaying.connect(_on_text_box_finished_displaying)
 	get_tree().root.add_child(text_box)
 	text_box.global_position = text_box_position
 	
-	print("Sending text to text box: ", dialogue_line[current_line_index])
 	text_box.display_text(dialogue_line[current_line_index])
 	
 	can_advance_line = false

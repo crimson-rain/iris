@@ -7,15 +7,13 @@ use iris_gen::agent::maestro::Maestro;
 use iris_utils::asyn::channels::Channels;
 use iris_utils::constructs::Dialogue;
 use tokio::runtime::Runtime;
-use tokio::sync::Mutex;
-use std::sync::Arc;
 
 #[derive(GodotClass)]
 #[class(base=Node)]
 struct Iris {
     channels: Channels<String>,
     base: Base<Node>,
-    maestro: Option<Arc<Mutex<Maestro>>>,
+    maestro: Maestro,
 }
 
 #[godot_api]
@@ -24,7 +22,7 @@ impl INode for Iris {
         Iris {
             channels: Channels::default(),
             base,
-            maestro: Some(Arc::new(Mutex::new(Maestro::default()))),
+            maestro: Maestro::default(),
         }
     }
 
@@ -54,7 +52,7 @@ impl Iris {
     #[func]
     pub fn generate_dialogue(&mut self, prompt: String, npc_data: String) {
         let sender = self.channels.sender.clone();
-        let maestro = self.maestro.clone().expect("Failed to Initialize");
+        let mut maestro = self.maestro.clone();
 
         std::thread::spawn({
             move || {
@@ -62,9 +60,7 @@ impl Iris {
                 runtime.block_on(async move {
                     let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
 
-                    let mut locked_maestro = maestro.lock().await;
-
-                    match locked_maestro.conduct_dialogue_gen(formatted_prompt).await {
+                    match maestro.conduct_dialogue_gen(formatted_prompt).await {
                         Ok(res) => {
                             if let Some(sender) = sender {
                                 let _ = sender.send(res).await;

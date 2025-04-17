@@ -22,15 +22,15 @@ var chat_box: Control
 
 var is_dialogue_active: bool = false
 var can_advance_line: bool = false
-var chat_box_active: bool = false  # Prevent multiple chat boxes
+var chat_box_active: bool = false
 
 func start_dialogue(position: Vector2, lines: Array[String]) -> void:
-	if is_dialogue_active or chat_box_active:  # Prevent restarting if chat is active
+	if is_dialogue_active or chat_box_active:
 		return
 	
 	dialogue_line = lines
 	text_box_position = position
-	current_line_index = 0  # Reset to avoid repeats
+	current_line_index = 0
 	is_dialogue_active = true
 	_show_text_box()
 
@@ -69,10 +69,9 @@ func _end_dialogue() -> void:
 		text_box.queue_free()
 		text_box = null
 	
-	_show_chat_box()  # Display chat box when dialogue ends
+	_show_chat_box()
 
 func _show_chat_box() -> void:
-	# Prevents Multiple Chats
 	if chat_box_active:
 		return 
 	

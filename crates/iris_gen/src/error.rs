@@ -17,6 +17,9 @@ pub enum IrisGenError {
     #[error("SerdeJSON Error: {0}")]
     SerdeJSONError(#[from] serde_json::Error),
 
+    #[error("IO Error: {0}")]
+    IOError(#[from] std::io::Error),
+
     #[error("No Models Found")]
     NoModelsFound,
 }

@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+// NPC Data Schemas
 #[derive(Serialize, Deserialize)]
 pub struct NPCData {
     pub id: String,
@@ -32,4 +33,20 @@ pub struct Relations {
 pub struct Equipment {
     name: String,
     description: String,
+}
+
+// Location Schemas
+#[derive(Serialize, Deserialize)]
+pub struct WorldData {
+    pub id: String,
+    pub title: String,
+    pub tag: Vec<String>,
+    pub coordinates: Coordinates,
+    pub description: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Coordinates {
+    pub x: i32,
+    pub y: i32,
 }

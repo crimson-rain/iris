@@ -11,6 +11,11 @@ height = 22.0
 radius = 75.2396
 
 [node name="Mel" type="NPC"]
+id = "Mel"
+role = "Bard"
+personality = "Kind and Charasmatic"
+description = "A kind and caring bard who is devoted to her ballads."
+relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_8pco5")

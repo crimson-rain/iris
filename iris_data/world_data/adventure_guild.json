@@ -1,0 +1,13 @@
+{
+  "id": "adventurer_guild_0001",
+  "title": "The Adventurer Guild",
+  "tags": [
+    "Location",
+    "Place of Interet"
+  ],
+  "coordinates": {
+    "x": 12.4,
+    "y": 12.45
+  },
+  "description": "The Adventurer guild is the heart of the town, many adventurers who go out to quest and fight threats around Aether town are around the area."
+}

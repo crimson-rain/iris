@@ -1,12 +1,13 @@
 use godot::builtin::{GString, Variant};
 use godot::classes::{INode, Node};
-use godot::global::godot_error;
+use godot::global::{godot_error, godot_print};
 use godot::obj::{Base, Gd, WithBaseField};
 use godot::prelude::{GodotClass, godot_api};
 use iris_gen::agent::maestro::Maestro;
 use iris_utils::asyn::channels::Channels;
 use iris_utils::constructs::Dialogue;
 use tokio::runtime::Runtime;
+use ollama_rs::generation::chat::ChatMessage;
 
 #[derive(GodotClass)]
 #[class(base=Node)]
@@ -14,15 +15,23 @@ struct Iris {
     channels: Channels<String>,
     base: Base<Node>,
     maestro: Maestro,
+    history: Vec<ChatMessage>,
 }
 
 #[godot_api]
 impl INode for Iris {
     fn init(base: Base<Node>) -> Self {
+
+        let system_message = ChatMessage::new(
+            ollama_rs::generation::chat::MessageRole::System,
+            iris_gen::agent::configs::DIALOGUE_SYSTEM_PROMPT.to_string(),
+        );
+
         Iris {
             channels: Channels::default(),
             base,
             maestro: Maestro::default(),
+            history: vec![system_message],
         }
     }
 
@@ -39,6 +48,14 @@ impl Iris {
 
         if let Some(receiver) = &mut self.channels.reciever {
             while let Ok(res) = receiver.try_recv() {
+
+                self.history.push(ChatMessage::new(
+                    ollama_rs::generation::chat::MessageRole::Assistant,
+                    res.clone(),
+                ));
+
+                godot_print!("{:?}", &self.history);
+
                 dialogue_arr.push(serde_json::from_str(&res).unwrap());
             }
         }
@@ -53,6 +70,12 @@ impl Iris {
     pub fn generate_dialogue(&mut self, prompt: String, npc_data: String) {
         let sender = self.channels.sender.clone();
         let mut maestro = self.maestro.clone();
+        let mut history = self.history.clone();
+
+        self.history.push(ChatMessage::new(
+            ollama_rs::generation::chat::MessageRole::User,
+            prompt.clone(),
+        ));
 
         std::thread::spawn({
             move || {
@@ -60,7 +83,7 @@ impl Iris {
                 runtime.block_on(async move {
                     let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
 
-                    match maestro.conduct_dialogue_gen(formatted_prompt).await {
+                    match maestro.conduct_dialogue_gen(formatted_prompt, &mut history).await {
                         Ok(res) => {
                             if let Some(sender) = sender {
                                 let _ = sender.send(res).await;
@@ -86,5 +109,5 @@ impl Iris {
 
 #[cfg(test)]
 mod test {
-    
+
 }

@@ -35,5 +35,4 @@ pub const QUEST_SYSTEM_PROMPT: &str = r#"
     "npc": "{npc_name}",
     "choices": ["Option 1", "Option 2", "Option 3"]
   }
-
 "#;

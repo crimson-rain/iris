@@ -35,10 +35,6 @@ impl Model {
         history: &mut Vec<ChatMessage>,
     ) -> Result<ChatMessageResponse, IrisGenError> {
 
-        if history.is_empty() {
-            history.push(ChatMessage::system(DIALOGUE_SYSTEM_PROMPT.to_string()));
-        };
-
         let req = ChatMessageRequest::new(
             self.llm_model.clone(),
             vec![ChatMessage::user(prompt.to_string())],
@@ -63,25 +59,22 @@ impl Model {
         Ok(res)
     }
 
-    pub async fn generate_request_with_tools(
-        &self,
-        prompt: &str,
-        mut history: Vec<ChatMessage>,
-    ) -> Result<ChatMessageResponse, IrisGenError> {
-        if history.is_empty() {
-            history.push(ChatMessage::system(DIALOGUE_SYSTEM_PROMPT.to_string()));
-        }
-
-        let mut coordinator =
-            Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history)
-                .add_tool(crate::agent::tools::get_weather);
-
-        let formatted_prompt = ChatMessage::user(prompt.to_owned());
-
-        let res = coordinator.chat(vec![formatted_prompt]).await?;
-
-        Ok(res)
-    }
+//    pub async fn generate_request_with_tools(
+//        &self,
+//        prompt: &str,
+//        history: Vec<ChatMessage>,
+//    ) -> Result<ChatMessageResponse, IrisGenError> {
+//
+//        let mut coordinator =
+//            Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history)
+//                .add_tool(crate::agent::tools::get_weather);
+//
+//        let formatted_prompt = ChatMessage::user(prompt.to_owned());
+//
+//        let res = coordinator.chat(vec![formatted_prompt]).await?;
+//
+//        Ok(res)
+//    }
 }
 
 #[cfg(test)]
@@ -92,6 +85,8 @@ mod tests {
     async fn test_generation_request() {
         let mut model = Model::default();
         let mut hist = Vec::new();
+
+        hist.push(ChatMessage::new(ollama_rs::generation::chat::MessageRole::System, DIALOGUE_SYSTEM_PROMPT.to_string()));
 
         let prompt = "Hello, World!";
 

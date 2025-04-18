@@ -2,6 +2,7 @@
 //! Maestro is responsible for making LLM calls as well as handling various other
 //! tasks, is required to create the needed operation.
 
+use super::configs::DIALOGUE_SYSTEM_PROMPT;
 use super::model::Model;
 use crate::error::IrisGenError;
 use crate::rag::RAG;
@@ -15,14 +16,22 @@ pub struct Maestro {
 
 impl Default for Maestro {
     fn default() -> Self {
+        
+        let system_message = ChatMessage::new(
+            ollama_rs::generation::chat::MessageRole::System, 
+            DIALOGUE_SYSTEM_PROMPT.to_string()
+        );
+
+
         Self {
             model: Model::default(),
-            history: Vec::new(),
+            history: vec![system_message],
         }
     }
 }
 
 impl Maestro {
+
     pub async fn conduct_dialogue_gen(&mut self, prompt: String) -> Result<String, IrisGenError> {
         let rag_res = self.conduct_rag(&prompt).await?;
 
@@ -30,23 +39,39 @@ impl Maestro {
 
         let resp = self
             .model
-            .generate_request_with_tools(&rag_inject_prompt, self.history.clone())
+            .generate_request(&rag_inject_prompt, &mut self.history)
             .await?;
-
-        self.history.push(ChatMessage::new(
-            ollama_rs::generation::chat::MessageRole::User,
-            prompt.clone(),
-        ));
-
-        self.history.push(ChatMessage::new(
-            ollama_rs::generation::chat::MessageRole::Assistant,
-            resp.message.content.clone(),
-        ));
 
         dbg!(&self.history);
 
         Ok(resp.message.content)
     }
+
+
+//    pub async fn conduct_dialogue_gen_with_tools(&mut self, prompt: String) -> Result<String, IrisGenError> {
+//        let rag_res = self.conduct_rag(&prompt).await?;
+//
+//        let rag_inject_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
+//
+//        let resp = self
+//            .model
+//            .generate_request_with_tools(&rag_inject_prompt, self.history.clone())
+//            .await?;
+//
+//        self.history.push(ChatMessage::new(
+//            ollama_rs::generation::chat::MessageRole::User,
+//            prompt.clone(),
+//        ));
+//
+//        self.history.push(ChatMessage::new(
+//            ollama_rs::generation::chat::MessageRole::Assistant,
+//            resp.message.content.clone(),
+//        ));
+//
+//        dbg!(&self.history);
+//
+//        Ok(resp.message.content)
+//    }
 
     pub async fn conduct_quest_gen(&self) -> Result<String, IrisGenError> {
         Ok("Conducted Quest Generation".to_string())

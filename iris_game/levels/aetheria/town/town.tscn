@@ -15,5 +15,9 @@ zoom = Vector2(2, 2)
 [node name="TownTile" parent="." instance=ExtResource("3_aooww")]
 
 [node name="Mel" parent="." instance=ExtResource("4_37vvx")]
-position = Vector2(150, 0)
-collision_mask = 1
+id = ""
+role = ""
+personality = ""
+description = ""
+relation_to_player = ""
+position = Vector2(130, -103)

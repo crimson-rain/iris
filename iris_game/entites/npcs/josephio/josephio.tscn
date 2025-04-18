@@ -11,12 +11,6 @@ height = 22.0
 radius = 75.2396
 
 [node name="Josephio" type="NPC"]
-id = "Laurentiu"
-role = "Mayor"
-personality = "Tired and Agitated"
-description = "The mayor of Aether Town.
-Absoloute hates Squirrels with a passion and wishes to remove them ."
-relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_2ncmk")

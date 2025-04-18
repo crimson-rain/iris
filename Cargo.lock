@@ -1633,6 +1633,7 @@ dependencies = [
  "godot",
  "iris_gen",
  "iris_utils",
+ "ollama-rs",
  "serde",
  "serde_json",
  "thiserror 2.0.12",

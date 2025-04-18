@@ -1,7 +1,6 @@
 //! `agent/model.rs`
 
 use ollama_rs::Ollama;
-use ollama_rs::coordinator::Coordinator;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
 use ollama_rs::generation::embeddings::GenerateEmbeddingsResponse;
@@ -9,7 +8,7 @@ use ollama_rs::generation::embeddings::request::GenerateEmbeddingsRequest;
 
 use crate::error::IrisGenError;
 
-use super::configs::{DIALOGUE_SYSTEM_PROMPT, EMBED_MODEL, LLM_MODEL};
+use super::configs::{EMBED_MODEL, LLM_MODEL};
 
 #[derive(Clone)]
 pub struct Model {
@@ -80,6 +79,7 @@ impl Model {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::agent::configs::DIALOGUE_SYSTEM_PROMPT;
 
     #[tokio::test]
     async fn test_generation_request() {

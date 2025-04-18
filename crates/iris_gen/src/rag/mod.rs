@@ -114,7 +114,6 @@ impl RAG {
         let mut points = Vec::new();
 
         for (i, data) in world_data.iter().enumerate() {
-
             let world_data: WorldData = serde_json::from_str(&data)?;
 
             let embeds = maestro.conduct_embed_gen(data.clone()).await?;
@@ -125,7 +124,7 @@ impl RAG {
                 [
                     ("title", world_data.title.into()),
                     ("tag", world_data.tags.clone().into()),
-                    ("description",world_data.description.clone().into()),
+                    ("description", world_data.description.clone().into()),
                 ],
             );
 
@@ -146,18 +145,14 @@ impl RAG {
     ) -> Result<String, IrisGenError> {
         let query_embeds = maestro.conduct_embed_gen(prompt.to_string()).await?;
 
-        let search_request = SearchPointsBuilder::new(
-            "world_collection",
-            query_embeds[0].clone(),
-            1, 
-        )
-        .with_payload(true);
+        let search_request =
+            SearchPointsBuilder::new("world_collection", query_embeds[0].clone(), 1)
+                .with_payload(true);
 
         let response = self.client.search_points(search_request).await?;
 
         Ok(format!("{:?}", response))
     }
-
 
     pub async fn rag_resp(
         &self,
@@ -166,11 +161,8 @@ impl RAG {
     ) -> Result<String, IrisGenError> {
         let query_embeds = maestro.conduct_embed_gen(prompt.to_string()).await?;
 
-        let search_request = SearchPointsBuilder::new(
-            "npc_collection", 
-            query_embeds[0].clone(), 
-            1
-        ).with_payload(true);
+        let search_request = SearchPointsBuilder::new("npc_collection", query_embeds[0].clone(), 1)
+            .with_payload(true);
 
         let response = self.client.search_points(search_request).await?;
 

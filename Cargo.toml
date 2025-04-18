@@ -1,5 +1,6 @@
 [workspace]
-members = [
+members = [ 
+    "crates/iris_db",
     "crates/iris_gen",
     "crates/iris_godot", 
     "crates/iris_utils"

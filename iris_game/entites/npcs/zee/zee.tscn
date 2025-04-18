@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxrchp4n6kcdh"]
+
+[ext_resource type="Script" uid="uid://ccnva5c233t8e" path="res://entites/npcs/zee/zee.gd" id="1_wcbya"]
+[ext_resource type="Texture2D" uid="uid://ctvnhvjuugrl2" path="res://entites/npcs/zee/data/sprites/character_8_frame32x32.png" id="2_0awk2"]
+[ext_resource type="Script" uid="uid://kamh7aikg4ab" path="res://systems/interaction/interaction_area/interaction_area.gd" id="3_wcbya"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wcbya"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0awk2"]
+radius = 140.513
+
+[node name="Zee" type="NPC"]
+id = "Zee"
+role = "Knight"
+personality = "A Friendly knight who  protects the town of Aether."
+description = "A night who protects Aether town from any bad actors and wrong doers."
+relation_to_player = "Ally"
+script = ExtResource("1_wcbya")
+
+[node name="Iris" type="Iris" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_wcbya")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0awk2")
+hframes = 3
+vframes = 4
+frame = 1
+
+[node name="InteractionArea" type="Area2D" parent="."]
+script = ExtResource("3_wcbya")
+metadata/_custom_type_script = "uid://kamh7aikg4ab"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_0awk2")

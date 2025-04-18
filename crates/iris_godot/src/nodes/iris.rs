@@ -83,3 +83,8 @@ impl Iris {
     #[signal]
     fn dialogue_generated(response: GString);
 }
+
+#[cfg(test)]
+mod test {
+    
+}

@@ -40,13 +40,13 @@ pub struct Equipment {
 pub struct WorldData {
     pub id: String,
     pub title: String,
-    pub tag: Vec<String>,
+    pub tags: Vec<String>,
     pub coordinates: Coordinates,
     pub description: String,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct Coordinates {
-    pub x: i32,
-    pub y: i32,
+    x: f32,
+    y: f32,
 }

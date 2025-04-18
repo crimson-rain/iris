@@ -84,11 +84,15 @@ impl Maestro {
 
     pub async fn conduct_rag(&self, prompt: &String) -> Result<String, IrisGenError> {
         let rag = RAG::new().await;
-        let _ = rag.init_collection(self).await;
+        let _ = rag.init_collection(self).await?;
+        let _ = rag.init_world_collection(self).await?;
 
-        let rag_resp = rag.rag_resp(self, prompt.to_string()).await?;
+        let npc_rag_resp = rag.rag_resp(self, prompt.to_string()).await?;
+        let world_rag_resp = rag.world_rag_resp(self, prompt.to_string()).await?;
 
-        Ok(rag_resp)
+        let resp = format!("NPC_RAG: {}, WORLD_RAG: {}", npc_rag_resp, world_rag_resp);
+
+        Ok(resp)
     }
 }
 

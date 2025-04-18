@@ -33,7 +33,7 @@ mod tests {
         let mut coordinator =
             Coordinator::new(ollama, LLM_MODEL.to_string(), history).add_tool(get_weather);
 
-        let user_messages = vec!["Can I get the weather for a city please?", "Dhaka"];
+        let user_messages = vec!["Can I get the weather for a city please?", "Roehampton"];
 
         for user_message in user_messages {
             println!("User: {user_message}");

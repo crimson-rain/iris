@@ -12,6 +12,9 @@ pub const DIALOGUE_SYSTEM_PROMPT: &str = r#"
   If there is something you do not understand then don't act like you do, just say "Sorry  I do not understand what you are saying."
   Do not reference real-world knowledge.
 
+  MIN 2 SENTENCES
+  MAX 3 SENTENCES
+
   ## Response Format (DO NOT ALTER):
   {
     "dialogue": "NPC's response here.",

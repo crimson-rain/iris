@@ -7,6 +7,8 @@
 
 mod data_scehmas;
 
+use std::result;
+
 use data_scehmas::{NPCData, WorldData};
 use qdrant_client::Qdrant;
 use qdrant_client::qdrant::{
@@ -149,9 +151,15 @@ impl RAG {
             SearchPointsBuilder::new("world_collection", query_embeds[0].clone(), 1)
                 .with_payload(true);
 
-        let response = self.client.search_points(search_request).await?;
+        let search_response = self.client.search_points(search_request).await?;
 
-        Ok(format!("{:?}", response))
+        let mut result_vec = Vec::new();
+
+        for point in &search_response.result {
+            result_vec.push(format!("{:?}", point.payload));
+        }
+
+        Ok(format!("{:?}", result_vec))
     }
 
     pub async fn rag_resp(
@@ -164,9 +172,15 @@ impl RAG {
         let search_request = SearchPointsBuilder::new("npc_collection", query_embeds[0].clone(), 1)
             .with_payload(true);
 
-        let response = self.client.search_points(search_request).await?;
+        let search_response = self.client.search_points(search_request).await?;
+        
+        let mut result_vec = Vec::new();
 
-        Ok(format!("{:?}", response))
+        for point in &search_response.result {
+            result_vec.push(format!("{:?}", point.payload));
+        }
+
+        Ok(format!("{:?}", result_vec))
     }
 }
 

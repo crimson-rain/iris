@@ -82,6 +82,10 @@ impl Maestro {
 
         Ok(resp)
     }
+
+    pub async fn memory_summarization(&self, history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
+        todo!()
+    } 
 }
 
 // NOTE: History is working fine here.
@@ -126,6 +130,11 @@ mod tests {
 
         maestro
             .conduct_dialogue_gen("What was the place I asked about?".to_string(), &mut history)
+            .await
+            .unwrap();
+
+        maestro
+            .conduct_dialogue_gen("Who is Laurentiu?".to_string(), &mut history)
             .await
             .unwrap();
 

@@ -36,30 +36,18 @@ impl Maestro {
         Ok(resp.message.content)
     }
 
-    //    pub async fn conduct_dialogue_gen_with_tools(&mut self, prompt: String) -> Result<String, IrisGenError> {
-    //        let rag_res = self.conduct_rag(&prompt).await?;
-    
-    //        let rag_inject_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
-    
-    //        let resp = self
-    //            .model
-    //            .generate_request_with_tools(&rag_inject_prompt, self.history.clone())
-    //            .await?;
-    
-    //        self.history.push(ChatMessage::new(
-    //            ollama_rs::generation::chat::MessageRole::User,
-    //            prompt.clone(),
-    //        ));
-    
-    //        self.history.push(ChatMessage::new(
-    //            ollama_rs::generation::chat::MessageRole::Assistant,
-    //            resp.message.content.clone(),
-    //        ));
-    
-    //        dbg!(&self.history);
-    
-    //        Ok(resp.message.content)
-    //    }
+    pub async fn conduct_dialogue_gen_with_tools(&mut self, prompt: String, history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
+        let rag_res = self.conduct_rag(&prompt).await?;
+
+        let rag_inject_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
+
+        let resp = self
+            .model
+            .generate_request_with_tools(&rag_inject_prompt, history.clone())
+            .await?;
+
+        Ok(resp.message.content)
+    }
 
     pub async fn conduct_quest_gen(&self) -> Result<String, IrisGenError> {
         Ok("Conducted Quest Generation".to_string())
@@ -83,12 +71,11 @@ impl Maestro {
         Ok(resp)
     }
 
-    pub async fn memory_summarization(&self, history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
+    pub async fn conduct_memory_summarization(&self, history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
         todo!()
     } 
 }
 
-// NOTE: History is working fine here.
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -138,6 +125,6 @@ mod tests {
             .await
             .unwrap();
 
-        assert!(history.len() > 3);
+        assert!(history.len() > 4);
     }
 }

@@ -15,3 +15,6 @@ bus = &"Master"
 
 [node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0"]
 text = "iris_game"
+
+[node name="SubTitleLabel" parent="MenuContainer/SubTitleMargin/SubTitleContainer" index="0"]
+text = "Emergent Dialogue and Quest Generations"

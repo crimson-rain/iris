@@ -1610,9 +1610,7 @@ checksum = "469fb0b9cefa57e3ef31275ee7cacb78f2fdca44e4765491884a2b119d4eb130"
 name = "iris_gen"
 version = "0.1.0"
 dependencies = [
- "godot",
  "ollama-rs",
- "ollama-rs-macros",
  "qdrant-client",
  "reqwest",
  "schemars",
@@ -1631,7 +1629,6 @@ dependencies = [
  "iris_gen",
  "iris_utils",
  "ollama-rs",
- "ollama-rs-macros",
  "serde",
  "serde_json",
  "thiserror 2.0.12",
@@ -2016,17 +2013,6 @@ dependencies = [
  "text-splitter",
  "thiserror 2.0.12",
  "url",
-]
-
-[[package]]
-name = "ollama-rs-macros"
-version = "0.2.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0804f6ccb2caba80d5ced8a151d88b343e1284b5260a79eadea58e561726a923"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.99",
 ]
 
 [[package]]

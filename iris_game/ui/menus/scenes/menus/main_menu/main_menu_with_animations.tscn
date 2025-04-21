@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://ctnf6i5xynv80"]
+[gd_scene load_steps=19 format=3 uid="uid://ctnf6i5xynv80"]
 
 [ext_resource type="PackedScene" uid="uid://c6k5nnpbypshi" path="res://addons/maaacks_menus_template/base/scenes/menus/main_menu/main_menu.tscn" id="1_u4l8y"]
 [ext_resource type="Script" uid="uid://csj5hql6t7v73" path="res://ui/menus/scenes/menus/main_menu/main_menu_with_animations.gd" id="2_ynbq8"]
 [ext_resource type="PackedScene" uid="uid://b2sbflpnttujb" path="res://ui/menus/scenes/menus/options_menu/master_options_menu_with_tabs.tscn" id="3_2t64f"]
 [ext_resource type="PackedScene" uid="uid://b3kb3wv0bae8r" path="res://ui/menus/scenes/credits/credits.tscn" id="4_8y02w"]
+[ext_resource type="Texture2D" uid="uid://b1ce3k3eds36f" path="res://assets/background_textures/stary_field.png" id="5_ynbq8"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "Intro"
@@ -368,17 +369,30 @@ parameters/conditions/intro_done = false
 [node name="BackgroundMusicPlayer" parent="." index="3"]
 bus = &"Master"
 
+[node name="BackgroundTextureRect" parent="." index="4"]
+offset_left = -636.0
+offset_top = -338.0
+offset_right = 712.0
+offset_bottom = 466.0
+texture = ExtResource("5_ynbq8")
+
 [node name="VersionContainer" parent="VersionMargin" index="0"]
 modulate = Color(1, 1, 1, 0)
+
+[node name="VersionLabel" parent="VersionMargin/VersionContainer" index="0"]
+text = "v0.6.1"
 
 [node name="TitleContainer" parent="MenuContainer/TitleMargin" index="0"]
 modulate = Color(1, 1, 1, 0)
 
 [node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0"]
-text = "iris_game"
+text = "IRIS: Aetheria"
 
 [node name="SubTitleContainer" parent="MenuContainer/SubTitleMargin" index="0"]
 modulate = Color(1, 1, 1, 0)
+
+[node name="SubTitleLabel" parent="MenuContainer/SubTitleMargin/SubTitleContainer" index="0"]
+text = "Emergent Dialogue and Quest Generation"
 
 [node name="MenuButtonsContainer" parent="MenuContainer/MenuButtonsMargin" index="0"]
 modulate = Color(1, 1, 1, 0)
@@ -391,5 +405,11 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "Continue"
+
+[node name="FlowControlContainer" parent="." index="9"]
+layout_mode = 1
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/ContinueGameButton" to="." method="_on_continue_game_button_pressed"]

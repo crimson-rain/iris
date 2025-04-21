@@ -15,6 +15,7 @@ id = "Josephio"
 role = "Tavern Keeper"
 personality = "A Kind and caring tavern keeper. The heart of the town."
 description = "Josephio has lived in Aethera for a long time, cares about the people and brings those up with his hearty food and amazing ale."
+location = "Drunken Griffin"
 relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2

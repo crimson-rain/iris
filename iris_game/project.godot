@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="iris_game"
+config/name="Iris: Aetheria"
 run/main_scene="res://ui/menus/scenes/opening/opening_with_logo.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"

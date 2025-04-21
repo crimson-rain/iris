@@ -6,8 +6,8 @@ use godot::prelude::{GodotClass, godot_api};
 use iris_gen::agent::maestro::Maestro;
 use iris_utils::asyn::channels::Channels;
 use iris_utils::constructs::Dialogue;
-use tokio::runtime::Runtime;
 use ollama_rs::generation::chat::ChatMessage;
+use tokio::runtime::Runtime;
 
 #[derive(GodotClass)]
 #[class(base=Node)]
@@ -21,7 +21,6 @@ struct Iris {
 #[godot_api]
 impl INode for Iris {
     fn init(base: Base<Node>) -> Self {
-
         let system_message = ChatMessage::new(
             ollama_rs::generation::chat::MessageRole::System,
             iris_gen::agent::configs::DIALOGUE_SYSTEM_PROMPT.to_string(),
@@ -48,7 +47,6 @@ impl Iris {
 
         if let Some(receiver) = &mut self.channels.reciever {
             while let Ok(res) = receiver.try_recv() {
-
                 self.history.push(ChatMessage::new(
                     ollama_rs::generation::chat::MessageRole::Assistant,
                     res.clone(),
@@ -72,18 +70,21 @@ impl Iris {
         let mut maestro = self.maestro.clone();
         let mut history = self.history.clone();
 
+        let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
+
         self.history.push(ChatMessage::new(
             ollama_rs::generation::chat::MessageRole::User,
-            prompt.clone(),
+            formatted_prompt.clone(),
         ));
 
         std::thread::spawn({
             move || {
                 let runtime = Runtime::new().expect("Failed to Create a Tokio Runtime");
                 runtime.block_on(async move {
-                    let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
-
-                    match maestro.conduct_dialogue_gen(formatted_prompt, &mut history).await {
+                    match maestro
+                        .conduct_dialogue_gen(formatted_prompt, &mut history)
+                        .await
+                    {
                         Ok(res) => {
                             if let Some(sender) = sender {
                                 let _ = sender.send(res).await;
@@ -108,6 +109,4 @@ impl Iris {
 }
 
 #[cfg(test)]
-mod test {
-
-}
+mod test {}

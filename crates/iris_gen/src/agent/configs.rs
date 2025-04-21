@@ -3,7 +3,7 @@
 //! This module holds all configurations for loading and creating an LLM instance.
 //! As well instructions which can be used for the LLM generation.
 
-pub const LLM_MODEL: &str = "cogito:8b";
+pub const LLM_MODEL: &str = "llama3.1";
 
 pub const EMBED_MODEL: &str = "nomic-embed-text";
 
@@ -34,8 +34,9 @@ pub const QUEST_SYSTEM_PROMPT: &str = r#"
 
   ## Response Format (DO NOT ALTER):
   {
-    "dialogue": "NPC's response here.",
-    "npc": "{npc_name}",
-    "choices": ["Option 1", "Option 2", "Option 3"]
+    "quest_name": "{quest_name}",
+    "description": "{quest_description}",
+    "objective": "{quest_objective}"
   }
+
 "#;

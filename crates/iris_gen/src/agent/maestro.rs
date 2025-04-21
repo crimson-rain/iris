@@ -7,21 +7,17 @@ use crate::error::IrisGenError;
 use crate::rag::RAG;
 use ollama_rs::generation::chat::ChatMessage;
 
-#[derive(Clone)]
+#[derive(Default, Clone)]
 pub struct Maestro {
     model: Model,
 }
 
-impl Default for Maestro {
-    fn default() -> Self {
-        Self {
-            model: Model::default(),
-        }
-    }
-}
-
 impl Maestro {
-    pub async fn conduct_dialogue_gen(&mut self, prompt: String, history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
+    pub async fn conduct_dialogue_gen(
+        &mut self,
+        prompt: String,
+        history: &mut Vec<ChatMessage>,
+    ) -> Result<String, IrisGenError> {
         let rag_res = self.conduct_rag(&prompt).await?;
 
         let rag_inject_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
@@ -32,19 +28,6 @@ impl Maestro {
             .await?;
 
         dbg!(&history);
-
-        Ok(resp.message.content)
-    }
-
-    pub async fn conduct_dialogue_gen_with_tools(&mut self, prompt: String, history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
-        let rag_res = self.conduct_rag(&prompt).await?;
-
-        let rag_inject_prompt = format!("CONTEXT: {}, PROMPT: {}", rag_res, prompt);
-
-        let resp = self
-            .model
-            .generate_request_with_tools(&rag_inject_prompt, history.clone())
-            .await?;
 
         Ok(resp.message.content)
     }
@@ -60,8 +43,9 @@ impl Maestro {
 
     pub async fn conduct_rag(&self, prompt: &String) -> Result<String, IrisGenError> {
         let rag = RAG::new().await;
-        let _ = rag.init_collection(self).await?;
-        let _ = rag.init_world_collection(self).await?;
+
+        rag.init_collection(self).await?;
+        rag.init_world_collection(self).await?;
 
         let npc_rag_resp = rag.rag_resp(self, prompt.to_string()).await?;
         let world_rag_resp = rag.world_rag_resp(self, prompt.to_string()).await?;
@@ -71,9 +55,12 @@ impl Maestro {
         Ok(resp)
     }
 
-    pub async fn conduct_memory_summarization(&self, _history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
+    pub async fn conduct_memory_summarization(
+        &self,
+        _history: &mut [ChatMessage],
+    ) -> Result<String, IrisGenError> {
         todo!()
-    } 
+    }
 }
 
 #[cfg(test)]
@@ -91,7 +78,6 @@ mod tests {
                 .await
                 .is_ok()
         );
-
     }
 
     #[tokio::test]
@@ -111,12 +97,18 @@ mod tests {
             .unwrap();
 
         maestro
-            .conduct_dialogue_gen("And whats the weather like in Roehampton?".to_string(), &mut history)
+            .conduct_dialogue_gen(
+                "And whats the weather like in Roehampton?".to_string(),
+                &mut history,
+            )
             .await
             .unwrap();
 
         maestro
-            .conduct_dialogue_gen("What was the place I asked about?".to_string(), &mut history)
+            .conduct_dialogue_gen(
+                "What was the place I asked about?".to_string(),
+                &mut history,
+            )
             .await
             .unwrap();
 

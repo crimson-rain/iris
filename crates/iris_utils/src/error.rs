@@ -1,4 +1,7 @@
-//! Error stacks for different errros which can occur in the library
+//! error.rs
+//!
+//! Error stacks for different errros which can occur in the irsi_util crate.
+
 use thiserror::Error;
 
 #[derive(Debug, Error)]

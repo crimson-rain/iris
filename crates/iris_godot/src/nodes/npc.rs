@@ -3,6 +3,7 @@ use godot::classes::{CharacterBody2D, ICharacterBody2D};
 use godot::obj::Base;
 use godot::prelude::{GodotClass, godot_api};
 
+#[allow(clippy::upper_case_acronyms)]
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
 struct NPC {
@@ -43,7 +44,12 @@ impl NPC {
     pub fn get_npc_info(&self) -> String {
         format!(
             "ID: {}, Role: {}, Personality: {}, Description: {}, Location: {} Relation To Player: {}",
-            self.id, self.role, self.personality, self.description, self.location, self.relation_to_player
+            self.id,
+            self.role,
+            self.personality,
+            self.description,
+            self.location,
+            self.relation_to_player
         )
     }
 }

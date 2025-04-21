@@ -1,6 +1,5 @@
 //! `agent/model.rs`
 
-use ollama_rs::coordinator::Coordinator;
 use ollama_rs::Ollama;
 use ollama_rs::generation::chat::request::ChatMessageRequest;
 use ollama_rs::generation::chat::{ChatMessage, ChatMessageResponse};
@@ -54,23 +53,6 @@ impl Model {
         let req = GenerateEmbeddingsRequest::new(self.embed_model.clone(), raw_text.into());
 
         let res = self.ollama.generate_embeddings(req).await?;
-
-        Ok(res)
-    }
-
-    pub async fn generate_request_with_tools(
-        &self,
-        prompt: &str,
-        history: Vec<ChatMessage>,
-    ) -> Result<ChatMessageResponse, IrisGenError> {
-
-        let mut coordinator =
-            Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history) 
-                .add_tool(crate::godot_tools::hello_function);
-
-        let formatted_prompt = ChatMessage::user(prompt.to_owned());
-
-        let res = coordinator.chat(vec![formatted_prompt]).await?;
 
         Ok(res)
     }

@@ -1,20 +1,13 @@
 //! `agent/memory.rs`
-//! 
+//!
 //! Memory module is responsible for handling and managing memories for NPCs.
 //! The memories are handled inside a history, which handles ChatMessages amongst the user and NPC.
 
 use ollama_rs::generation::chat::ChatMessage;
 
+#[derive(Default)]
 pub struct Memory {
     history: Vec<ChatMessage>,
-}
-
-impl Default for Memory {
-    fn default() -> Self {
-        Self {
-            history: Vec::new(),
-        }
-    }
 }
 
 impl Memory {

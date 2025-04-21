@@ -61,7 +61,7 @@ impl RAG {
         for (i, data) in npc_data.iter().enumerate() {
             let embeds = maestro.conduct_embed_gen(data.to_string()).await?;
 
-            let npc: NPCData = serde_json::from_str(&data)?;
+            let npc: NPCData = serde_json::from_str(data)?;
 
             let npc_information = serde_json::to_string(&npc.npc_information)?;
             let notable_traits = npc.notable_traits.clone();
@@ -116,7 +116,7 @@ impl RAG {
         let mut points = Vec::new();
 
         for (i, data) in world_data.iter().enumerate() {
-            let world_data: WorldData = serde_json::from_str(&data)?;
+            let world_data: WorldData = serde_json::from_str(data)?;
 
             let embeds = maestro.conduct_embed_gen(data.clone()).await?;
 
@@ -173,7 +173,7 @@ impl RAG {
             .with_payload(true);
 
         let search_response = self.client.search_points(search_request).await?;
-        
+
         let mut result_vec = Vec::new();
 
         for point in &search_response.result {

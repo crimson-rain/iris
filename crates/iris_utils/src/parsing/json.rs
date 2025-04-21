@@ -3,10 +3,10 @@ use crate::error::{IrisUtilError, ParseError};
 pub fn parse_json(value: &str) -> Result<String, IrisUtilError> {
     let start = value
         .find('{')
-        .ok_or_else(|| IrisUtilError::Parse(ParseError::InvalidSyntax))?;
+        .ok_or(IrisUtilError::Parse(ParseError::InvalidSyntax))?;
     let end = value
         .rfind('}')
-        .ok_or_else(|| IrisUtilError::Parse(ParseError::UnexpectedEoI))?;
+        .ok_or(IrisUtilError::Parse(ParseError::UnexpectedEoI))?;
 
     let json_str = &value[start..=end];
 

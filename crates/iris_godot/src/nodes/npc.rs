@@ -15,6 +15,8 @@ struct NPC {
     #[export(multiline)]
     description: GString,
     #[export]
+    location: GString,
+    #[export]
     relation_to_player: GString,
 
     base: Base<CharacterBody2D>,
@@ -28,6 +30,7 @@ impl ICharacterBody2D for NPC {
             role: GString::new(),
             personality: GString::new(),
             description: GString::new(),
+            location: GString::new(),
             relation_to_player: GString::new(),
             base,
         }
@@ -39,8 +42,8 @@ impl NPC {
     #[func]
     pub fn get_npc_info(&self) -> String {
         format!(
-            "ID: {}, Role: {}, Personality: {}, Description: {}, Relation To Player: {}",
-            self.id, self.role, self.personality, self.description, self.relation_to_player
+            "ID: {}, Role: {}, Personality: {}, Description: {}, Location: {} Relation To Player: {}",
+            self.id, self.role, self.personality, self.description, self.location, self.relation_to_player
         )
     }
 }

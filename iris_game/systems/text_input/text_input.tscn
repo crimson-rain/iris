@@ -13,7 +13,10 @@ bg_color = Color(1, 1, 1, 1)
 
 [node name="TextInput" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchor_right = 0.129
+anchor_bottom = 0.039
+offset_right = -148.608
+offset_bottom = -25.272
 size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource("1_rfuhp")
@@ -33,7 +36,7 @@ theme_override_colors/background_color = Color(1, 1, 1, 1)
 theme_override_colors/font_placeholder_color = Color(0.500095, 0.500095, 0.500095, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_0a00w")
-theme_override_font_sizes/font_size = 4
+theme_override_font_sizes/font_size = 6
 placeholder_text = "Type Here..."
 
 [node name="SubmitButton" type="Button" parent="MarginContainer/HBoxContainer"]

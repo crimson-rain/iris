@@ -9,8 +9,12 @@ extends Control
 signal generated_dialogue(response: String)
 signal exit_signal()
 
+const EXTRA_VERTICAL_PADDING: int = 8
+
 func _ready() -> void:
-	pass
+	text_edit.custom_minimum_size = Vector2(148.0, 25.0)
+	text_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	text_edit.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 func _on_submit_button_pressed() -> void:
 	emit_signal("generated_dialogue", text_edit.text)

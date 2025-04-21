@@ -15,6 +15,7 @@ id = "Mel"
 role = "Bard"
 personality = "Kind and Charasmatic"
 description = "A kind and caring bard who is devoted to her ballads."
+location = "Town Square"
 relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2

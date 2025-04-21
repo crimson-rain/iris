@@ -17,7 +17,6 @@ func _on_interact(prompt: String) -> void:
 	
 	iris.generate_dialogue(prompt, self.get_npc_info())
 
-# Remove the need for an array or keep it?
 func _on_iris_dialogue_generated(response: String) -> void:
 	DialogueManager.start_dialogue(self.position, [response])
 

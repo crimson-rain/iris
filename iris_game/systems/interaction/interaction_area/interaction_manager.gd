@@ -1,6 +1,5 @@
 # interaction_manager.gd | 19.03.2025
 #
-# DESCRIPTION
 # The interaction manager is responsible for allowing two objects to interact,
 # as well as organize multiple objects which can interact by prioritizing the one closest to the
 # player.
@@ -49,6 +48,6 @@ func _input(event: InputEvent) -> void:
 			can_interact = false
 			label.hide()
 			
-			await active_areas[0].interact.call("Hello")
+			await active_areas[0].interact.call("[USER HAS INTERACTED WITH YOU]")
 			
 			can_interact = true

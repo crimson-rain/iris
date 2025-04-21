@@ -65,8 +65,8 @@ impl Model {
     ) -> Result<ChatMessageResponse, IrisGenError> {
 
         let mut coordinator =
-            Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history)
-                .add_tool(crate::agent::tools::get_weather);
+            Coordinator::new(self.ollama.clone(), self.llm_model.clone(), history) 
+                .add_tool(crate::godot_tools::hello_function);
 
         let formatted_prompt = ChatMessage::user(prompt.to_owned());
 

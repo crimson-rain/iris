@@ -71,7 +71,7 @@ impl Maestro {
         Ok(resp)
     }
 
-    pub async fn conduct_memory_summarization(&self, history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
+    pub async fn conduct_memory_summarization(&self, _history: &mut Vec<ChatMessage>) -> Result<String, IrisGenError> {
         todo!()
     } 
 }

@@ -83,7 +83,7 @@ impl Iris {
                 runtime.block_on(async move {
                     let formatted_prompt = format!("Prompt: {}, NPC: {}", prompt, npc_data);
 
-                    match maestro.conduct_dialogue_gen_with_tools(formatted_prompt, &mut history).await {
+                    match maestro.conduct_dialogue_gen(formatted_prompt, &mut history).await {
                         Ok(res) => {
                             if let Some(sender) = sender {
                                 let _ = sender.send(res).await;

@@ -9,12 +9,12 @@ extends NPC
 
 func _ready() -> void:
 	interaction_area.interact = Callable(self, "_on_interact")
-	DialogueManager.user_responded.connect(_handle_user_response)
 	
 func _on_interact(prompt: String) -> void:
 	if DialogueManager.is_dialogue_active or DialogueManager.chat_box_active:
 		return
-	
+		
+	DialogueManager.user_responded.connect(_handle_user_response)
 	iris.generate_dialogue(prompt, self.get_npc_info())
 
 # Remove the need for an array or keep it?
@@ -22,4 +22,5 @@ func _on_iris_dialogue_generated(response: String) -> void:
 	DialogueManager.start_dialogue(self.position, [response])
 
 func _handle_user_response(response: String) -> void:
+	DialogueManager.user_responded.disconnect(_handle_user_response)
 	iris.generate_dialogue(response, self.get_npc_info())

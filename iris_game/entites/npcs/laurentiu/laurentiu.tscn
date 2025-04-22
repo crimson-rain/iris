@@ -16,6 +16,7 @@ role = "Mayor"
 personality = "Tired and Agitated"
 description = "The mayor of Aether Town.
 Absoloute hates Squirrels with a passion and wishes to remove them ."
+location = "Town Square"
 relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2

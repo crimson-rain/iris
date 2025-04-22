@@ -13,9 +13,8 @@ radius = 75.2396
 [node name="Josephio" type="NPC"]
 id = "Josephio"
 role = "Tavern Keeper"
-personality = "A Kind and caring tavern keeper. The heart of the town."
-description = "Josephio has lived in Aethera for a long time, cares about the people and brings those up with his hearty food and amazing ale."
-location = "Drunken Griffin"
+personality = "A kind and caring soul, the heart of town."
+description = "Josephio runs the Drunken Griffin, where many adventures come by to share a drink"
 relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2

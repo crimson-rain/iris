@@ -3,7 +3,7 @@
 //! This module holds all configurations for loading and creating an LLM instance.
 //! As well instructions which can be used for the LLM generation.
 
-pub const LLM_MODEL: &str = "llama3.1";
+pub const LLM_MODEL: &str = "granite3.3";
 
 pub const EMBED_MODEL: &str = "nomic-embed-text";
 

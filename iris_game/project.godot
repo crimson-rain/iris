@@ -34,6 +34,13 @@ gdscript/warnings/confusable_local_declaration=2
 
 enabled=PackedStringArray("res://addons/maaacks_menus_template/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://entites/npcs/": "blue",
+"res://entites/player/": "green"
+}
+
 [global_group]
 
 Player=""

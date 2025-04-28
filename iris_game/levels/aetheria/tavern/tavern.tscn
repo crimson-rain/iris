@@ -7,6 +7,7 @@
 [node name="Tavern" type="Node2D"]
 
 [node name="TavernEnvironment" parent="." instance=ExtResource("2_lj4cf")]
+position = Vector2(-66, 29)
 
 [node name="Player" parent="." instance=ExtResource("1_aixl0")]
 position = Vector2(534, 248)

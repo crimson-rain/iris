@@ -1,7 +1,7 @@
 //! `rag/mod.rs`
 //!
-//! All the RAG logic needed to create similiary search and setting up to make requests.
-//! To prompt more accurate and narrow dialogue generation.
+//! Defines the RAG sub-system to store and reterieve information about the Game World.
+//! Defines the NPC and World Data and provides an easy interface to pull the data.
 
 #![allow(unused)]
 
@@ -43,7 +43,7 @@ impl RAG {
 
         let path = format!("{}{}", manifest_dir, folder_dir);
 
-        let npc_data = load_npc_data(&path).await.unwrap();
+        let npc_data = load_data(&path).await.unwrap();
 
         // Create Collection
         let _ = self
@@ -102,7 +102,7 @@ impl RAG {
         let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
         let path = format!("{}{}", manifest_dir, folder_dir);
 
-        let world_data = load_npc_data(&path).await.unwrap(); // You'll define this
+        let world_data = load_data(&path).await.unwrap(); // You'll define this
 
         // Create Collection
         self.client
@@ -192,7 +192,7 @@ async fn connect_to_qdrant() -> Result<qdrant_client::Qdrant, IrisGenError> {
     Ok(client)
 }
 
-async fn load_npc_data(folder: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
+async fn load_data(folder: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
     let mut npc_data = Vec::new();
     let mut dir = fs::read_dir(folder).await?;
 
@@ -212,11 +212,17 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_world_data_load() {
+    async fn test_load_data() {
         let folder_dir = "../../../iris_data/world_data";
         let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
         let path = format!("{}{}", manifest_dir, folder_dir);
 
-        let world_data = load_npc_data(&path).await.unwrap(); // You'll define this
+        let world_data = load_data(&path).await.unwrap();    
+    }
+
+    #[tokio::test]
+    async fn test_connection_to_qdrant() {
+        let conn = connect_to_qdrant().await.unwrap();
+        assert!(conn.health_check().await.is_ok(), "Health Check Responded with an Error");
     }
 }

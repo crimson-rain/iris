@@ -1,3 +1,9 @@
+//! 'rag/data_schemas.rs'
+//!
+//! This module defines various data structures to store information about the World and NPCs.
+//! These structs can be serialized and deserialized, and is used to define collections inside
+//! Qdrant Vector Database.
+
 use serde::{Deserialize, Serialize};
 
 // NPC Data Schemas
@@ -35,7 +41,7 @@ pub struct Equipment {
     description: String,
 }
 
-// Location Schemas
+// World Data Schemas
 #[derive(Serialize, Deserialize)]
 pub struct WorldData {
     pub id: String,

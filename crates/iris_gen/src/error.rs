@@ -1,4 +1,8 @@
 //! `error.rs`
+//!
+//! This module is responsible for handling errors which can occur in the library
+//! Handles errors from Ollama, Reqwest, Qdrant, Serde_JSON and various other errors in a 
+//! error stack.
 
 use ollama_rs::error::OllamaError;
 use thiserror::Error;

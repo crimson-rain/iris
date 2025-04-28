@@ -1,4 +1,5 @@
 //! `agent/maestro.rs`
+//!
 //! Maestro is responsible for making LLM calls as well as handling various other
 //! tasks, is required to create the needed operation.
 
@@ -26,8 +27,6 @@ impl Maestro {
             .model
             .generate_request(&rag_inject_prompt, history)
             .await?;
-
-        dbg!(&history);
 
         Ok(resp.message.content)
     }
@@ -58,8 +57,9 @@ impl Maestro {
     pub async fn conduct_memory_summarization(
         &self,
         _history: &mut [ChatMessage],
+        prompt: String
     ) -> Result<String, IrisGenError> {
-        todo!()
+        let formatted_prompt = todo!();
     }
 }
 

@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://1xfuabuvi16y"]
+[gd_scene load_steps=6 format=3 uid="uid://bh7b4q2yyfsec"]
 
-[ext_resource type="Script" uid="uid://fu25go26ygat" path="res://entites/npcs/npc.gd" id="1_kw8rf"]
-[ext_resource type="Texture2D" uid="uid://dt2bhcql4ifhw" path="res://entites/npcs/laurentiu/data/sprite/character_9_frame32x32.png" id="2_026ht"]
-[ext_resource type="Script" uid="uid://kamh7aikg4ab" path="res://systems/interaction/interaction_area/interaction_area.gd" id="3_7mkqo"]
+[ext_resource type="Script" uid="uid://fu25go26ygat" path="res://entites/npcs/npc.gd" id="1_8e7w4"]
+[ext_resource type="Texture2D" uid="uid://d4jl2w6msimdo" path="res://entites/npcs/jamie/data/sprites/character_28_frame32x32.png" id="2_qmqig"]
+[ext_resource type="Script" uid="uid://kamh7aikg4ab" path="res://systems/interaction/interaction_area/interaction_area.gd" id="3_v3y4k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3yce"]
 height = 22.0
@@ -10,17 +10,16 @@ height = 22.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ryxte"]
 radius = 75.2396
 
-[node name="Laurentiu" type="NPC"]
-id = "Laurentiu"
-role = "Mayor"
-personality = "Tired and Agitated"
-description = "The mayor of Aether Town.
-Absoloute hates Squirrels with a passion and wishes to remove them ."
-location = "Town Square"
+[node name="Jamie" type="NPC"]
+id = "Jamie"
+role = "Banker"
+personality = "Greedy dwarf hoarding gold, scheming deep within the bank's vaults"
+description = "Jamie, a dwarf  hoarding riches deep inside the bank."
+location = "Aether Bank"
 relation_to_player = "Ally"
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_kw8rf")
+script = ExtResource("1_8e7w4")
 
 [node name="Iris" type="Iris" parent="."]
 
@@ -29,14 +28,14 @@ position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_p3yce")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_026ht")
+texture = ExtResource("2_qmqig")
 hframes = 3
 vframes = 4
 frame = 1
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0
-script = ExtResource("3_7mkqo")
+script = ExtResource("3_v3y4k")
 metadata/_custom_type_script = "uid://kamh7aikg4ab"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]

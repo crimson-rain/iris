@@ -5,6 +5,9 @@ const SPEED: float = 145.0
 # Acceleration of the Character, Increases the Speed with a Multiplier
 const ACCELERATION: float = 15.0
 
+@export var health: int = 250
+@export var damage: int = 100
+
 # Animation Player
 @onready var player_animation_player: AnimationPlayer = $AnimationPlayer
 

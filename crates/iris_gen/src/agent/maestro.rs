@@ -57,9 +57,10 @@ impl Maestro {
     pub async fn conduct_memory_summarization(
         &self,
         _history: &mut [ChatMessage],
-        prompt: String
+        prompt: Vec<String>
     ) -> Result<String, IrisGenError> {
-        let formatted_prompt = todo!();
+        let formatted_prompt = format!("{:?}", prompt);
+        todo!()
     }
 }
 

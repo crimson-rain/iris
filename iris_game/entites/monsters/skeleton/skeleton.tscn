@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkvi6wmpyptu8"]
+
+[ext_resource type="Script" uid="uid://dt8v1q18uargv" path="res://entites/monsters/skeleton/skeleton.gd" id="1_df273"]
+[ext_resource type="Texture2D" uid="uid://d4du3m1t4k74m" path="res://entites/monsters/skeleton/data/sprites/monsters_2.png" id="2_dwre8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c41ew"]
+
+[node name="Skeleton" type="Node2D"]
+script = ExtResource("1_df273")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dwre8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c41ew")

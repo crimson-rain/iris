@@ -37,6 +37,7 @@ enabled=PackedStringArray("res://addons/maaacks_menus_template/plugin.cfg", "res
 [file_customization]
 
 folder_colors={
+"res://entites/monsters/": "red",
 "res://entites/npcs/": "blue",
 "res://entites/player/": "green"
 }

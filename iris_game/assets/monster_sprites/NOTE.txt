@@ -1,0 +1,5 @@
+Note from author
+ - monsters a animated in 4 direction (3 frames)
+ - each frame is 48x48 pixels
+ - in the current folder, monsters are positionned on the bottom of the frame
+ - in the centered/ subfolder, monsters are positionned in the center of the frame

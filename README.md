@@ -10,7 +10,13 @@ It aims to move beyond static, pre-written lines by allowing NPCs to respond dyn
 world events, and character personalities.
 
 ## Getting Started
-Clone the Repo...
+Before getting started and running the project, you must first install dependencies for this project.
+
+### Dependencies
+- Godot
+- Ollama
+- Rust
+- Docker
 
 ## Additional Information
 Visit the Wiki...

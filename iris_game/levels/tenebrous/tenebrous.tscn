@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://2om74kqkn1k"]
+[gd_scene load_steps=3 format=3 uid="uid://2om74kqkn1k"]
 
 [ext_resource type="PackedScene" uid="uid://dqa0ih02nfn4c" path="res://entites/player/player.tscn" id="1_yavuq"]
+[ext_resource type="PackedScene" uid="uid://ck2q2grxfsquq" path="res://entites/monsters/skeleton/skeleton.tscn" id="2_q1gml"]
 
 [node name="Tenebrous" type="Node2D"]
 
@@ -8,3 +9,6 @@
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
+
+[node name="Skeleton" parent="." instance=ExtResource("2_q1gml")]
+position = Vector2(-199, -96)
